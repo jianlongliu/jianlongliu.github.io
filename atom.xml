@@ -1,0 +1,428 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>bonjour, jianlong liu</title>
+  
+  
+  <link href="http://jianlongliu.github.io/atom.xml" rel="self"/>
+  
+  <link href="http://jianlongliu.github.io/"/>
+  <updated>2024-05-02T14:57:04.036Z</updated>
+  <id>http://jianlongliu.github.io/</id>
+  
+  <author>
+    <name>Jianlong Liu</name>
+    
+  </author>
+  
+  <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>处理Fedora 下的Firefox 浏览器播放视频抖动</title>
+    <link href="http://jianlongliu.github.io/posts/846f9f90.html"/>
+    <id>http://jianlongliu.github.io/posts/846f9f90.html</id>
+    <published>2024-05-02T14:52:47.176Z</published>
+    <updated>2024-05-02T14:57:04.036Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="处理Fedora-下的Firefox-浏览器播放视频抖动"><a href="#处理Fedora-下的Firefox-浏览器播放视频抖动" class="headerlink" title="处理Fedora 下的Firefox 浏览器播放视频抖动"></a>处理Fedora 下的Firefox 浏览器播放视频抖动</h1><p>    在使用firefox 播放bilibili 视频时，画面时不时抖动抽风。切换Vivaldi 浏览器播放又正常，更新FFMPEG是解决firefox 浏览器播放抖动的一个思路</p><blockquote><p>操作系统: Fedora Workstation 40 Pre-Release</p><p>桌面环境: Gnome 46</p></blockquote><ol><li>配置RPM Fussion 库</li></ol><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">sudo dnf install https:&#x2F;&#x2F;mirrors.rpmfusion.org&#x2F;free&#x2F;fedora&#x2F;rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm https:&#x2F;&#x2F;mirrors.rpmfusion.org&#x2F;nonfree&#x2F;fedora&#x2F;rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><p>注意，如果在terminal 中运行报错，尝试把<code>$(rpm -E %fedora)</code>改成当前系统版本号，例如</p><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">sudo dnf install https:&#x2F;&#x2F;mirrors.rpmfusion.org&#x2F;free&#x2F;fedora&#x2F;rpmfusion-free-release-40.noarch.rpm https:&#x2F;&#x2F;mirrors.rpmfusion.org&#x2F;nonfree&#x2F;fedora&#x2F;rpmfusion-nonfree-release-40.noarch.rpm<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><blockquote><p><a href="https://rpmfusion.org/Configuration">RPM Fussion</a> 官网配置方法，其他操作系统用户可以参考</p></blockquote><ol start="2"><li><p>更新ffmpeg</p><p><code>sudo dnf update</code> 更新源</p><p><code>sudo dnf upgrade ffmpeg ffmpeg-devel --allowerasing</code></p></li></ol><p>        注意，此命令会覆盖系统内置ffmpeg </p><p>        <code>ffmpeg -version</code> 查看版本号</p><p>重新启动Firefox 浏览器后应该可以正常观看，视频不抖动了</p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h1 id=&quot;处理Fedora-下的Firefox-浏览器播放视频抖动&quot;&gt;&lt;a href=&quot;#处理Fedora-下的Firefox-浏览器播放视频抖动&quot; class=&quot;headerlink&quot; title=&quot;处理Fedora 下的Firefox 浏览器播放视频抖动&quot;&gt;&lt;/a&gt;处理</summary>
+      
+    
+    
+    
+    
+    <category term="Linux" scheme="http://jianlongliu.github.io/tags/Linux/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>在不同平台上使用Reader3 阅读</title>
+    <link href="http://jianlongliu.github.io/posts/0.html"/>
+    <id>http://jianlongliu.github.io/posts/0.html</id>
+    <published>2024-04-20T16:52:10.783Z</published>
+    <updated>2024-04-17T18:21:10.284Z</updated>
+    
+    <content type="html"><![CDATA[<blockquote><p>服务器端: Ubuntu Server 22.04<br>智能手机: Nothing Phone(1) (Project Elixir 3.6, Android 13)<br>平板: 小米平板6 Pro (MIUI 14, Android 13)  </p></blockquote><p>为了方便在不同设备上跨平台阅读小说，我决定部署阅读应用程序<a href="https://github.com/hectorqin/reader/">Reader3</a> docker compose版本到服务器。虽然按照<a href="https://github.com/hectorqin/reader/blob/master/doc.md">文档</a>进行了安装和配置，但实际部署过程中仍然遇到了一些问题，可能是因为我的经验不足。</p><h2 id="服务端部署"><a href="#服务端部署" class="headerlink" title="服务端部署"></a>服务端部署</h2><ol><li>安装docker-compose<br><code>sudo apt install docker-compose</code></li><li>拉取<code>docker-compose.yaml</code>配置文件<br><code>wget https://ghproxy.com/https://raw.githubusercontent.com/hectorqin/reader/master/docker-compose.yaml</code></li><li>按需配置刚刚拉取的yaml文件  </li><li>启动和停止docker-compose<br>启动: 在配置文件所在目录执行<code>sudo docker-compose up -d</code><br>停止: <code>sudo docker-compose stop</code></li><li>手动更新<br><code>sudo docker-compose pull &amp;&amp; sudo docker-compose up -d</code></li></ol><h2 id="客户端部署"><a href="#客户端部署" class="headerlink" title="客户端部署"></a>客户端部署</h2><h3 id="Web-端"><a href="#Web-端" class="headerlink" title="Web 端"></a>Web 端</h3><p>使用浏览器访问 <code>http://&lt;ip&gt;:&lt;port&gt;</code> 即可在线阅读和管理书源</p><blockquote><p>默认端口是4396<br>注意: 首次登陆记得要注册账号</p></blockquote><h3 id="Android-多端WebDav-同步"><a href="#Android-多端WebDav-同步" class="headerlink" title="Android 多端WebDav 同步"></a>Android 多端WebDav 同步</h3><p>在App 设置的”备份与恢复”配置WebDAV, 勾选”同步阅读进度”方便多端同步，首次使用需要点击备份  </p><p>WebDav 服务器地址: <code>http://&lt;ip&gt;:&lt;port&gt;/reader3/webdav/</code></p><blockquote><p>注意: 服务器地址要按上述格式添加，不然会报错的，在这里吃了亏，<br>需要添加刚刚注册的账号和密码  </p></blockquote><p>按上述配置基本上可以实现多端同步和使用了</p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;blockquote&gt;
+&lt;p&gt;服务器端: Ubuntu Server 22.04&lt;br&gt;智能手机: Nothing Phone(1) (Project Elixir 3.6, Android 13)&lt;br&gt;平板: 小米平板6 Pro (MIUI 14, Android 13) </summary>
+      
+    
+    
+    
+    
+    <category term="Android" scheme="http://jianlongliu.github.io/tags/Android/"/>
+    
+    <category term="Reading" scheme="http://jianlongliu.github.io/tags/Reading/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>一次升级失败：Nothing Phone遇到的问题与解决思路</title>
+    <link href="http://jianlongliu.github.io/posts/28c2be6d.html"/>
+    <id>http://jianlongliu.github.io/posts/28c2be6d.html</id>
+    <published>2024-04-20T16:52:10.779Z</published>
+    <updated>2024-04-17T18:21:10.284Z</updated>
+    
+    <content type="html"><![CDATA[<p>我使用的是<a href="https://intl.nothing.tech/products/phone-1">Nothing Phone (1) (代号: Spacewar)</a>手机，最近收到了<a href="https://projectelixiros.com/device/spacewar">Project Elixir</a> 3.7的升级推送。昨晚下载了升级包后，按照操作指引输入了<code>fastboot update project*.zip</code> 进行升级，但在等待设备重启到recovery模式时，我发现手机卡在了<code>super.img</code>。为了解决这个问题，我尝试更换了USB数据线和USB接口，然后使用了<code>fastboot -w</code> 命令清除了用户数据，但结果却仍然是类似的，令我感到相当困惑。</p><p>此时已经凌晨0点，考虑一番后我决定尝试<a href="https://download.pixelexperience.org/Spacewar/">Pixel Experience Plus</a>，并安装了一些常用的应用程序。初始情况看起来一切正常，我对此感到相当满意。但是，当我尝试观看视频时，发现手机没有声音输出的bug，这让人有些沮丧和失望！  </p><p>现在已经接近凌晨3点了。于是，我决定回滚到原厂系统Nothing OS 1.1.3，并进行OTA升级到1.5.3版本。在OTA升级和安装App期间还看了英超联赛，曼城4:1大胜娜娜看得血脉偾张。在这个过程中，我也一直在思考我所遇到的问题，希望能找到更好的解决方案。</p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;我使用的是&lt;a href=&quot;https://intl.nothing.tech/products/phone-1&quot;&gt;Nothing Phone (1) (代号: Spacewar)&lt;/a&gt;手机，最近收到了&lt;a href=&quot;https://projectelixiros.co</summary>
+      
+    
+    
+    
+    
+    <category term="Android" scheme="http://jianlongliu.github.io/tags/Android/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>非官方剧情DLC - The Machine, and her</title>
+    <link href="http://jianlongliu.github.io/posts/af08605b.html"/>
+    <id>http://jianlongliu.github.io/posts/af08605b.html</id>
+    <published>2023-12-23T16:58:17.000Z</published>
+    <updated>2024-04-17T18:21:10.284Z</updated>
+    
+    <content type="html"><![CDATA[<p>本体:<br><a href="https://www.nexusmods.com/fallout4/mods/30488">https://www.nexusmods.com/fallout4/mods/30488</a></p><p>XDI补丁:<br><a href="https://www.nexusmods.com/fallout4/mods/41194/?tab=description&BH=0">https://www.nexusmods.com/fallout4/mods/41194/?tab=description&amp;BH=0</a></p><p>XDI汉化补丁:<br><a href="https://www.nexusmods.com/fallout4/mods/60252">https://www.nexusmods.com/fallout4/mods/60252</a></p><p>汉化:<br><a href="http://www.9dmsgame.com/thread-177291-1-1.html">http://www.9dmsgame.com/thread-177291-1-1.html</a></p><p>人工智能的背后不是一定是AI，也许可能是人。强烈推荐玩下，bug多忍忍</p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;本体:&lt;br&gt;&lt;a href=&quot;https://www.nexusmods.com/fallout4/mods/30488&quot;&gt;https://www.nexusmods.com/fallout4/mods/30488&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;XDI补丁:&lt;br&gt;&lt;a href</summary>
+      
+    
+    
+    
+    
+    <category term="辐射4" scheme="http://jianlongliu.github.io/tags/%E8%BE%90%E5%B0%844/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>自用Starfield 星空Steam 版首发优化Modlist (2023/9/15)</title>
+    <link href="http://jianlongliu.github.io/posts/e6cc9149.html"/>
+    <id>http://jianlongliu.github.io/posts/e6cc9149.html</id>
+    <published>2023-09-16T11:00:56.000Z</published>
+    <updated>2024-04-17T18:21:10.284Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="I-前置脚本和引擎修复"><a href="#I-前置脚本和引擎修复" class="headerlink" title="I. 前置脚本和引擎修复"></a>I. 前置脚本和引擎修复</h2><ul><li>星空扩展脚本</li></ul><p><a href="https://www.nexusmods.com/starfield/mods/106">Starfield Script Extended</a></p><ul><li>ASI 加载器</li></ul><p><a href="https://www.nexusmods.com/starfield/mods/857">SFSE ASI Loader</a></p><ul><li>开启DLSS, FSR 超分辨率后的边缘闪烁修复</li></ul><p><a href="https://www.nexusmods.com/starfield/mods/1743">Upscaling Fix - FSR - DLSS - XeSS</a></p><ul><li>祖传奔跑bug修复</li></ul><p><a href="https://www.nexusmods.com/starfield/mods/884">Sprint Stuttering Fix</a></p><hr><h2 id="II-性能修复和优化"><a href="#II-性能修复和优化" class="headerlink" title="II. 性能修复和优化"></a>II. 性能修复和优化</h2><ul><li>PureDark的DLSS 2 or XESS</li></ul><p><a href="https://www.nexusmods.com/starfield/mods/111">Starfield Upscaler - Replacing FSR2 with DLSS or XeSS</a></p><ul><li>LukeFZ564的DLSS 2和帧生成</li></ul><p><a href="https://www.nexusmods.com/starfield/mods/196">Starfield FSR2 Bridge - Replacing FSR2 with DLSS or XeSS</a></p><p><a href="https://www.nexusmods.com/starfield/mods/761">Starfield Frame Generation - Replacing FSR2 with DLSS-G</a></p><ul><li>自定义预设帧率优化</li></ul><p><a href="https://www.nexusmods.com/starfield/mods/438">Starfield Graphics Optimization - Custom Presets for FPS Performance</a></p><ul><li>启用磁盘缓存，减少频繁读写提升IO性能</li></ul><p><a href="https://www.nexusmods.com/starfield/mods/2245">Disk Cache Enabler</a></p><ul><li>[推荐] 基于原版调色的色彩增强</li></ul><p><a href="https://www.nexusmods.com/starfield/mods/1119">NaturaLUTs - Color Graded Filter Removal and Black Level Restoration LUTs</a></p><blockquote><p>ps. 推荐vanilla+ 版本，去掉不合理的灰白</p></blockquote><p>—<a href="http://localhost:4000/">Title</a></p><h2 id="III-高清材质"><a href="#III-高清材质" class="headerlink" title="III. 高清材质"></a>III. 高清材质</h2><ul><li>效果纹理增强</li></ul><p><a href="https://www.nexusmods.com/starfield/mods/340">Effect Textures Enhanced</a></p><ul><li>星球纹理大修</li></ul><p><a href="https://www.nexusmods.com/starfield/mods/1845">8K Planets (opt. original NASA)</a></p><hr><h2 id="IV-中文精翻和字体补丁"><a href="#IV-中文精翻和字体补丁" class="headerlink" title="IV. 中文精翻和字体补丁"></a>IV. 中文精翻和字体补丁</h2><ul><li>更好的中文字体</li></ul><p><a href="https://www.nexusmods.com/starfield/mods/230">Better Chinese Fonts</a></p><ul><li>大学非官方中文翻译修订</li></ul><p><a href="https://www.nexusmods.com/starfield/mods/211">Unofficial Starfield Chinese Translation Revisions</a></p><hr><h2 id="V-UI"><a href="#V-UI" class="headerlink" title="V. UI"></a>V. UI</h2><ul><li>StarUI 库存</li></ul><p><a href="https://www.nexusmods.com/starfield/mods/773">StarUI Inventory</a></p><ul><li>StarUI 库存中文翻译</li></ul><p><a href="https://www.nexusmods.com/starfield/mods/804">StarUI Inventory - Simplified Chinese Translation</a></p><ul><li>没有延迟的菜单</li></ul><p><a href="https://www.nexusmods.com/starfield/mods/404">Undelayed Menus</a></p><ul><li>增强的对话界面</li></ul><p><a href="https://www.nexusmods.com/starfield/mods/871">Enhanced Dialogue Interface</a></p><hr><h2 id="VI-功能性"><a href="#VI-功能性" class="headerlink" title="VI. 功能性"></a>VI. 功能性</h2><ul><li>使用控制台或Mod后的成就启用</li></ul><p><a href="https://www.nexusmods.com/starfield/mods/658">Baka Achievement Enabler</a></p><hr><h2 id="VII-玩法大修"><a href="#VII-玩法大修" class="headerlink" title="VII. 玩法大修"></a>VII. 玩法大修</h2><ul><li>潜行NPC检测大修</li></ul><p><a href="https://www.nexusmods.com/starfield/mods/819">Stealth Overhaul</a></p><ul><li>Bethesda 没有实装的战斗潜行AI大修</li></ul><p><a href="https://www.nexusmods.com/starfield/mods/1043">Combat and Stealth AI Overhauls</a></p><ul><li>改进原版手电筒</li></ul><p><a href="https://www.nexusmods.com/starfield/mods/701">Vanilla Flashlight Improved (VFI)</a></p><ul><li>好看的妞面部预设</li></ul><p><a href="https://www.nexusmods.com/starfield/mods/655?tab=images">female character preset</a></p><blockquote><p>ps. 查看用户贴图，有好事之人晒出参数</p></blockquote><ul><li>樱花发色</li></ul><p><a href="https://www.nexusmods.com/starfield/mods/1330">Sakura Hair</a></p><blockquote><p><strong>鉴于星空游戏目前太空洞，在Creation Kit发布前停止更新MOD推荐</strong></p></blockquote>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h2 id=&quot;I-前置脚本和引擎修复&quot;&gt;&lt;a href=&quot;#I-前置脚本和引擎修复&quot; class=&quot;headerlink&quot; title=&quot;I. 前置脚本和引擎修复&quot;&gt;&lt;/a&gt;I. 前置脚本和引擎修复&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;星空扩展脚本&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;a hr</summary>
+      
+    
+    
+    
+    
+    <category term="Starfield" scheme="http://jianlongliu.github.io/tags/Starfield/"/>
+    
+    <category term="星空" scheme="http://jianlongliu.github.io/tags/%E6%98%9F%E7%A9%BA/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>简易部署和使用 cloudreve 网盘</title>
+    <link href="http://jianlongliu.github.io/posts/859747b3.html"/>
+    <id>http://jianlongliu.github.io/posts/859747b3.html</id>
+    <published>2023-07-02T13:25:51.000Z</published>
+    <updated>2024-04-17T18:21:10.284Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="简易部署和使用-cloudreve-网盘"><a href="#简易部署和使用-cloudreve-网盘" class="headerlink" title="简易部署和使用 cloudreve 网盘"></a>简易部署和使用 cloudreve 网盘</h1><p>简单思路是使用docker 部署cloudreve, 在服务器通过nginx 反向代理映射到公网端口和使用https.<br>进阶想法是借助onlyoffice或collabora online实现office 文档在线预览和编辑</p><h2 id="安装-docker"><a href="#安装-docker" class="headerlink" title="安装 docker"></a>安装 docker</h2><h3 id="Windows"><a href="#Windows" class="headerlink" title="Windows"></a>Windows</h3><p>在低版本Windows 下使用 <a href="https://github.com/docker-archive/toolbox/releases">Docker-Toolbox</a><br>windows 11使用docker desktop for Windows</p><h3 id="Linux"><a href="#Linux" class="headerlink" title="Linux"></a>Linux</h3><p>直接apt安装 <code>sudo apt install docker</code>, linux 下所有docker操作必须<code>sudo</code>提权  </p><h3 id="常用命令"><a href="#常用命令" class="headerlink" title="常用命令"></a>常用命令</h3><table><thead><tr><th align="center">命令</th><th align="center">操作</th></tr></thead><tbody><tr><td align="center"><code>docker ps</code></td><td align="center">查看运行容器</td></tr><tr><td align="center"><code>docker exec &lt;container name&gt; -it /bin/bash</code></td><td align="center">进入容器</td></tr><tr><td align="center"><code>docker run</code></td><td align="center">启动容器</td></tr><tr><td align="center"><code>docker container stop &lt;container name&gt;</code></td><td align="center">停止某个容器</td></tr><tr><td align="center"><code>docker container rm &lt;container name&gt;</code></td><td align="center">移除某个容器</td></tr><tr><td align="center"><code>docker pull &lt;images&gt;</code></td><td align="center">拉取镜像</td></tr><tr><td align="center"><code>docker-machine start</code></td><td align="center">启动docker虚拟机 (docker-toolbox 专用)</td></tr><tr><td align="center"><code>docker-machine stop</code></td><td align="center">停止docker虚拟机 (docker-toolbox 专用)</td></tr></tbody></table><h2 id="部署-cloudreve"><a href="#部署-cloudreve" class="headerlink" title="部署 cloudreve"></a>部署 cloudreve</h2><p>下载<a href="https://github.com/cloudreve/Cloudreve/releases">cloudreve</a></p><h2 id="安装和配置-nginx"><a href="#安装和配置-nginx" class="headerlink" title="安装和配置 nginx"></a>安装和配置 nginx</h2><h2 id="部署-collabora-online-或-onlyoffice"><a href="#部署-collabora-online-或-onlyoffice" class="headerlink" title="部署 collabora online 或 onlyoffice"></a>部署 collabora online 或 onlyoffice</h2><blockquote><p>施工中…</p></blockquote>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h1 id=&quot;简易部署和使用-cloudreve-网盘&quot;&gt;&lt;a href=&quot;#简易部署和使用-cloudreve-网盘&quot; class=&quot;headerlink&quot; title=&quot;简易部署和使用 cloudreve 网盘&quot;&gt;&lt;/a&gt;简易部署和使用 cloudreve 网盘&lt;/h1&gt;&lt;</summary>
+      
+    
+    
+    
+    
+    <category term="office" scheme="http://jianlongliu.github.io/tags/office/"/>
+    
+    <category term="docker" scheme="http://jianlongliu.github.io/tags/docker/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Xiaomi Pad 6 Pro (Liuqin) 简单试用</title>
+    <link href="http://jianlongliu.github.io/posts/d22d7eaa.html"/>
+    <id>http://jianlongliu.github.io/posts/d22d7eaa.html</id>
+    <published>2023-04-25T07:48:38.000Z</published>
+    <updated>2024-04-17T18:21:10.284Z</updated>
+    
+    <content type="html"><![CDATA[<p>    最近买了一台小米平板6 Pro，使用过程中感慨颇多。不过，miui 14好像不能使用第三方启动器？还有，为什么平板拿着一段时间会变弯啊，这真的让我震惊了整整一年！虽然这台机器的做工有点糙，但性能确实不错。我准备再用几天看看。未来，我也会尝试刷其他ROM。</p><p>    下面是一张主屏幕截图，折腾得不容易哦~</p><p><img src="https://cdn.staticaly.com/gh/jianlongliu/pictures@jianlongliu.github.io/20230425/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20230425160949.1lx391wmf3xc.jpg"></p><blockquote><p>MIUI+ 下载方法: </p><p><a href="https://zhuanlan.zhihu.com/p/574307078">https://zhuanlan.zhihu.com/p/574307078</a></p></blockquote><blockquote><p>ps. 买了没几天弄丢了，艹</p></blockquote>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;    最近买了一台小米平板6 Pro，使用过程中感慨颇多。不过，miui 14好像不能使用第三方启动器？还有，为什么平板拿着一段时间会变弯啊，这真的让我震惊了整整一年！虽然这台机器的做工有点糙，但性能确实不错。我准备再用几天看看。未来，我也会尝试刷其他ROM。&lt;/p&gt;
+&lt;</summary>
+      
+    
+    
+    
+    
+    <category term="Android" scheme="http://jianlongliu.github.io/tags/Android/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>发现 Starship</title>
+    <link href="http://jianlongliu.github.io/posts/c414e64a.html"/>
+    <id>http://jianlongliu.github.io/posts/c414e64a.html</id>
+    <published>2023-03-25T04:56:10.000Z</published>
+    <updated>2024-04-17T18:21:10.284Z</updated>
+    
+    <content type="html"><![CDATA[<p>逛知乎发现了一个挺好看的终端美化小玩意儿, 全平台的。下面是官网和项目地址</p><blockquote><p><a href="https://starship.rs/">starship 官网</a></p><p><a href="https://github.com/starship/starship">Github 项目地址</a></p></blockquote><p>以下是<a href="https://starship.rs/presets/pastel-powerline.html">Pastel-Powerline 预设</a>实际使用效果</p><p><img src="https://cdn.staticaly.com/gh/jianlongliu/pictures@jianlongliu.github.io/Screenshot-2023-03-25-131544.458sx72r656o.webp"></p><p><img src="https://cdn.staticaly.com/gh/jianlongliu/pictures@jianlongliu.github.io/Screenshot-(12).5wg0efmos4jk.webp"></p><p> </p><p>这个在Android 上使用paste-powerline 预设有点小折腾，以下是一些小经验</p><h2 id="在Android-termux上安装starship-paste-powerline-预设"><a href="#在Android-termux上安装starship-paste-powerline-预设" class="headerlink" title="在Android termux上安装starship paste-powerline 预设"></a>在Android termux上安装starship paste-powerline 预设</h2><p>    1. 需要准备</p><ul><li><p><a href="https://github.com/termux/termux-app/releases">Termux</a> 终端  *(不建议使用Play Store 旧版本)</p></li><li><p><a href="">Nerd Fonts</a> 字体</p></li><li><p><a href="https://github.com/termux/termux-styling/releases">Termux:Styling</a></p></li></ul><p>    2. 安装Nerd Fonts 字体</p><ul><li><p>在termux 执行<code>termux-setup-storage</code> 开启<code>/sdcard</code>访问权限</p></li><li><p>创建<code>~/fonts </code>目录, 复制nerd fonts 字体到目录中</p></li><li><p>安装font config <code>pkg install fontconfig</code>, 在<code>~/fonts</code>目录执行<code>fc-cache -v</code> 刷新字体缓存</p></li></ul><p>   3. 安装starship和paste-powerline 预设</p><p>   4. 安装Termux:Styling, 打开termux 长按空白处选择more, 选择nerd fonts字体即可. 你就拥有漂亮的termux 了。</p><p><img src="https://cdn.staticaly.com/gh/jianlongliu/pictures@jianlongliu.github.io/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20230325140951.4yiuza5zvsow.webp"></p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;逛知乎发现了一个挺好看的终端美化小玩意儿, 全平台的。下面是官网和项目地址&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;a href=&quot;https://starship.rs/&quot;&gt;starship 官网&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://github.c</summary>
+      
+    
+    
+    
+    
+    <category term="Android" scheme="http://jianlongliu.github.io/tags/Android/"/>
+    
+    <category term="Terminal" scheme="http://jianlongliu.github.io/tags/Terminal/"/>
+    
+    <category term="Windows" scheme="http://jianlongliu.github.io/tags/Windows/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>在Windows 11上使用TVBox</title>
+    <link href="http://jianlongliu.github.io/posts/f84b3442.html"/>
+    <id>http://jianlongliu.github.io/posts/f84b3442.html</id>
+    <published>2023-03-22T06:15:18.000Z</published>
+    <updated>2024-04-17T18:21:10.284Z</updated>
+    
+    <content type="html"><![CDATA[<p>        当今，越来越多的人选择通过电视观看流媒体内容，这也催生了许多流媒体盒子。但是，如果您正在寻找一种全新的方式来观看电视，那么您可以尝试使用 TVBox 这个开源安卓应用程序。这篇博客将会为您介绍如何安装和配置 TVBox。</p><h2 id="如何下载-TVBox-应用程序？"><a href="#如何下载-TVBox-应用程序？" class="headerlink" title="如何下载 TVBox 应用程序？"></a>如何下载 TVBox 应用程序？</h2><p>        TVBox 是一个开源项目，您可以在其 GitHub 页面下载它。访问 TVBox 的 GitHub 页面（<a href="https://github.com/pvqogw/TVBoxOSC/releases"></a>），并下载最新版本的 APK 文件。        </p><h2 id="如何安装-TVBox-应用程序？"><a href="#如何安装-TVBox-应用程序？" class="headerlink" title="如何安装 TVBox 应用程序？"></a>如何安装 TVBox 应用程序？</h2><p>        将 APK 文件复制到您的 Android 设备中，然后在设备上运行该文件进行安装。如果您使用的是 Windows 11按照以下方法安装。</p><ul><li><strong>启用Windows Subsystem for Android (R)</strong></li></ul><p>        打开Microsoft Store, 搜索Amazon Store 并按提示安装, 按需简单配置下图形和打开开发者选项。</p><ul><li><strong>下载Android 开发者工具</strong></li></ul><p>        在Google Android 官网下载 <a href="https://developer.android.google.cn/studio/releases/platform-tools">SDK Platform Tools | Android Developers</a> 和配置好环境变量方便使用</p><ul><li><strong>安装</strong></li></ul><p>        在Windows Terminal (或其他终端) 键入<code>adb connect 127.0.0.1:&lt;port&gt;</code>连接Android 子系统, 然后安装app <code>adb install tvbox.apk</code></p><p> </p><h2 id="使用-TVBox"><a href="#使用-TVBox" class="headerlink" title="使用 TVBox"></a>使用 TVBox</h2><p>        安装 TVBox 后，您需要进行一些简单的配置。首先，在应用程序设置中配置”配置地址”。在这里，您可以添加一些流媒体源，以便在 TVBox 中观看直播电视和点播内容。</p><p><img src="https://cdn.staticaly.com/gh/jianlongliu/pictures@jianlongliu.github.io/H8cE2d.6j08nyd6b4ao.webp"></p><p>        总之，TVBox 是一款功能强大的开源安卓应用程序，能够提供高质量的流媒体体验。通过简单的配置，您可以获得一个新的观看电视的方式，为您的生活增添一些乐趣。</p><p><img src="https://cdn.staticaly.com/gh/jianlongliu/pictures@jianlongliu.github.io/Screenshot-2024-03-22-173520.1wtrj3n1ffb4.webp"></p><blockquote><p>这是一些当前可以使用的TVBox 源</p><ul><li><a href="https://uzbox.com/tech/tvbox-jiekou.html">TVBox接口 20230226 TVBox下载 ，最新版 TVBox接口，亲测可用无广告速度快 – 优质盒子</a></li><li><a href="https://github.com/jyoketsu/tv">GitHub - jyoketsu&#x2F;tv</a></li><li><a href="https://yimili.net/tvbox-2022/">TVBox Pro 猫影视后续神器-2023可用猫影视配置接口 - 玉米粒的分享玉米粒的分享</a></li></ul></blockquote><blockquote><p>笔者注: 这是一个拿人工和ChatGPT 拼接的半废话博客</p><p>这篇博客还会继续更新，很多人话不通顺</p></blockquote>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;        当今，越来越多的人选择通过电视观看流媒体内容，这也催生了许多流媒体盒子。但是，如果您正在寻找一种全新的方式来观看电视，那么您可以尝试使用 TVBox 这个开源安卓应用程序。这篇博客将会为您介绍如何安装和配置 TVBox。&lt;/p&gt;
+&lt;h2 id=&quot;如何下载-T</summary>
+      
+    
+    
+    
+    
+    <category term="Android" scheme="http://jianlongliu.github.io/tags/Android/"/>
+    
+    <category term="TVBox" scheme="http://jianlongliu.github.io/tags/TVBox/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>基于 FRP 的微软远程协助简单实现</title>
+    <link href="http://jianlongliu.github.io/posts/d2857f74.html"/>
+    <id>http://jianlongliu.github.io/posts/d2857f74.html</id>
+    <published>2023-03-04T10:50:59.000Z</published>
+    <updated>2024-04-17T18:21:10.284Z</updated>
+    
+    <content type="html"><![CDATA[<p>    frp 是一个专注于内网穿透的高性能的反向代理应用，支持 TCP, UDP, HTTP, HTTPS 等多种协议. 可以将内网服务以安全, 便捷的方式通过具有公网 IP 节点的中转暴露到公网.</p><blockquote><p> 下载地址: <a href="https://github.com/fatedier/frp/releases">https://github.com/fatedier/frp/releases</a></p></blockquote><h2 id="服务端配置"><a href="#服务端配置" class="headerlink" title="服务端配置"></a>服务端配置</h2><p>服务端 <code>frps.ini</code></p><pre class="line-numbers language-ini" data-language="ini"><code class="language-ini">[common]bind_port &#x3D; 7000bind_udp_port &#x3D; 7000vhost_http_port &#x3D; 80vhost_https_port &#x3D; 443tcp_mux &#x3D; true         #多路复用 compress &#x3D; true        #压缩<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><p>手动执行 <code>./frps -c frps.ini</code> 测试, 如果测试成功注册为systemctl 守护进程</p><p>手动创建 <code>sudo touch /etc/systemd/system/frps.service</code></p><pre class="line-numbers language-frps.service" data-language="frps.service"><code class="language-frps.service">[Unit]Description&#x3D;frp serverAfter&#x3D;network.target syslog.targetWants&#x3D;network.target[Service]Type&#x3D;simpleExecStart&#x3D;&lt;绝对路径&gt;&#x2F;frps -c &lt;绝对路径&gt;&#x2F;frps.ini[Install]WantedBy&#x3D;multi-user.target<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><p> 随开机自启动和手动启动<code>frps.service</code></p><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">systemctl enable frpssystemctl start frps<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre><h2 id="客户端配置"><a href="#客户端配置" class="headerlink" title="客户端配置"></a>客户端配置</h2><p>客户端 <code>frpc.ini</code></p><pre class="line-numbers language-ini" data-language="ini"><code class="language-ini">[common]server_addr &#x3D; &lt;远程主机ip&gt;server_port &#x3D; 7000tcp_mux &#x3D; true     #多路复用 compress &#x3D; true    #压缩[RDP]              type &#x3D; tcplocal_ip &#x3D; 127.0.0.1local_port &#x3D; 3389remote_port &#x3D; 6000<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><p>手动执行<code>frpc -c frpc.ini</code>用另外一台Windows 设备mstsc 输入测试 <code>&lt;公网IP&gt;:remote_port</code>。</p><p>如果没有问题就设置为开机自启动或计划任务，搜索引擎自行搜索</p><blockquote><p>FRP 文档</p><p><a href="https://gofrp.org/docs/">https://gofrp.org/docs/</a></p></blockquote><p><strong>当然，我更推荐 <a href="http://rustdesk.com/">RustDesk</a></strong></p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;    frp 是一个专注于内网穿透的高性能的反向代理应用，支持 TCP, UDP, HTTP, HTTPS 等多种协议. 可以将内网服务以安全, 便捷的方式通过具有公网 IP 节点的中转暴露到公网.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt; 下载地址: &lt;a href=&quot;</summary>
+      
+    
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title>Quest Tags - FIS - Chinese Translation 简体中文翻译</title>
+    <link href="http://jianlongliu.github.io/posts/d3df0643.html"/>
+    <id>http://jianlongliu.github.io/posts/d3df0643.html</id>
+    <published>2023-02-27T16:10:59.000Z</published>
+    <updated>2024-04-17T18:21:10.284Z</updated>
+    
+    <content type="html"><![CDATA[<p>        用了两天时间，踩在前人的肩膀上汉化了Quest Tags - FIS 模组, 主要是对xTranslator 工具不是很熟悉, 又遇到了电脑死机词典没有保存到。</p><p><img src="https://staticdelivery.nexusmods.com/mods/1151/images/69197/69197-1677514049-170373553.png"></p><blockquote><p><a href="https://www.nexusmods.com/fallout4/mods/69197/">Quest Tags - FIS - Chinese Translation at Fallout 4 Nexus - Mods and community</a></p></blockquote>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;        用了两天时间，踩在前人的肩膀上汉化了Quest Tags - FIS 模组, 主要是对xTranslator 工具不是很熟悉, 又遇到了电脑死机词典没有保存到。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://staticdelivery.nexusmod</summary>
+      
+    
+    
+    
+    
+    <category term="辐射4" scheme="http://jianlongliu.github.io/tags/%E8%BE%90%E5%B0%844/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>See Through Scopes - MCM Settings Menu - Chinese Translation</title>
+    <link href="http://jianlongliu.github.io/posts/7331872f.html"/>
+    <id>http://jianlongliu.github.io/posts/7331872f.html</id>
+    <published>2023-02-25T15:11:14.000Z</published>
+    <updated>2024-04-17T18:21:10.284Z</updated>
+    
+    <content type="html"><![CDATA[<p>       今天吃晚饭的时候汉化了See Through Scopes 的MCM菜单, 非常感谢<a href="https://chat.openai.com/">ChatGPT</a>，附上截图和地址</p><p>  <img src="https://staticdelivery.nexusmods.com/mods/1151/images/69118/69118-1677337147-1314224281.png"></p><p>  <img src="https://staticdelivery.nexusmods.com/mods/1151/images/69118/69118-1677337169-230346407.png"></p><p>  <img src="https://staticdelivery.nexusmods.com/mods/1151/images/69118/69118-1677337167-1771261002.png"></p><p>  <img src="https://staticdelivery.nexusmods.com/mods/1151/images/69118/69118-1677337180-264519462.png"></p><p> </p><blockquote><p><a href="https://www.nexusmods.com/fallout4/mods/69118">See Through Scopes - MCM Settings Menu - Chinese Translation at Fallout 4 Nexus - Mods and community</a></p></blockquote>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;       今天吃晚饭的时候汉化了See Through Scopes 的MCM菜单, 非常感谢&lt;a href=&quot;https://chat.openai.com/&quot;&gt;ChatGPT&lt;/a&gt;，附上截图和地址&lt;/p&gt;
+&lt;p&gt;  &lt;img src=&quot;https://static</summary>
+      
+    
+    
+    
+    
+    <category term="辐射4" scheme="http://jianlongliu.github.io/tags/%E8%BE%90%E5%B0%844/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>飞利浦 288E2E 4k 显示器避坑指南</title>
+    <link href="http://jianlongliu.github.io/posts/b4fbd2f8.html"/>
+    <id>http://jianlongliu.github.io/posts/b4fbd2f8.html</id>
+    <published>2023-02-24T10:59:20.000Z</published>
+    <updated>2024-04-17T18:21:10.284Z</updated>
+    
+    <content type="html"><![CDATA[<p>近日购置了飞利浦288E2E显示器 2160p @60hz, 用过后发现有些坑可以分享给大家， 本文仅供避雷用途</p><h2 id="1-Windows-11篇"><a href="#1-Windows-11篇" class="headerlink" title="1. Windows 11篇"></a>1. Windows 11篇</h2><p>        首先，尽量更新显卡驱动是最新版本，为了玩游戏和windows 11新系统避坑，当然也不是完全能躲掉</p><p>        其次，显卡驱动(RTX 2060)设置最大显示器分辨率(3840*2160)，最大刷新率(60Hz), HDMI 接口注意，在”修改分辨率”选项里有个Output dynamic range 修改limited (16-255)为full (0-255)避免显示器发白，75Hz 以上不会有上述问题. </p><p><img src="https://pic4.zhimg.com/80/v2-3afef4fc0fc44f82b1ce06dd93e2941f_720w.jpg"></p><p>        打游戏的看这里，不是所有游戏都支持DLSS 2.x 大力水手. 2060也就跑个1080p 舒舒服服。RTX20&#x2F;30系<strong>在adjust desktop size and position 这里打开图灵卡的整数缩放功能，我这里设置分辨率为1080p，游戏中想开锐化效果能好很多,</strong> 比一般显示器自带的插值要锐一点，可以去b站搜搜类似视频详解. RTX 16系以下无能为力</p><p><img src="https://pic1.zhimg.com/80/v2-d7fa27fc56d9db843bf142b01b0debe4_720w.jpg"></p><p>        去年年底把显卡升级成Radeon 6950XT. 如果有些游戏特别吃性能又不支持FSR 2.x，例如打过ENB的辐射4， 可以考虑开启RSR (3200*1800p) 超采样到(3840*2160p)， 基本肉眼看不出</p><h2 id="2-XBox-Series-X篇"><a href="#2-XBox-Series-X篇" class="headerlink" title="2. XBox Series X篇"></a>2. XBox Series X篇</h2><p>        色彩深度30位，色彩空间 RGB，显示覆写这里自动侦测来回多折腾几遍，题外话应用程序可以新增边界的勾去掉edge可以全屏</p><p><img src="https://pic2.zhimg.com/80/v2-6553119516915dbf5f2cf1273daa1e59_720w.webp"></p><p>        勾选4k，可变刷新率这些，在勾选4k后就能看到uhd选项了，如果这番操作不行请继续折腾，奇迹总会出现</p><p><img src="https://pic2.zhimg.com/80/v2-535fbbe55b186763c9738dc978bd2e69_720w.webp"></p><p><img src="https://pic2.zhimg.com/80/v2-47e5a013e3bf5f9058b64ad02e230e8d_720w.webp"></p><p>        经过一番折腾实现以下理想效果</p><p><img src="https://pic3.zhimg.com/80/v2-633ec439fc11723cfb774b7ce8b3cd9e_720w.webp"></p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;近日购置了飞利浦288E2E显示器 2160p @60hz, 用过后发现有些坑可以分享给大家， 本文仅供避雷用途&lt;/p&gt;
+&lt;h2 id=&quot;1-Windows-11篇&quot;&gt;&lt;a href=&quot;#1-Windows-11篇&quot; class=&quot;headerlink&quot; title=&quot;1.</summary>
+      
+    
+    
+    
+    
+    <category term="显示器" scheme="http://jianlongliu.github.io/tags/%E6%98%BE%E7%A4%BA%E5%99%A8/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Camera Tweaks - Chinese Translation</title>
+    <link href="http://jianlongliu.github.io/posts/65ffd951.html"/>
+    <id>http://jianlongliu.github.io/posts/65ffd951.html</id>
+    <published>2023-02-23T13:37:56.000Z</published>
+    <updated>2024-04-17T18:21:10.284Z</updated>
+    
+    <content type="html"><![CDATA[<p>近日翻译了一个辐射4模组，Camera Tweaks 相机调整</p><blockquote><p><a href="https://www.nexusmods.com/fallout4/mods/68996">Camera Tweaks - Chinese Translation at Fallout 4 Nexus - Mods and community</a></p></blockquote><p><img src="https://staticdelivery.nexusmods.com/mods/1151/images/68996/68996-1676955908-1247527835.png"></p><p>半机翻，翻译不全，够用即可，如果够闲就精翻下~</p><blockquote><p><strong>此MOD停止更新维护会隐藏掉，推荐Custom Camera</strong></p></blockquote>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;近日翻译了一个辐射4模组，Camera Tweaks 相机调整&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;a href=&quot;https://www.nexusmods.com/fallout4/mods/68996&quot;&gt;Camera Tweaks - Chinese Trans</summary>
+      
+    
+    
+    
+    
+    <category term="辐射4" scheme="http://jianlongliu.github.io/tags/%E8%BE%90%E5%B0%844/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Quickstart Markdown Synatax</title>
+    <link href="http://jianlongliu.github.io/posts/d0b9ea32.html"/>
+    <id>http://jianlongliu.github.io/posts/d0b9ea32.html</id>
+    <published>2023-02-21T05:21:48.000Z</published>
+    <updated>2024-04-17T18:21:10.284Z</updated>
+    
+    <content type="html"><![CDATA[<div class="row">    <embed src="/resource/Markdown Syntax.pdf" width="100%" height="550" type="application/pdf"></div>]]></content>
+    
+    
+      
+      
+    <summary type="html">
+
+	&lt;div class=&quot;row&quot;&gt;
+    &lt;embed src=&quot;/resource/Markdown Syntax.pdf&quot; width=&quot;100%&quot; height=&quot;550&quot; type=&quot;application/pdf&quot;&gt;
+	&lt;/div&gt;
+
+
+</summary>
+      
+    
+    
+    
+    
+    <category term="Markdown" scheme="http://jianlongliu.github.io/tags/Markdown/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>如何在EAS客户端配置hotmail 邮箱</title>
+    <link href="http://jianlongliu.github.io/posts/9cfc808e.html"/>
+    <id>http://jianlongliu.github.io/posts/9cfc808e.html</id>
+    <published>2023-02-20T15:13:48.000Z</published>
+    <updated>2024-04-17T18:21:10.284Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="如何在EAS客户端配置hotmail-邮箱"><a href="#如何在EAS客户端配置hotmail-邮箱" class="headerlink" title="如何在EAS客户端配置hotmail 邮箱"></a>如何在EAS客户端配置hotmail 邮箱</h1><p>        因为EAS可以同步邮件, 日历和联系人，要比其他协议更方便在手机端或Windows端好用, 联系人也不会单向同步. 接下来是在office outlook, gmail 客户端配置EAS协议的hotmail.com, outlook.com 邮箱</p><p>Exchange 服务器: <code>outlook.office365.com</code><br>Exchange 端口: <code>443</code><br>Exchange 用户名: <em>&lt;username&gt;@hotmail.com</em>, <em>&lt;username&gt;@outlook.com</em><br>Exchange 密码: <a href="https://accounts.microsoft.com/">Microsoft Accounts 微软账户</a> 生成的随机密码</p><blockquote><p>登录你的微软账户，找到Security 安全, App passwords 应用密码, Create a new app password 创建一个app 密码. 这个密码添加进去即可，不需要记住，更换手机或因为安全原因移除并重新创建一个即可</p></blockquote><p>Exchange TLS&#x2F;SSL encryption required: Yes (是)</p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h1 id=&quot;如何在EAS客户端配置hotmail-邮箱&quot;&gt;&lt;a href=&quot;#如何在EAS客户端配置hotmail-邮箱&quot; class=&quot;headerlink&quot; title=&quot;如何在EAS客户端配置hotmail 邮箱&quot;&gt;&lt;/a&gt;如何在EAS客户端配置hotmail 邮箱&lt;/</summary>
+      
+    
+    
+    
+    
+    <category term="Microsoft" scheme="http://jianlongliu.github.io/tags/Microsoft/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>辐射4 2023年MOD 安装推荐和优化Modlist (自用)</title>
+    <link href="http://jianlongliu.github.io/posts/7478ab99.html"/>
+    <id>http://jianlongliu.github.io/posts/7478ab99.html</id>
+    <published>2023-02-13T06:28:06.000Z</published>
+    <updated>2024-04-17T18:21:10.284Z</updated>
+    
+    <content type="html"><![CDATA[<p>        随着辐射4 Mod 在2022年迎来井喷，一些过时的 Mod 已经不再适用，因此我重新整理了一个适合自己使用的 Mod 列表。</p><h2 id="1-中文补丁和非官方补丁"><a href="#1-中文补丁和非官方补丁" class="headerlink" title="1. 中文补丁和非官方补丁"></a>1. 中文补丁和非官方补丁</h2><ul><li>(<em>必备</em>) <a href="https://www.nexusmods.com/fallout4/mods/4598">Unofficial Fallout 4 Patch</a>（非官方补丁）</li><li>(<em>可选</em>) <a href="https://www.nexusmods.com/fallout4/mods/28854">Unofficial Fallout 4 Chinese Translation Fix</a>（汉化补丁）</li></ul><h2 id="2-脚本和工具"><a href="#2-脚本和工具" class="headerlink" title="2. 脚本和工具"></a>2. 脚本和工具</h2><ul><li>(必备) <a href="https://f4se.silverlock.org/">F4SE</a></li><li>(推荐) <a href="https://www.nexusmods.com/fallout4/mods/2737">FO4EDIT</a></li><li>(必备) <a href="https://www.nexusmods.com/fallout4/mods/47327">Address Library for F4SE Plugins</a> 地址库F4SE插件</li><li><a href="https://www.nexusmods.com/fallout4/mods/25">BodySlide and Outfit Studios</a> 身形和服装调整</li><li>(推荐) <a href="https://github.com/ModOrganizer2/modorganizer">MOD Organizer 2</a><blockquote><p>ps. 虚拟文件系统的mod管理器，不会污染游戏本体，可自定义排序</p></blockquote></li><li>(建议) <a href="https://www.nexusmods.com/fallout4/mods/631">BethINI Pie</a></li><li>(建议) <a href="https://www.nexusmods.com/fallout4/mods/22633">FallrimTools - Script cleaning and more</a> 存档脚本清理</li><li>(必备) <a href="https://www.nexusmods.com/fallout4/mods/47359">Buffout 4</a> 引擎性能, 稳定性修复和内存管理<ul><li>(推荐) <a href="https://www.nexusmods.com/fallout4/mods/63346">Buffout 4 - Crash Log Scaner GUI</a> 自然语言的方式查看buffout 4 CTD日志</li><li>(可选) <a href="https://www.nexusmods.com/fallout4/mods/46340">Baka ScrapHeap - Script Memory Limit Expander</a> <blockquote><p>A version independent F4SE plugin that expands the default size of ScrapHeap allocations. 扩展 ScrapHeap 分配的默认大小</p></blockquote></li></ul></li><li>(必备) <a href="https://www.nexusmods.com/fallout4/mods/44798">High FPS Physics Fix</a> 高帧率bug 修复</li><li><a href="https://www.nexusmods.com/fallout4/mods/63482">Shadow Boost FO4</a> 游戏内阴影距离调整</li><li><a href="https://www.nexusmods.com/fallout4/mods/69798">RobCo Patch</a>    <blockquote><p>RobCo Patcher, is a patcher based on F4SE and CommonLibF4, which allows mod authors and users to modify game data without the use of plugins.<br>You can modify ammos, npcs, races, weapons and more.<br>RobCo Patcher 是一个基于 F4SE 和 CommonLibF4 的补丁程序，它允许 mod 作者和用户在不使用插件的情况下修改游戏数据。<br>您可以修改弹药、NPC、种族、武器等。</p></blockquote></li><li><a href="https://www.nexusmods.com/fallout4/mods/52515">Fallout Priority - CPU Performance FPS Optimizer</a> 旧型号CPU优先级优化</li><li><a href="https://www.nexusmods.com/fallout4/mods/74841">Disk Cache Enabler</a> 磁盘缓存启用</li></ul><blockquote><p>参考:</p><ul><li><a href="http://b23.tv/fmgTiQd%E2%80%8B">http://b23.tv/fmgTiQd​</a></li><li><a href="http://b23.tv/W2MYQDh%E2%80%8B">http://b23.tv/W2MYQDh​</a></li></ul></blockquote><h2 id="4-光影大修"><a href="#4-光影大修" class="headerlink" title="4. 光影大修"></a>4. 光影大修</h2><ul><li>(必备) <a href="http://enbdev.com/download_mod_fallout4.html">ENB</a></li><li><a href="https://www.nexusmods.com/fallout4/mods/45086">Quantum Horizons ENB (Based on SSE Silent Horizon)</a> 量子地平线2.2<blockquote><p>ps. 也不是不能用，太久没更新了，更推荐反应堆ENB</p></blockquote></li><li>(强烈推荐) <a href="https://www.nexusmods.com/fallout4/mods/57321">REACTOR ENB</a><ul><li>(推荐)<a href="https://www.nexusmods.com/fallout4/mods/61366">REACTOR ENB - Realistic Night Vision Overlay</a> 更真实的夜视叠加层</li></ul></li><li>(推荐) <a href="https://www.nexusmods.com/fallout4/mods/46722">NAC X - NATURAL AND ATMOSPHERIC COMMONWEALTH 10 - Legacy Edition</a> 天气系统</li><li><a href="https://www.nexusmods.com/fallout4/mods/22101">Ultra Interior Lighting</a> 室内光影大修</li><li>(推荐) <a href="https://www.nexusmods.com/fallout4/mods/41625">Ultra Exterior Lighting</a> 室外光影大修</li><li>(推荐) <a href="https://www.nexusmods.com/fallout4/mods/13596">Enhanced Lights and FX</a> ELFX室内光影大修</li><li>(推荐) <a href="https://www.nexusmods.com/fallout4/mods/50837">Terrain Undersides - 2 Million Sunblock</a> 修正太阳光源</li><li>(推荐) <a href="https://www.nexusmods.com/fallout4/mods/49613">Sunlight Alignment Tweak - Better Dawn and Dusk</a> 废土上帝光</li></ul><h2 id="5-高清贴图"><a href="#5-高清贴图" class="headerlink" title="5. 高清贴图"></a>5. 高清贴图</h2><ul><li>(强烈推荐) Fallout 4 HD overhaul<ul><li><a href="https://www.nexusmods.com/fallout4/mods/52423">Fallout 4 HD Overhaul 4k</a> </li><li><a href="https://www.nexusmods.com/fallout4/mods/65720">Fallout 4 HD Overhaul 2k</a><blockquote><p>ps. 任何情况下都不推荐使用官方高清贴图</p></blockquote></li></ul></li><li><a href="https://www.nexusmods.com/fallout4/mods/3747">FlaconOil’s Complete Retexture Project</a></li><li><a href="https://www.nexusmods.com/fallout4/mods/64078">VULKAN - Landscape Retexture</a></li><li><a href="https://www.nexusmods.com/fallout4/mods/67833">NXGEN - Parallax Textures</a> 视差帖图</li><li><a href="https://www.nexusmods.com/fallout4/users/50525966?tab=user+files">luxor8071</a> 作者的重制或高清贴图</li><li><a href="https://www.nexusmods.com/fallout4/mods/43458">Ultimate Window Overhaul Redone</a> 窗户玻璃大修</li></ul><h2 id="6-游戏内容框架"><a href="#6-游戏内容框架" class="headerlink" title="6. 游戏内容框架"></a>6. 游戏内容框架</h2><ul><li><p>(<em>强烈推荐</em>) ECO-LEO-NEO系列 </p><ul><li><a href="https://www.nexusmods.com/fallout4/mods/67679">Equipment and Crafting Overhaul (ECO) - Redux</a></li><li><a href="https://www.nexusmods.com/fallout4/mods/65761">New Equipment Overhaul (NEO)</a></li><li><a href="https://www.nexusmods.com/fallout4/mods/66900">Legendary Effect Overhaul (LEO) - Legendary Modifications And More</a></li><li><a href="https://www.nexusmods.com/fallout4/mods/63914">Leveled Item Fixes (LIF)</a></li></ul></li><li><p><del>Armor and Weapon Keywords Community Resource (AWKCR)</del></p></li><li><p><del>Armorsmith Extended</del>. </p></li><li><p><a href="https://www.nexusmods.com/fallout4/mods/40752">No AWKCR and AE For Mods File Dump</a></p><blockquote><p>前面两个已经过时不再需要, 后面的是依赖ACKWR+AE 的武器和服装可以在此补丁去掉依赖, 虽然不全也包含很多了</p></blockquote></li><li><p>武器框架</p><ul><li><a href="https://www.nexusmods.com/fallout4/mods/49444">Tactical Reload</a> 战术重装</li><li>(可选) <a href="https://www.nexusmods.com/fallout4/mods/67716">Tactical Reload - ECO</a> 兼容ECO的补丁</li><li><a href="https://www.nexusmods.com/fallout4/mods/41178">Bullet Counted Reload System (BCR)</a> 霰弹枪子弹重装计数器</li><li>(必备) <a href="https://www.nexusmods.com/fallout4/mods/9476">See Through Scopes</a> <ul><li><a href="https://www.nexusmods.com/fallout4/mods/56352">See Through Scopes - MCM Settings Menu</a> STS MCM菜单</li></ul></li><li>(推荐) <a href="https://www.nexusmods.com/fallout4/mods/69157">Fake Through Scopes</a><ul><li><a href="https://www.nexusmods.com/fallout4/mods/74279">Fake Through Scope CN</a> 汉化补丁</li></ul></li><li>SideAim by brotherhood 侧瞄框架 (来自discord)</li></ul></li></ul><h2 id="7-UI"><a href="#7-UI" class="headerlink" title="7. UI"></a>7. UI</h2><ul><li><p>(<em>强烈推荐</em>) FallUI 系列</p><ul><li><a href="https://www.nexusmods.com/fallout4/mods/48758">FallUI - Inventory</a> Pip-boy 界面大修</li><li><a href="https://www.nexusmods.com/fallout4/mods/51813">FallUI - HUD</a> hud大修</li><li><a href="https://www.nexusmods.com/fallout4/mods/60580">FIS - The NEW FallUI Item Sorter</a> 物品分类</li><li><a href="https://www.nexusmods.com/fallout4/mods/60579">FallUI - Icon Library</a> 图标库</li><li><a href="https://www.nexusmods.com/fallout4/mods/49300">FallUI - Workbench</a> 工坊界面大修</li><li><a href="https://www.nexusmods.com/fallout4/mods/48958">FallUI - Confirm Boxes</a> 确认框大修</li><li><a href="https://www.nexusmods.com/fallout4/mods/49070">FallUI - Sleep and Wait</a> 睡眠和等待界面大修</li><li><a href="https://www.nexusmods.com/fallout4/mods/55597">Simple Wait Anywhere (Lightweight)</a> 任何位置等待</li></ul></li><li><p>FallUI预设推荐:</p><ul><li><a href="https://www.nexusmods.com/fallout4/mods/57959">Sensible Minimal Letterbox Edition</a> 极简预设</li><li><a href="https://www.nexusmods.com/fallout4/mods/65423">Fallout New Vegas</a> 辐射新维加斯式预设</li></ul></li><li><p>Ammo UI &amp; Expand (by tooun)</p></li><li><p><a href="https://www.nexusmods.com/fallout4/mods/21497">Mod Configuration Menu</a> MCM菜单</p></li><li><p><a href="https://www.nexusmods.com/fallout4/mods/56997">MCM Booster</a> MCM缓存加速</p></li><li><p><a href="https://www.nexusmods.com/fallout4/mods/27216">Extended Dialogue Interface</a> 辐射新维加斯式的对话</p></li><li><p>(推荐) <a href="https://www.nexusmods.com/fallout4/mods/66690">Favorites Menu Ex</a> 辐射新维加斯式的转轮菜单</p></li><li><p><a href="https://www.nexusmods.com/fallout4/mods/28822">Level Up Menu Ex</a> 辐射新维加斯式的升级菜单</p><blockquote><p>ps. 啊！MOD冲突不知道和哪个CTD</p></blockquote></li><li><p>Tactical Tablet 战术平板</p></li></ul><blockquote><p>UI 改造推荐下面个视频作为参考</p><ul><li><a href="http://b23.tv/uECvov0">http://b23.tv/uECvov0</a></li><li><a href="http://b23.tv/8gQCtgR">http://b23.tv/8gQCtgR</a></li></ul></blockquote><h2 id="8-沉浸式"><a href="#8-沉浸式" class="headerlink" title="8.沉浸式"></a>8.沉浸式</h2><ul><li><a href="https://www.nexusmods.com/fallout4/mods/15870">Fallout Suite - Soundtrack Extension for Fallout 4</a> 更沉浸的背景音乐扩展模组<blockquote><p>ps. 让你分不清是不是游戏原版背景音乐</p></blockquote></li><li><a href="https://www.nexusmods.com/fallout4/mods/10189">Reverb and Ambiance Overhaul</a> 室内混响大修</li><li><a href="https://www.nexusmods.com/fallout4/mods/64458">JSRS Movement Sounds</a> 武装突袭的移动声音</li><li><a href="https://www.nexusmods.com/fallout4/mods/56603">Simple Impact</a> 开枪抖动</li><li><a href="https://www.nexusmods.com/fallout4/mods/57789">Burst Impact Blast FX</a> 爆破特效</li><li><a href="https://www.nexusmods.com/fallout4/mods/41594">Muzzle Flashy</a> 枪口火花大修</li><li><del><a href="https://www.nexusmods.com/fallout4/mods/66602">Ingame Nightvision Styles Improvement</a> 类似CODMW(2022)夜视仪效果</del><blockquote><p>REACTOR ENB 可以配置，不需要此模组了</p></blockquote></li><li><a href="https://www.nexusmods.com/fallout4/mods/76461">Ragdoll Physics - More realistic ragdoll death physics and corpse collision</a> 更真实的布娃娃死亡物理和尸体碰撞</li></ul><h2 id="9-武器推荐"><a href="#9-武器推荐" class="headerlink" title="9. 武器推荐"></a>9. 武器推荐</h2><ul><li><p><del><a href="https://www.nexusmods.com/fallout4/mods/62283">BH SIG MCX NGMW by Brotherhood</a> 战术步枪</del></p></li><li><p><a href="https://www.nexusmods.com/fallout4/mods/51615">MW AN94</a> 突击步枪</p></li><li><p><del><a href="https://www.nexusmods.com/fallout4/mods/55488">Agency Arms Benelli M2 - Shotgun</a> 霰弹枪</del></p></li><li><p><a href="https://www.nexusmods.com/fallout4/mods/36750">Remington 700 M24 and XM2010 Enhanced Sniper Rifle</a> 狙击枪</p></li><li><p><a href="https://www.nexusmods.com/fallout4/mods/42805">HK USP .45(New) with Tactical knife</a></p><blockquote><p>ps. 主要是蹭这两个模组的夜视仪和效果</p></blockquote></li><li><p><del><a href="https://www.nexusmods.com/fallout4/mods/44404">Glock19x</a> 手枪</del></p></li><li><p>(推荐) <a href="https://www.nexusmods.com/fallout4/mods/70693">FJX Imperium</a> 使命召唤 现代战争2(2022) 帝国狙击步枪</p></li><li><p>(推荐) <a href="https://www.nexusmods.com/fallout4/mods/75786">MW2022 - MCPR 300 - Barrett MRAD</a> 使命召唤 现代战争2(2022) 巴雷特狙击步枪</p></li><li><p>(推荐) <a href="https://www.nexusmods.com/fallout4/mods/76876">MW2023 - BAS-B (SIG XM7 Spear)</a> 战术突击步枪</p><ul><li><a href="https://www.nexusmods.com/fallout4/mods/76947">MW2023 - BAS-B (SIG XM7 Spear) - Side Aim Framework Patch</a> 侧瞄框架补丁</li><li><a href="https://www.nexusmods.com/fallout4/mods/76899">MW2023 - BAS-B (SIG XM7 Spear) - Simplified Chinese Translation</a> 汉化补丁</li></ul></li><li><p>(推荐) <a href="https://www.nexusmods.com/fallout4/mods/56675">FN SCAR-H - Battle rifle</a> 战术突击步枪</p><ul><li><a href="https://www.nexusmods.com/fallout4/mods/56839">Chinese - FN SCAR-H - Battle rifle</a> 汉化补丁</li><li>(推荐) <a href="https://www.nexusmods.com/fallout4/mods/75106">FN SCAR-H Armory Project</a> 真实化补丁</li></ul></li><li><p>(推荐) <a href="https://www.nexusmods.com/fallout4/mods/77134">MW2019 - Model 680 Pump Action Shotgun</a> 使命召唤:现代战争(2019)的680型战术霰弹枪</p><ul><li><a href="https://www.nexusmods.com/fallout4/mods/77162">MW2019 - Model 680 - FTS Patch</a> FTS补丁</li><li><a href="https://www.nexusmods.com/fallout4/mods/77138">MW2019 - Model 680 - Side Aim Framework Patch</a> 侧瞄补丁</li><li><a href="https://www.nexusmods.com/fallout4/mods/77139">Chinese Translation - MW2019 - Model 680 Pump Action Shotgun</a> 汉化补丁</li></ul></li><li><p>(推荐)<a href="https://www.nexusmods.com/fallout4/mods/76771">SIG Sauer P320 - M17</a></p></li></ul><h2 id="10-服装推荐"><a href="#10-服装推荐" class="headerlink" title="10. 服装推荐"></a>10. 服装推荐</h2><ul><li><a href="https://www.nexusmods.com/fallout4/mods/69505">BOCW SEAL Team 10</a></li><li><a href="https://www.nexusmods.com/fallout4/mods/58586">Clothes Pack 5 by DonEb14n - CBBE - TWB - BodySlide</a></li><li><a href="https://www.nexusmods.com/fallout4/mods/67194">Gunner Armor Expansion</a></li><li>MW Outfit Discord by XHX (from Discord)</li></ul><h2 id="BUG-修复"><a href="#BUG-修复" class="headerlink" title="BUG 修复"></a>BUG 修复</h2><ul><li><a href="https://www.nexusmods.com/fallout4/mods/47760">Sprint Stuttering Fix</a><blockquote><p>Fixed twitching&#x2F;stuttering when sprinting in first person. 修复了以第一人称冲刺时抽搐&#x2F;卡顿的问题。    </p></blockquote></li><li><a href="https://www.nexusmods.com/fallout4/mods/48078">Weapon Debris Crash Fix</a><blockquote><p>Fixed crashes caused by Weapon Debris setting 修复了武器碎片设置导致的崩溃问题    </p></blockquote></li><li><a href="https://www.nexusmods.com/fallout4/mods/76586">Flashlight Stealth Fix</a><blockquote><p>Allows NPCs to properly detect the player when using a flashlight 允许 NPC 在使用手电筒时正确检测玩家    </p></blockquote></li><li><a href="https://www.nexusmods.com/fallout4/mods/70013">Faster Workbench Exit</a><blockquote><p>ps. 我认为他就是BUG!!! 快速退出工坊，不用慢吞吞的等</p></blockquote></li><li><a href="https://www.nexusmods.com/fallout4/mods/56885">Ownership Fixes</a><blockquote><p>Fixes incorrect or missing ownership data assigned to junk and containers. 修复了分配给垃圾和容器的所有权数据不正确或缺失的问题    </p></blockquote></li><li><a href="https://www.nexusmods.com/fallout4/mods/73469">Long Loading Times Fix</a><blockquote><p>F4SE plugin to fix long loading times. Also some settings for loading screens. F4SE 插件来修复加载时间过长的问题。还有一些用于加载屏幕的设置    </p></blockquote></li><li><a href="https://www.nexusmods.com/fallout4/mods/55419">SUP F4SE SUP</a><blockquote><p>F4SE plugin which adds new engine fixes, new permanent events and many functions for modders. 为模组制作者添加了新的引擎修复、新的永久事件和许多功能 (ps. 我也不知有哪些用处)</p></blockquote></li></ul><h2 id="非官方剧情类DLC"><a href="#非官方剧情类DLC" class="headerlink" title="非官方剧情类DLC"></a>非官方剧情类DLC</h2><ul><li><a href="https://jianlongliu.github.io/posts/af08605b.html">The machine, and her</a></li></ul><p>&#x3D;&#x3D;&#x3D; 稍候继续施工，我又挤了一点牙膏 &#x3D;&#x3D;&#x3D;<br>&#x3D;&#x3D;&#x3D; 2024年1月再次施工 &#x3D;&#x3D;&#x3D;</p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;        随着辐射4 Mod 在2022年迎来井喷，一些过时的 Mod 已经不再适用，因此我重新整理了一个适合自己使用的 Mod 列表。&lt;/p&gt;
+&lt;h2 id=&quot;1-中文补丁和非官方补丁&quot;&gt;&lt;a href=&quot;#1-中文补丁和非官方补丁&quot; class=&quot;headerli</summary>
+      
+    
+    
+    
+    
+    <category term="辐射4" scheme="http://jianlongliu.github.io/tags/%E8%BE%90%E5%B0%844/"/>
+    
+  </entry>
+  
+</feed>
