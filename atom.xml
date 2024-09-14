@@ -6,7 +6,7 @@
   <link href="http://jianlongliu.github.io/atom.xml" rel="self"/>
   
   <link href="http://jianlongliu.github.io/"/>
-  <updated>2024-09-14T14:46:18.179Z</updated>
+  <updated>2024-09-14T14:47:52.673Z</updated>
   <id>http://jianlongliu.github.io/</id>
   
   <author>
@@ -21,7 +21,7 @@
     <link href="http://jianlongliu.github.io/posts/58855692.html"/>
     <id>http://jianlongliu.github.io/posts/58855692.html</id>
     <published>2024-09-14T14:44:44.396Z</published>
-    <updated>2024-09-14T14:46:18.179Z</updated>
+    <updated>2024-09-14T14:47:52.673Z</updated>
     
     <content type="html"><![CDATA[<h1 id="KDE-Connect-在同一个局域网里搜不到设备"><a href="#KDE-Connect-在同一个局域网里搜不到设备" class="headerlink" title="KDE Connect 在同一个局域网里搜不到设备?"></a>KDE Connect 在同一个局域网里搜不到设备?</h1><p>这几天安装了Mac OS X Sonoma, 尝试着把手里的两部Android 连接到Mackintosh 上, 总是搜索不到设备. </p><p>看看你的代理工具, 把KDE Connect 不勾选代理试试. 你的行不行, 反正我的行了~</p>]]></content>
     
@@ -33,6 +33,8 @@
     
     
     
+    
+    <category term="Android" scheme="http://jianlongliu.github.io/tags/Android/"/>
     
   </entry>
   
