@@ -1,0 +1,262 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><meta name="author"><title>Nextcloud docker部署 (自用) · bonjour, jianlong liu</title><meta name="description" content="Nextcloud docker部署 (自用)使用环境机器: Mac Mini M4
+OS: MacOS Sequoia
+容器: Orb Stack
+配置文件docker-compose.yamlservices:
+  app:
+    image: nextcloud:latest
+    vol"><meta name="og:description" content="Nextcloud docker部署 (自用)使用环境机器: Mac Mini M4
+OS: MacOS Sequoia
+容器: Orb Stack
+配置文件docker-compose.yamlservices:
+  app:
+    image: nextcloud:latest
+    vol"><meta name="twitter:site" content="bonjour, jianlong liu"><meta name="twitter:title" content="Nextcloud docker部署 (自用)"><meta name="twitter:card" content="summary"><meta name="keywords" content=""><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="renderer" content="webkit"><link rel="short icon" href="images/favicon.png" type="image/x-icon"><link rel="stylesheet" href="/css/bootstrap.min.css"><link rel="stylesheet" href="/css/font-awesome.min.css"><link rel="stylesheet" href="/css/style.css"><link rel="alternate" type="application/atom+xml" title="ATOM 1.0" href="/atom.xml"><meta name="generator" content="Hexo 6.3.0"><link rel="stylesheet" href="/css/prism.css" type="text/css">
+<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"></head><body><div class="container" id="stage"><div class="row"><div class="col-sm-3 col-xs-12 side-container invisible" id="side-bar"><div class="vertical-text site-title"><h3 class="site-title-small" tabindex="-1"><a class="a-title" href="/">we are going deep, and we are going hard</a></h3><h1 class="site-title-large" tabindex="-1"><a class="a-title" href="/">jianlong liu</a></h1><!--h6(onclick="triggerSiteNav()") Trigger--></div><br class="visible-lg visible-md visible-sm"><div class="site-title-links" id="site-nav"><ul><li><a href="/">首页</a></li><li><a href="/archives">归档</a></li><li><a href="/tags">标签</a></li><li><a href="/about/index.html">About Us 关于我们</a></li><li><a href="/css/flat-top.css"></a></li><li class="soc"><a href="https://github.com/jianlongliu" target="_blank" rel="noopener noreferrer" aria-label="Github"><i class="fa fa-github">&nbsp;</i></a><a href="https://twitter.com/jianlongliu" target="_blank" rel="noopener noreferrer" aria-label="Twitter"><i class="fa fa-twitter">&nbsp;</i></a><a href="http://jianlongliu.github.io/atom.xml" target="_blank" rel="noopener noreferrer" aria-label="RSS"><i class="fa fa-rss">&nbsp;</i></a></li></ul><div class="visible-lg visible-md visible-sm site-nav-footer"><br class="site-nav-footer-br"><footer><p>&copy;&nbsp;2024&nbsp;<a target="_blank" href="http://jianlongliu.github.io" rel="noopener noreferrer">Jianlong Liu</a></p><p>Theme&nbsp;<a target="_blank" href="https://github.com/SumiMakito/hexo-theme-typography" rel="noopener noreferrer">Typography</a>&nbsp;by&nbsp;<a target="_blank" href="https://www.keep.moe" rel="noopener noreferrer">Makito</a></p><p>Proudly published with&nbsp;<a target="_blank" href="https://hexo.io" rel="noopener noreferrer">Hexo</a></p></footer></div></div></div><div class="col-sm-9 col-xs-12 main-container invisible" id="main-container"><div class="autopagerize_page_element"><div class="content"><div class="post-page"><div class="post-container"><p class="post-title"><a>Nextcloud docker部署 (自用)</a></p><p class="post-meta"><span class="date meta-item">发布于&nbsp;2024-12-22</span></p><p class="post-abstract"><h1 id="Nextcloud-docker部署-自用"><a href="#Nextcloud-docker部署-自用" class="headerlink" title="Nextcloud docker部署 (自用)"></a>Nextcloud docker部署 (自用)</h1><h2 id="使用环境"><a href="#使用环境" class="headerlink" title="使用环境"></a>使用环境</h2><p>机器: Mac Mini M4</p>
+<p>OS: MacOS Sequoia</p>
+<p>容器: Orb Stack</p>
+<h2 id="配置文件"><a href="#配置文件" class="headerlink" title="配置文件"></a>配置文件</h2><h3 id="docker-compose-yaml"><a href="#docker-compose-yaml" class="headerlink" title="docker-compose.yaml"></a>docker-compose.yaml</h3><pre class="line-numbers language-yaml"><code class="language-yaml"><span class="token key atrule">services</span><span class="token punctuation">:</span>
+  <span class="token key atrule">app</span><span class="token punctuation">:</span>
+    <span class="token key atrule">image</span><span class="token punctuation">:</span> nextcloud<span class="token punctuation">:</span>latest
+    <span class="token key atrule">volumes</span><span class="token punctuation">:</span>
+      <span class="token punctuation">-</span> nextcloud<span class="token punctuation">:</span>/var/www/html
+      <span class="token punctuation">-</span> ./config/config.php<span class="token punctuation">:</span>/var/www/html/config/config.php
+    <span class="token key atrule">environment</span><span class="token punctuation">:</span>
+      <span class="token punctuation">-</span> MYSQL_DATABASE=nextcloud
+      <span class="token punctuation">-</span> MYSQL_USER=nextcloud
+      <span class="token punctuation">-</span> MYSQL_PASSWORD=your_db_password
+      <span class="token punctuation">-</span> MYSQL_HOST=db
+      <span class="token punctuation">-</span> REDIS_HOST=redis
+      <span class="token punctuation">-</span> REDIS_HOST_PASSWORD=your_redis_password
+      <span class="token punctuation">-</span> NEXTCLOUD_TRUSTED_DOMAINS=localhost
+    <span class="token key atrule">command</span><span class="token punctuation">:</span> <span class="token punctuation">></span><span class="token scalar string">
+      sh -c "
+      chmod -R 755 /var/www/html/config &amp;&amp;
+      chown -R www-data:www-data /var/www/html/config &amp;&amp;
+      chown -R www-data:www-data /var/www/html/apps &amp;&amp;
+      su -s /bin/bash www-data -c 'php occ upgrade' &amp;&amp;
+      apache2-foreground
+      "</span>
+    <span class="token key atrule">depends_on</span><span class="token punctuation">:</span> 
+      <span class="token punctuation">-</span> db
+      <span class="token punctuation">-</span> redis
+      <span class="token punctuation">-</span> nginx
+  
+  <span class="token key atrule">db</span><span class="token punctuation">:</span>
+    <span class="token key atrule">image</span><span class="token punctuation">:</span> mariadb<span class="token punctuation">:</span>11.4.4<span class="token punctuation">-</span>ubi9
+    <span class="token key atrule">environment</span><span class="token punctuation">:</span>
+      <span class="token key atrule">MYSQL_ROOT_PASSWORD</span><span class="token punctuation">:</span> your_root_password
+      <span class="token key atrule">MYSQL_DATABASE</span><span class="token punctuation">:</span> nextcloud
+      <span class="token key atrule">MYSQL_USER</span><span class="token punctuation">:</span> nextcloud
+      <span class="token key atrule">MYSQL_PASSWORD</span><span class="token punctuation">:</span> your_db_password
+    <span class="token key atrule">volumes</span><span class="token punctuation">:</span>
+      <span class="token punctuation">-</span> db<span class="token punctuation">:</span>/var/lib/mysql
+    <span class="token key atrule">restart</span><span class="token punctuation">:</span> always
+
+  <span class="token key atrule">redis</span><span class="token punctuation">:</span>
+    <span class="token key atrule">image</span><span class="token punctuation">:</span> redis<span class="token punctuation">:</span>alpine
+    <span class="token key atrule">command</span><span class="token punctuation">:</span> redis<span class="token punctuation">-</span>server <span class="token punctuation">-</span><span class="token punctuation">-</span>requirepass your_redis_password
+    <span class="token key atrule">restart</span><span class="token punctuation">:</span> always
+    <span class="token key atrule">environment</span><span class="token punctuation">:</span>
+      <span class="token punctuation">-</span> REDIS_PASSWORD=your_redis_password
+    <span class="token key atrule">volumes</span><span class="token punctuation">:</span>
+      <span class="token punctuation">-</span> redis<span class="token punctuation">:</span>/data
+
+  <span class="token key atrule">nginx</span><span class="token punctuation">:</span>
+    <span class="token key atrule">image</span><span class="token punctuation">:</span> nginx<span class="token punctuation">:</span>latest
+    <span class="token key atrule">container_name</span><span class="token punctuation">:</span> nginx
+    <span class="token key atrule">restart</span><span class="token punctuation">:</span> always
+    <span class="token key atrule">ports</span><span class="token punctuation">:</span>
+      <span class="token punctuation">-</span> <span class="token string">"80:80"</span>   <span class="token comment" spellcheck="true"># 映射标准 HTTP 端口</span>
+      <span class="token punctuation">-</span> <span class="token string">"443:443"</span> <span class="token comment" spellcheck="true"># 映射标准 HTTPS 端口</span>
+    <span class="token key atrule">volumes</span><span class="token punctuation">:</span>
+      <span class="token punctuation">-</span> ./nginx/nginx.conf<span class="token punctuation">:</span>/etc/nginx/nginx.conf
+      <span class="token punctuation">-</span> ./nginx/ssl/origin.pem<span class="token punctuation">:</span>/etc/nginx/ssl/origin.pem
+      <span class="token punctuation">-</span> ./nginx/ssl/origin<span class="token punctuation">-</span>key.pem<span class="token punctuation">:</span>/etc/nginx/ssl/origin<span class="token punctuation">-</span>key.pem
+
+<span class="token key atrule">volumes</span><span class="token punctuation">:</span>
+  <span class="token key atrule">nextcloud</span><span class="token punctuation">:</span>
+  <span class="token key atrule">db</span><span class="token punctuation">:</span>
+  <span class="token key atrule">redis</span><span class="token punctuation">:</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>ps. 应该还要配置cron, 晚点继续研究</p>
+<h3 id="nginx-conf"><a href="#nginx-conf" class="headerlink" title="nginx.conf"></a>nginx.conf</h3><pre class="line-numbers language-nginx"><code class="language-nginx"><span class="token comment" spellcheck="true"># nginx.conf 文件的基本结构</span>
+
+<span class="token keyword">user</span>  nginx<span class="token punctuation">;</span>
+<span class="token keyword">worker_processes</span>  <span class="token number">1</span><span class="token punctuation">;</span>
+
+<span class="token comment" spellcheck="true"># 事件配置</span>
+<span class="token keyword">events</span> <span class="token operator">&amp;</span><span class="token comment" spellcheck="true">#123;</span>
+    <span class="token keyword">worker_connections</span> <span class="token number">1024</span><span class="token punctuation">;</span>
+<span class="token operator">&amp;</span><span class="token comment" spellcheck="true">#125;</span>
+
+<span class="token keyword">http</span> <span class="token operator">&amp;</span><span class="token comment" spellcheck="true">#123;</span>
+    <span class="token keyword">include</span>       mime<span class="token punctuation">.</span><span class="token keyword">types</span><span class="token punctuation">;</span>
+    <span class="token keyword">default_type</span>  application<span class="token operator">/</span>octet<span class="token operator">-</span>stream<span class="token punctuation">;</span>
+
+    <span class="token comment" spellcheck="true"># 日志格式</span>
+    <span class="token keyword">access_log</span>  <span class="token operator">/</span>var<span class="token operator">/</span>log<span class="token operator">/</span>nginx<span class="token operator">/</span>access<span class="token punctuation">.</span>log<span class="token punctuation">;</span>
+    <span class="token keyword">error_log</span>   <span class="token operator">/</span>var<span class="token operator">/</span>log<span class="token operator">/</span>nginx<span class="token operator">/</span>error<span class="token punctuation">.</span>log<span class="token punctuation">;</span>
+
+    <span class="token comment" spellcheck="true"># 配置 HTTP 相关设置</span>
+    <span class="token keyword">sendfile</span>        on<span class="token punctuation">;</span>
+    <span class="token keyword">tcp_nopush</span>      on<span class="token punctuation">;</span>
+    <span class="token keyword">tcp_nodelay</span>     on<span class="token punctuation">;</span>
+    <span class="token keyword">keepalive_timeout</span>  <span class="token number">65</span><span class="token punctuation">;</span>
+    <span class="token keyword">types_hash_max_size</span> <span class="token number">2048</span><span class="token punctuation">;</span>
+
+    <span class="token comment" spellcheck="true"># 这里开始是你的 server 配置块</span>
+    <span class="token keyword">server</span> <span class="token operator">&amp;</span><span class="token comment" spellcheck="true">#123;</span>
+        <span class="token keyword">listen</span> <span class="token number">80</span><span class="token punctuation">;</span>
+        <span class="token keyword">server_name</span> your<span class="token punctuation">.</span>domain<span class="token punctuation">.</span>com<span class="token punctuation">;</span>
+
+        <span class="token comment" spellcheck="true"># 强制重定向到 HTTPS</span>
+        <span class="token keyword">return</span> <span class="token number">301</span> <span class="token keyword">https</span><span class="token punctuation">:</span><span class="token operator">/</span><span class="token operator">/</span><span class="token variable">$host</span><span class="token variable">$request_uri</span><span class="token punctuation">;</span>
+    <span class="token operator">&amp;</span><span class="token comment" spellcheck="true">#125;</span>
+
+    <span class="token keyword">server</span> <span class="token operator">&amp;</span><span class="token comment" spellcheck="true">#123;</span>
+        <span class="token keyword">listen</span> <span class="token number">443</span> <span class="token keyword">ssl</span><span class="token punctuation">;</span>
+        <span class="token keyword">server_name</span> your<span class="token punctuation">.</span>domain<span class="token punctuation">.</span>com<span class="token punctuation">;</span>
+
+        <span class="token comment" spellcheck="true"># SSL 配置</span>
+        <span class="token keyword">ssl_certificate</span> <span class="token operator">/</span>etc<span class="token operator">/</span>nginx<span class="token operator">/</span><span class="token keyword">ssl</span><span class="token operator">/</span>origin<span class="token punctuation">.</span>pem<span class="token punctuation">;</span>
+        <span class="token keyword">ssl_certificate_key</span> <span class="token operator">/</span>etc<span class="token operator">/</span>nginx<span class="token operator">/</span><span class="token keyword">ssl</span><span class="token operator">/</span>origin<span class="token operator">-</span>key<span class="token punctuation">.</span>pem<span class="token punctuation">;</span>
+
+        <span class="token keyword">ssl_protocols</span> TLSv1<span class="token number">.2</span> TLSv1<span class="token number">.3</span><span class="token punctuation">;</span>
+        <span class="token keyword">ssl_ciphers</span> <span class="token string">'ECDHE-ECDSA-AES128-GCM-SHA256:...'</span><span class="token punctuation">;</span>  <span class="token comment" spellcheck="true"># 可根据需要调整</span>
+    
+
+        <span class="token comment" spellcheck="true"># 启用 HSTS (Strict-Transport-Security)</span>
+        <span class="token keyword">add_header</span> Strict<span class="token operator">-</span>Transport<span class="token operator">-</span>Security <span class="token string">"max-age=15552000; includeSubDomains"</span> always<span class="token punctuation">;</span>
+
+        <span class="token comment" spellcheck="true"># 设置反向代理到 Nextcloud 容器（app）</span>
+        <span class="token keyword">location</span> <span class="token operator">/</span> <span class="token operator">&amp;</span><span class="token comment" spellcheck="true">#123;</span>
+            <span class="token keyword">proxy_pass</span> <span class="token keyword">http</span><span class="token punctuation">:</span><span class="token operator">/</span><span class="token operator">/</span>app<span class="token punctuation">:</span><span class="token number">80</span><span class="token punctuation">;</span>  <span class="token comment" spellcheck="true"># 反向代理到 Nextcloud 容器的 80 端口</span>
+            <span class="token keyword">proxy_set_header</span> Host <span class="token variable">$host</span><span class="token punctuation">;</span>
+            <span class="token keyword">proxy_set_header</span> X<span class="token operator">-</span>Real<span class="token operator">-</span>IP <span class="token variable">$remote_addr</span><span class="token punctuation">;</span>
+            <span class="token keyword">proxy_set_header</span> X<span class="token operator">-</span>Forwarded<span class="token operator">-</span>For <span class="token variable">$proxy_add_x_forwarded_for</span><span class="token punctuation">;</span>
+            <span class="token keyword">proxy_set_header</span> X<span class="token operator">-</span>Forwarded<span class="token operator">-</span>Proto <span class="token variable">$scheme</span><span class="token punctuation">;</span>
+
+            <span class="token comment" spellcheck="true"># 适用于 WebSocket 和 Nextcloud 的一些优化</span>
+            <span class="token keyword">proxy_http_version</span> <span class="token number">1.1</span><span class="token punctuation">;</span>
+            <span class="token keyword">proxy_set_header</span> Upgrade <span class="token variable">$http_upgrade</span><span class="token punctuation">;</span>
+            <span class="token keyword">proxy_set_header</span> Connection <span class="token string">'upgrade'</span><span class="token punctuation">;</span>
+        <span class="token operator">&amp;</span><span class="token comment" spellcheck="true">#125;</span>
+    <span class="token operator">&amp;</span><span class="token comment" spellcheck="true">#125;</span>
+<span class="token operator">&amp;</span><span class="token comment" spellcheck="true">#125;</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>写完上面的yaml文件后, <code>docker-compose pull</code> 拉取镜像, 继续配置nginx.conf, 启动容器<code>docker-compose up -d</code></p>
+<h3 id="var-www-html-config-config-php"><a href="#var-www-html-config-config-php" class="headerlink" title="&#x2F;var&#x2F;www&#x2F;html&#x2F;config&#x2F;config.php"></a>&#x2F;var&#x2F;www&#x2F;html&#x2F;config&#x2F;config.php</h3><p>下面这个配置文件可以考虑外挂在物理机上, 覆盖容器内的文件</p>
+<pre class="line-numbers language-php"><code class="language-php"><span class="token delimiter">&lt;?php</span>
+<span class="token variable">$CONFIG</span> <span class="token operator">=</span> <span class="token keyword">array</span> <span class="token punctuation">(</span>
+  <span class="token string">'htaccess.RewriteBase'</span> <span class="token operator">=</span><span class="token operator">></span> <span class="token string">'/'</span><span class="token punctuation">,</span>
+  <span class="token string">'memcache.local'</span> <span class="token operator">=</span><span class="token operator">></span> <span class="token string">'\\OC\\Memcache\\APCu'</span><span class="token punctuation">,</span>
+  <span class="token string">'apps_paths'</span> <span class="token operator">=</span><span class="token operator">></span> 
+  <span class="token keyword">array</span> <span class="token punctuation">(</span>
+    <span class="token number">0</span> <span class="token operator">=</span><span class="token operator">></span> 
+    <span class="token keyword">array</span> <span class="token punctuation">(</span>
+      <span class="token string">'path'</span> <span class="token operator">=</span><span class="token operator">></span> <span class="token string">'/var/www/html/apps'</span><span class="token punctuation">,</span>
+      <span class="token string">'url'</span> <span class="token operator">=</span><span class="token operator">></span> <span class="token string">'/apps'</span><span class="token punctuation">,</span>
+      <span class="token string">'writable'</span> <span class="token operator">=</span><span class="token operator">></span> <span class="token boolean">false</span><span class="token punctuation">,</span>
+    <span class="token punctuation">)</span><span class="token punctuation">,</span>
+    <span class="token number">1</span> <span class="token operator">=</span><span class="token operator">></span> 
+    <span class="token keyword">array</span> <span class="token punctuation">(</span>
+      <span class="token string">'path'</span> <span class="token operator">=</span><span class="token operator">></span> <span class="token string">'/var/www/html/custom_apps'</span><span class="token punctuation">,</span>
+      <span class="token string">'url'</span> <span class="token operator">=</span><span class="token operator">></span> <span class="token string">'/custom_apps'</span><span class="token punctuation">,</span>
+      <span class="token string">'writable'</span> <span class="token operator">=</span><span class="token operator">></span> <span class="token boolean">true</span><span class="token punctuation">,</span>
+    <span class="token punctuation">)</span><span class="token punctuation">,</span>
+  <span class="token punctuation">)</span><span class="token punctuation">,</span>
+  <span class="token string">'memcache.distributed'</span> <span class="token operator">=</span><span class="token operator">></span> <span class="token string">'\\OC\\Memcache\\Redis'</span><span class="token punctuation">,</span>
+  <span class="token string">'memcache.locking'</span> <span class="token operator">=</span><span class="token operator">></span> <span class="token string">'\\OC\\Memcache\\Redis'</span><span class="token punctuation">,</span>
+  <span class="token string">'redis'</span> <span class="token operator">=</span><span class="token operator">></span> 
+  <span class="token keyword">array</span> <span class="token punctuation">(</span>
+    <span class="token string">'host'</span> <span class="token operator">=</span><span class="token operator">></span> <span class="token string">'redis'</span><span class="token punctuation">,</span>
+    <span class="token string">'password'</span> <span class="token operator">=</span><span class="token operator">></span> <span class="token string">'your_redis_password'</span><span class="token punctuation">,</span>
+    <span class="token string">'port'</span> <span class="token operator">=</span><span class="token operator">></span> <span class="token number">6379</span><span class="token punctuation">,</span>
+  <span class="token punctuation">)</span><span class="token punctuation">,</span>
+  <span class="token string">'upgrade.disable-web'</span> <span class="token operator">=</span><span class="token operator">></span> <span class="token boolean">true</span><span class="token punctuation">,</span>
+  <span class="token string">'instanceid'</span> <span class="token operator">=</span><span class="token operator">></span> <span class="token string">''</span><span class="token punctuation">,</span>
+  <span class="token string">'passwordsalt'</span> <span class="token operator">=</span><span class="token operator">></span> <span class="token string">''</span><span class="token punctuation">,</span>
+  <span class="token string">'secret'</span> <span class="token operator">=</span><span class="token operator">></span> <span class="token string">''</span><span class="token punctuation">,</span>
+  <span class="token string">'trusted_domains'</span> <span class="token operator">=</span><span class="token operator">></span> 
+  <span class="token keyword">array</span> <span class="token punctuation">(</span>
+    <span class="token number">0</span> <span class="token operator">=</span><span class="token operator">></span> <span class="token string">'localhost'</span><span class="token punctuation">,</span>
+    <span class="token number">1</span> <span class="token operator">=</span><span class="token operator">></span> 'https<span class="token punctuation">:</span><span class="token comment" spellcheck="true">//your.domain.com',</span>
+  <span class="token punctuation">)</span><span class="token punctuation">,</span>
+  <span class="token string">'datadirectory'</span> <span class="token operator">=</span><span class="token operator">></span> <span class="token string">'/var/www/html/data'</span><span class="token punctuation">,</span>
+  <span class="token string">'dbtype'</span> <span class="token operator">=</span><span class="token operator">></span> <span class="token string">'mysql'</span><span class="token punctuation">,</span>
+  <span class="token string">'version'</span> <span class="token operator">=</span><span class="token operator">></span> <span class="token string">'30.0.4.1'</span><span class="token punctuation">,</span>
+  <span class="token string">'overwriteprotocol'</span> <span class="token operator">=</span><span class="token operator">></span> <span class="token string">'https'</span><span class="token punctuation">,</span>
+  <span class="token string">'overwrite.cli.url'</span> <span class="token operator">=</span><span class="token operator">></span> 'https<span class="token punctuation">:</span><span class="token comment" spellcheck="true">//your.domain.com',</span>
+  <span class="token string">'dbname'</span> <span class="token operator">=</span><span class="token operator">></span> <span class="token string">'nextcloud'</span><span class="token punctuation">,</span>
+  <span class="token string">'dbhost'</span> <span class="token operator">=</span><span class="token operator">></span> <span class="token string">'db'</span><span class="token punctuation">,</span>
+  <span class="token string">'dbport'</span> <span class="token operator">=</span><span class="token operator">></span> <span class="token string">''</span><span class="token punctuation">,</span>
+  <span class="token string">'dbtableprefix'</span> <span class="token operator">=</span><span class="token operator">></span> <span class="token string">'oc_'</span><span class="token punctuation">,</span>
+  <span class="token string">'mysql.utf8mb4'</span> <span class="token operator">=</span><span class="token operator">></span> <span class="token boolean">true</span><span class="token punctuation">,</span>
+  <span class="token string">'dbuser'</span> <span class="token operator">=</span><span class="token operator">></span> <span class="token string">'nextcloud'</span><span class="token punctuation">,</span>
+  <span class="token string">'dbpassword'</span> <span class="token operator">=</span><span class="token operator">></span> <span class="token string">'your_db_password'</span><span class="token punctuation">,</span>
+  <span class="token string">'installed'</span> <span class="token operator">=</span><span class="token operator">></span> <span class="token boolean">true</span><span class="token punctuation">,</span>
+  <span class="token string">'config_is_read_only'</span> <span class="token operator">=</span><span class="token operator">></span> <span class="token boolean">false</span><span class="token punctuation">,</span>
+  <span class="token string">'default_language'</span> <span class="token operator">=</span><span class="token operator">></span> <span class="token string">'CN'</span><span class="token punctuation">,</span>
+  <span class="token string">'default_phone_region'</span> <span class="token operator">=</span><span class="token operator">></span> <span class="token string">'CN'</span><span class="token punctuation">,</span>
+  <span class="token string">'mail_smtpmode'</span> <span class="token operator">=</span><span class="token operator">></span> <span class="token string">'smtp'</span><span class="token punctuation">,</span>
+  <span class="token string">'mail_sendmailmode'</span> <span class="token operator">=</span><span class="token operator">></span> <span class="token string">'smtp'</span><span class="token punctuation">,</span>
+  <span class="token string">'mail_smtphost'</span> <span class="token operator">=</span><span class="token operator">></span> <span class="token string">'smtp.domain.com'</span><span class="token punctuation">,</span>
+  <span class="token string">'mail_smtpport'</span> <span class="token operator">=</span><span class="token operator">></span> <span class="token string">'587'</span><span class="token punctuation">,</span>
+  <span class="token string">'mail_from_address'</span> <span class="token operator">=</span><span class="token operator">></span> <span class="token string">'name'</span><span class="token punctuation">,</span>
+  <span class="token string">'mail_domain'</span> <span class="token operator">=</span><span class="token operator">></span> <span class="token string">'mail.com'</span><span class="token punctuation">,</span>
+  <span class="token string">'mail_smtpauth'</span> <span class="token operator">=</span><span class="token operator">></span> <span class="token number">1</span><span class="token punctuation">,</span>
+  <span class="token string">'mail_smtpname'</span> <span class="token operator">=</span><span class="token operator">></span> <span class="token string">'name@mail.com'</span><span class="token punctuation">,</span>
+  <span class="token string">'mail_smtppassword'</span> <span class="token operator">=</span><span class="token operator">></span> <span class="token string">'passwd'</span><span class="token punctuation">,</span>
+  <span class="token string">'defaultapp'</span> <span class="token operator">=</span><span class="token operator">></span> <span class="token string">''</span><span class="token punctuation">,</span>
+  <span class="token string">'loglevel'</span> <span class="token operator">=</span><span class="token operator">></span> <span class="token number">2</span><span class="token punctuation">,</span>
+  <span class="token string">'maintenance'</span> <span class="token operator">=</span><span class="token operator">></span> <span class="token boolean">false</span><span class="token punctuation">,</span>
+  <span class="token string">'appstoreenabled'</span> <span class="token operator">=</span><span class="token operator">></span> <span class="token boolean">false</span><span class="token punctuation">,</span>
+<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h2 id="怎么数据备份"><a href="#怎么数据备份" class="headerlink" title="怎么数据备份?"></a>怎么数据备份?</h2><p>数据存放的数据卷<code>nextcloud_nextcloud</code>中, <code>/var/www/html/_data</code>目录下, 考虑以下脚本备份</p>
+<pre class="line-numbers language-sh"><code class="language-sh"># backup_orbstack_volumes.sh
+
+#!/bin/bash
+
+# 设置路径
+SOURCE_DIR="$HOME/OrbStack/docker/volumes"
+BACKUP_DIR="$HOME/Backup/OrbStack"
+SCRIPT_DIR="$BACKUP_DIR"
+DATE=$(date +"%Y-%m-%d_%H-%M-%S")
+BACKUP_FILE="$&#123;BACKUP_DIR&#125;/orbstack_volumes_backup_$&#123;DATE&#125;.tar.gz"
+
+# 检查目标备份目录是否存在
+if [ ! -d "$&#123;BACKUP_DIR&#125;" ]; then
+    echo "目标备份目录不存在，创建中..."
+    mkdir -p "$&#123;BACKUP_DIR&#125;"
+fi
+
+# 计算数据大小
+echo "正在计算待备份目录的大小..."
+TOTAL_SIZE=$(gfind "$&#123;SOURCE_DIR&#125;" -type f -exec stat -f "%z" &#123;&#125; + | awk '&#123;s+=$1&#125; END &#123;print s&#125;')
+
+if [ -z "$&#123;TOTAL_SIZE&#125;" ] || [ "$&#123;TOTAL_SIZE&#125;" -eq 0 ]; then
+    echo "无法计算目录大小或目录为空，请检查路径：$&#123;SOURCE_DIR&#125;"
+    exit 1
+fi
+
+# 备份数据卷
+echo "开始备份 OrbStack volumes（共 $(echo $&#123;TOTAL_SIZE&#125; | numfmt --to=iec)）..."
+tar -cf - -C "$&#123;SOURCE_DIR&#125;" . | pv -s "$&#123;TOTAL_SIZE&#125;" | gzip > "$&#123;BACKUP_FILE&#125;"
+
+if [ $? -eq 0 ]; then
+    echo "备份完成！文件已保存至：$&#123;BACKUP_FILE&#125;"
+else
+    echo "备份失败，请检查错误信息。"
+    exit 1
+fi
+
+# 删除超过 30 天的备份文件
+echo "清理超过 30 天的备份文件..."
+find "$&#123;BACKUP_DIR&#125;" -type f -name "orbstack_volumes_backup_*.tar.gz" -mtime +30 -exec rm -v &#123;&#125; \;
+echo "清理完成！"
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<blockquote>
+<p>以上脚本均由ChatGPT 生成, 我非常感谢他~</p>
+</blockquote>
+</p></div><div class="share"><span>分享到</span>&nbsp;<span class="soc"><a class="fa fa-bookmark" href="javascript:(function(){EN_CLIP_HOST='http://www.evernote.com';try{var%20x=document.createElement('SCRIPT');x.type='text/javascript';x.src=EN_CLIP_HOST+'/public/bookmarkClipper.js?'+(new%20Date().getTime()/100000);document.getElementsByTagName('head')[0].appendChild(x);}catch(e){location.href=EN_CLIP_HOST+'/clip.action?url='+encodeURIComponent(location.href)+'&amp;title='+encodeURIComponent(document.title);}})();" ref="nofollow" target="_blank"></a></span><span class="soc"><a class="fa fa-weibo" href="javascript:void((function(s,d,e){try{}catch(e){}var f='http://service.weibo.com/share/share.php?',u=d.location.href,p=['url=',e(u),'&amp;title=',e(d.title),'&amp;appkey=2924220432'].join('');function a(){if(!window.open([f,p].join(''),'mb',['toolbar=0,status=0,resizable=1,width=620,height=450,left=',(s.width-620)/2,',top=',(s.height-450)/2].join('')))u.href=[f,p].join('');};if(/Firefox/.test(navigator.userAgent)){setTimeout(a,0)}else{a()}})(screen,document,encodeURIComponent));"></a></span><span class="soc"><a class="fa fa-twitter" target="_blank" rel="noopener" href="http://twitter.com/home?status=http://jianlongliu.github.io/posts/881d0c1e.html%20bonjour, jianlong liu%20Nextcloud docker部署 (自用)"></a></span></div><div class="pagination"><p class="clearfix"><span>&nbsp;</span><span class="next pagbuttons"><a role="navigation" href="/posts/0.html" title="">下一篇: &nbsp;<i class="fa fa-angle-double-right"></i></a></span></p></div></div></div></div><div class="visible-xs site-bottom-footer"><footer><p>&copy;&nbsp;2024&nbsp;<a target="_blank" href="http://jianlongliu.github.io" rel="noopener noreferrer">Jianlong Liu</a></p><p>Theme&nbsp;<a target="_blank" href="https://github.com/SumiMakito/hexo-theme-typography" rel="noopener noreferrer">Typography</a>&nbsp;by&nbsp;<a target="_blank" href="https://www.keep.moe" rel="noopener noreferrer">Makito</a></p><p>Proudly published with&nbsp;<a target="_blank" href="https://hexo.io" rel="noopener noreferrer">Hexo</a></p></footer></div></div></div></div><script src="/js/jquery-3.1.0.min.js"></script><script src="/js/bootstrap.min.js"></script><script src="/js/jquery-migrate-1.2.1.min.js"></script><script src="/js/jquery.appear.js"></script><script src="/js/google-analytics.js"></script><script src="/js/typography.js"></script></body></html>
