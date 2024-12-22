@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+
+
+<html theme="dark" showBanner="true" hasBanner="true" > 
+<link href="https://cdn.staticfile.org/font-awesome/6.4.2/css/fontawesome.min.css" rel="stylesheet">
+<link href="https://cdn.staticfile.org/font-awesome/6.4.2/css/brands.min.css" rel="stylesheet">
+<link href="https://cdn.staticfile.org/font-awesome/6.4.2/css/solid.min.css" rel="stylesheet">
+<script src="/js/color.global.min.js" ></script>
+<script src="/js/load-settings.js" ></script>
+<head>
+  <meta charset="utf-8">
+  
+  
+  
+
+  
+  <title>在docker compose 部署beszel 面板 | bonjour, jianlong liu</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <link rel="preload" href="/css/fonts/Roboto-Regular.ttf" as="font" type="font/ttf" crossorigin="anonymous">
+  <link rel="preload" href="/css/fonts/Roboto-Bold.ttf" as="font" type="font/ttf" crossorigin="anonymous">
+
+  <meta name="description" content="在docker compose 部署beszel 面板部署beszel hub123456789services:  beszel:    image: &#x27;henrygd&#x2F;beszel&#x27;    container_name: &#x27;beszel&#x27;    restart: unless-stopped    ports:      - &#x27;8090:809">
+<meta property="og:type" content="article">
+<meta property="og:title" content="在docker compose 部署beszel 面板">
+<meta property="og:url" content="http://jianlongliu.github.io/posts/d94ea7aa.html">
+<meta property="og:site_name" content="bonjour, jianlong liu">
+<meta property="og:description" content="在docker compose 部署beszel 面板部署beszel hub123456789services:  beszel:    image: &#x27;henrygd&#x2F;beszel&#x27;    container_name: &#x27;beszel&#x27;    restart: unless-stopped    ports:      - &#x27;8090:809">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2024-11-14T02:28:49.000Z">
+<meta property="article:modified_time" content="2024-12-22T17:12:06.641Z">
+<meta property="article:author" content="Jianlong Liu">
+<meta property="article:tag" content="docker">
+<meta property="article:tag" content="beszel">
+<meta name="twitter:card" content="summary">
+  
+  
+    <link rel="icon" media="(prefers-color-scheme: light)" href="/images/favicon-light-32.png" sizes="32x32">
+    <link rel="icon" media="(prefers-color-scheme: light)" href="/images/favicon-light-128.png" sizes="128x128">
+    <link rel="icon" media="(prefers-color-scheme: light)" href="/images/favicon-light-180.png" sizes="180x180">
+    <link rel="icon" media="(prefers-color-scheme: light)" href="/images/favicon-light-192.png" sizes="192x192">
+    <link rel="icon" media="(prefers-color-scheme: dark)" href="/images/favicon-dark-32.png" sizes="32x32">
+    <link rel="icon" media="(prefers-color-scheme: dark)" href="/images/favicon-dark-128.png" sizes="128x128">
+    <link rel="icon" media="(prefers-color-scheme: dark)" href="/images/favicon-dark-180.png" sizes="180x180">
+    <link rel="icon" media="(prefers-color-scheme: dark)" href="/images/favicon-dark-192.png" sizes="192x192">
+  
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+<body>
+  
+  
+    
+<div id="banner" class="">
+  <img src="/bg.jpg" itemprop="image">
+  <div id="banner-dim"></div>
+</div>
+ 
+   
+  <div id="main-grid" class="  ">
+    <div id="nav" class=""  >
+      <navbar id="navbar">
+  <nav id="title-nav">
+    <a href="/">
+      <div id="vivia-logo">
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+      </div>
+      <div>bonjour, jianlong liu </div>
+    </a>
+  </nav>
+  <nav id="main-nav">
+    
+      <a class="main-nav-link" href="/">Home</a>
+    
+      <a class="main-nav-link" href="/archives">Archives</a>
+    
+      <a class="main-nav-link" href="/about">About</a>
+    
+  </nav>
+  <nav id="sub-nav">
+    <a id="theme-btn" class="nav-icon">
+      <span class="light-mode-icon"><svg xmlns="http://www.w3.org/2000/svg" height="20" viewBox="0 -960 960 960" width="20"><path d="M438.5-829.913v-48q0-17.452 11.963-29.476 11.964-12.024 29.326-12.024 17.363 0 29.537 12.024t12.174 29.476v48q0 17.452-11.963 29.476-11.964 12.024-29.326 12.024-17.363 0-29.537-12.024T438.5-829.913Zm0 747.826v-48q0-17.452 11.963-29.476 11.964-12.024 29.326-12.024 17.363 0 29.537 12.024t12.174 29.476v48q0 17.452-11.963 29.476-11.964 12.024-29.326 12.024-17.363 0-29.537-12.024T438.5-82.087ZM877.913-438.5h-48q-17.452 0-29.476-11.963-12.024-11.964-12.024-29.326 0-17.363 12.024-29.537t29.476-12.174h48q17.452 0 29.476 11.963 12.024 11.964 12.024 29.326 0 17.363-12.024 29.537T877.913-438.5Zm-747.826 0h-48q-17.452 0-29.476-11.963-12.024-11.964-12.024-29.326 0-17.363 12.024-29.537T82.087-521.5h48q17.452 0 29.476 11.963 12.024 11.964 12.024 29.326 0 17.363-12.024 29.537T130.087-438.5Zm660.174-290.87-34.239 32q-12.913 12.674-29.565 12.174-16.653-.5-29.327-13.174-12.674-12.673-12.554-28.826.12-16.152 12.794-28.826l33-35q12.913-12.674 30.454-12.674t30.163 12.847q12.709 12.846 12.328 30.826-.38 17.98-13.054 30.653ZM262.63-203.978l-32 34q-12.913 12.674-30.454 12.674t-30.163-12.847q-12.709-12.846-12.328-30.826.38-17.98 13.054-30.653l33.239-31q12.913-12.674 29.565-12.174 16.653.5 29.327 13.174 12.674 12.673 12.554 28.826-.12 16.152-12.794 28.826Zm466.74 33.239-32-33.239q-12.674-12.913-12.174-29.565.5-16.653 13.174-29.327 12.673-12.674 28.826-13.054 16.152-.38 28.826 12.294l35 33q12.674 12.913 12.674 30.454t-12.847 30.163q-12.846 12.709-30.826 12.328-17.98-.38-30.653-13.054ZM203.978-697.37l-34-33q-12.674-12.913-13.174-29.945-.5-17.033 12.174-29.707t31.326-13.293q18.653-.62 31.326 13.054l32 34.239q11.674 12.913 11.174 29.565-.5 16.653-13.174 29.327-12.673 12.674-28.826 12.554-16.152-.12-28.826-12.794ZM480-240q-100 0-170-70t-70-170q0-100 70-170t170-70q100 0 170 70t70 170q0 100-70 170t-170 70Zm-.247-82q65.703 0 111.475-46.272Q637-414.544 637-480.247t-45.525-111.228Q545.95-637 480.247-637t-111.475 45.525Q323-545.95 323-480.247t45.525 111.975Q414.05-322 479.753-322ZM481-481Z"/></svg></span>
+      <span class="dark-mode-icon"><svg xmlns="http://www.w3.org/2000/svg" height="20" viewBox="0 -960 960 960" width="20"><path d="M480.239-116.413q-152.63 0-258.228-105.478Q116.413-327.37 116.413-480q0-130.935 77.739-227.435t206.304-125.043q43.022-9.631 63.87 10.869t3.478 62.805q-8.891 22.043-14.315 44.463-5.424 22.42-5.424 46.689 0 91.694 64.326 155.879 64.325 64.186 156.218 64.186 24.369 0 46.978-4.946 22.609-4.945 44.413-14.076 42.826-17.369 62.967 1.142 20.142 18.511 10.511 61.054Q807.174-280 712.63-198.206q-94.543 81.793-232.391 81.793Zm0-95q79.783 0 143.337-40.217 63.554-40.218 95.793-108.283-15.608 4.044-31.097 5.326-15.49 1.283-31.859.805-123.706-4.066-210.777-90.539-87.071-86.473-91.614-212.092-.24-16.369.923-31.978 1.164-15.609 5.446-30.978-67.826 32.478-108.282 96.152Q211.652-559.543 211.652-480q0 111.929 78.329 190.258 78.329 78.329 190.258 78.329ZM466.13-465.891Z"/></svg></span>
+    </a>
+    
+    <div id="nav-menu-btn" class="nav-icon">
+      <svg xmlns="http://www.w3.org/2000/svg" height="20" viewBox="0 -960 960 960" width="20"><path d="M177.37-252.282q-17.453 0-29.477-11.964-12.024-11.963-12.024-29.326t12.024-29.537q12.024-12.174 29.477-12.174h605.26q17.453 0 29.477 11.964 12.024 11.963 12.024 29.326t-12.024 29.537q-12.024 12.174-29.477 12.174H177.37Zm0-186.218q-17.453 0-29.477-11.963-12.024-11.964-12.024-29.326 0-17.363 12.024-29.537T177.37-521.5h605.26q17.453 0 29.477 11.963 12.024 11.964 12.024 29.326 0 17.363-12.024 29.537T782.63-438.5H177.37Zm0-186.217q-17.453 0-29.477-11.964-12.024-11.963-12.024-29.326t12.024-29.537q12.024-12.174 29.477-12.174h605.26q17.453 0 29.477 11.964 12.024 11.963 12.024 29.326t-12.024 29.537q-12.024 12.174-29.477 12.174H177.37Z"/></svg>
+    </div>
+  </nav>
+</navbar>
+<div id="nav-dropdown" class="hidden">
+  <div id="dropdown-link-list">
+    
+      <a class="nav-dropdown-link" href="/">Home</a>
+    
+      <a class="nav-dropdown-link" href="/archives">Archives</a>
+    
+      <a class="nav-dropdown-link" href="/about">About</a>
+    
+     
+    </div>
+</div>
+<script>
+  let dropdownBtn = document.getElementById("nav-menu-btn");
+  let dropdownEle = document.getElementById("nav-dropdown");
+  dropdownBtn.onclick = function() {
+    dropdownEle.classList.toggle("hidden");
+  }
+</script>
+    </div>
+    <div id="sidebar-wrapper">
+      <sidebar id="sidebar">
+  
+    <div class="widget-wrap">
+  <div class="info-card">
+    <div class="avatar">
+      
+        <image src=/favicon.png></image>
+      
+      <div class="img-dim"></div>
+    </div>
+    <div class="info">
+      <div class="username">Jianlong Liu </div>
+      <div class="dot"></div>
+      <div class="subtitle">We are going deep, and we are going hard... </div>
+      <div class="link-list">
+        
+          <a class="link-btn" target="_blank" rel="noopener" href="https://twitter.com/jianlongliu" title="Twitter"><i class="fa-brands fa-twitter"></i></a>
+        
+          <a class="link-btn" target="_blank" rel="noopener" href="https://store.steampowered.com" title="Steam"><i class="fa-brands fa-steam"></i></a>
+        
+          <a class="link-btn" target="_blank" rel="noopener" href="https://github.com/jianlongliu" title="GitHub"><i class="fa-brands fa-github"></i></a>
+         
+      </div>  
+    </div>
+  </div>
+</div>
+
+  
+  <div class="sticky">
+    
+      
+
+
+
+    
+      
+  <div class="widget-wrap">
+    <div class="widget">
+      <h3 class="widget-title">Tags</h3>
+      <ul class="widget-tag-list" itemprop="keywords"><li class="widget-tag-list-item"><a class="widget-tag-list-link" href="/tags/Android/" rel="tag">Android</a></li><li class="widget-tag-list-item"><a class="widget-tag-list-link" href="/tags/Linux/" rel="tag">Linux</a></li><li class="widget-tag-list-item"><a class="widget-tag-list-link" href="/tags/Markdown/" rel="tag">Markdown</a></li><li class="widget-tag-list-item"><a class="widget-tag-list-link" href="/tags/Microsoft/" rel="tag">Microsoft</a></li><li class="widget-tag-list-item"><a class="widget-tag-list-link" href="/tags/Starfield/" rel="tag">Starfield</a></li><li class="widget-tag-list-item"><a class="widget-tag-list-link" href="/tags/Terminal/" rel="tag">Terminal</a></li><li class="widget-tag-list-item"><a class="widget-tag-list-link" href="/tags/beszel/" rel="tag">beszel</a></li><li class="widget-tag-list-item"><a class="widget-tag-list-link" href="/tags/docker/" rel="tag">docker</a></li><li class="widget-tag-list-item"><a class="widget-tag-list-link" href="/tags/office/" rel="tag">office</a></li><li class="widget-tag-list-item"><a class="widget-tag-list-link" href="/tags/%E6%98%BE%E7%A4%BA%E5%99%A8/" rel="tag">显示器</a></li><li class="widget-tag-list-item"><a class="widget-tag-list-link" href="/tags/%E8%BE%90%E5%B0%844/" rel="tag">辐射4</a></li></ul>
+    </div>
+  </div>
+
+
+    
+  </div>
+</sidebar>
+    </div>
+    <div id="content-body">
+       
+
+
+<article id="post-beszel" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  
+    
+   
+  <div class="article-inner">
+    <div class="article-main">
+      <header class="article-header">
+        
+<div class="main-title-bar">
+  <div class="main-title-dot"></div>
+  
+    
+      <h1 class="p-name article-title" itemprop="headline name">
+        在docker compose 部署beszel 面板
+      </h1>
+    
+  
+</div>
+
+        <div class='meta-info-bar'>
+          <div class="meta-info">
+  <time class="dt-published" datetime="2024-11-14T02:28:49.000Z" itemprop="datePublished">2024-11-14</time>
+</div>
+          <div class="need-seperator meta-info">
+            <div class="meta-cate-flex">
+  
+    Uncategorized 
+   
+</div>
+  
+          </div>
+          <div class="wordcount need-seperator meta-info">
+            2.8k words 
+          </div>
+        </div>
+        
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/beszel/" rel="tag">beszel</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/docker/" rel="tag">docker</a></li></ul>
+
+      </header>
+      <div class="e-content article-entry" itemprop="articleBody">
+        
+          <h1 id="在docker-compose-部署beszel-面板"><a href="#在docker-compose-部署beszel-面板" class="headerlink" title="在docker compose 部署beszel 面板"></a>在docker compose 部署beszel 面板</h1><h2 id="部署beszel-hub"><a href="#部署beszel-hub" class="headerlink" title="部署beszel hub"></a>部署beszel hub</h2><figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs yml"><span class="hljs-attr">services:</span><br>  <span class="hljs-attr">beszel:</span><br>    <span class="hljs-attr">image:</span> <span class="hljs-string">&#x27;henrygd/beszel&#x27;</span><br>    <span class="hljs-attr">container_name:</span> <span class="hljs-string">&#x27;beszel&#x27;</span><br>    <span class="hljs-attr">restart:</span> <span class="hljs-string">unless-stopped</span><br>    <span class="hljs-attr">ports:</span><br>      <span class="hljs-bullet">-</span> <span class="hljs-string">&#x27;8090:8090&#x27;</span><br>    <span class="hljs-attr">volumes:</span><br>      <span class="hljs-bullet">-</span> <span class="hljs-string">./beszel_data:/beszel_data</span><br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p><strong>注意</strong>: macOS 默认不支持 Docker 容器的 <code>network_mode: host</code> 配置。<code>host</code> 网络模式允许容器直接使用主机的网络接口，这种方式在 Linux 环境下很常见，因为容器和主机共享同一网络命名空间。但 macOS 和 Windows 的 Docker 架构不同，它们使用虚拟机来运行容器环境，无法直接访问主机的网络栈，因此不支持 <code>host</code> 网络模式</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/henrygd/beszel/blob/main/supplemental/docker/agent/docker-compose.yml">GitHub</a>和<a target="_blank" rel="noopener" href="https://en.xiaoz.org/post/21383">Xiao Z’s Blog</a></p>
+</blockquote>
+<h2 id="在docker-部署beszel-agent-不推荐"><a href="#在docker-部署beszel-agent-不推荐" class="headerlink" title="在docker 部署beszel-agent (不推荐)"></a>在docker 部署beszel-agent (不推荐)</h2><p>在docker-compose 下部署只能监听容器状态, 不推荐</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs yml"><span class="hljs-attr">services:</span><br>  <span class="hljs-attr">beszel-agent:</span><br>    <span class="hljs-attr">image:</span> <span class="hljs-string">&quot;henrygd/beszel-agent&quot;</span><br>    <span class="hljs-attr">container_name:</span> <span class="hljs-string">&quot;beszel-agent&quot;</span><br>    <span class="hljs-attr">restart:</span> <span class="hljs-string">unless-stopped</span><br>    <span class="hljs-attr">ports:</span><br>      <span class="hljs-bullet">-</span> <span class="hljs-string">&#x27;45876:45876&#x27;</span><br>    <span class="hljs-attr">volumes:</span><br>      <span class="hljs-bullet">-</span> <span class="hljs-string">/var/run/docker.sock:/var/run/docker.sock:ro</span><br>    <span class="hljs-attr">environment:</span><br>      <span class="hljs-attr">PORT:</span> <span class="hljs-number">45876</span><br>      <span class="hljs-attr">KEY:</span> <span class="hljs-string">&quot;&lt;key&gt;&quot;</span><br></code></pre></td></tr></table></figure>
+
+<h2 id="或在物理机部署agent"><a href="#或在物理机部署agent" class="headerlink" title="或在物理机部署agent"></a>或在物理机部署agent</h2><p>从release页面下载agent 并运行<br><code>PORT=45876 KEY=&quot;&#123;PASTE_YOUR_KEY&#125;&quot; ./beszel-agent</code></p>
+<blockquote>
+<p>⚠️注意: 如果多次运行不成功, 可能是docker desktop 下删除容器, 在目录下重新<code>docker-compose up -d</code><br>项目地址 <a target="_blank" rel="noopener" href="https://github.com/henrygd/beszel">https://github.com/henrygd/beszel</a></p>
+</blockquote>
+<h3 id="交给launchd-管理"><a href="#交给launchd-管理" class="headerlink" title="交给launchd 管理"></a>交给launchd 管理</h3><p>如果测试没有任何问题, 接下来把它加入到launchd 服务中</p>
+<p>在 ~&#x2F;Library&#x2F;LaunchAgents&#x2F;下创建 com.yourname.beszel-agent.plist</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-meta">&lt;?xml version=<span class="hljs-string">&quot;1.0&quot;</span> encoding=<span class="hljs-string">&quot;UTF-8&quot;</span>?&gt;</span><br><span class="hljs-meta">&lt;!DOCTYPE <span class="hljs-keyword">plist</span> <span class="hljs-keyword">PUBLIC</span> <span class="hljs-string">&quot;-//Apple//DTD PLIST 1.0//EN&quot;</span> <span class="hljs-string">&quot;http://www.apple.com/DTDs/PropertyList-1.0.dtd&quot;</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">plist</span> <span class="hljs-attr">version</span>=<span class="hljs-string">&quot;1.0&quot;</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">dict</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">key</span>&gt;</span>Label<span class="hljs-tag">&lt;/<span class="hljs-name">key</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">string</span>&gt;</span>com.jianlong.beszel.agent<span class="hljs-tag">&lt;/<span class="hljs-name">string</span>&gt;</span><br>    <br>    <span class="hljs-tag">&lt;<span class="hljs-name">key</span>&gt;</span>ProgramArguments<span class="hljs-tag">&lt;/<span class="hljs-name">key</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">array</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">string</span>&gt;</span>/Users/jianlongliu/App/beszel/beszel-agent<span class="hljs-tag">&lt;/<span class="hljs-name">string</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">array</span>&gt;</span><br><br>    <span class="hljs-tag">&lt;<span class="hljs-name">key</span>&gt;</span>EnvironmentVariables<span class="hljs-tag">&lt;/<span class="hljs-name">key</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">dict</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">key</span>&gt;</span>PORT<span class="hljs-tag">&lt;/<span class="hljs-name">key</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">string</span>&gt;</span>45876<span class="hljs-tag">&lt;/<span class="hljs-name">string</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">key</span>&gt;</span>KEY<span class="hljs-tag">&lt;/<span class="hljs-name">key</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">string</span>&gt;</span>&quot;your-key&quot;<span class="hljs-tag">&lt;/<span class="hljs-name">key</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">dict</span>&gt;</span><br><br>    <span class="hljs-tag">&lt;<span class="hljs-name">key</span>&gt;</span>RunAtLoad<span class="hljs-tag">&lt;/<span class="hljs-name">key</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">true</span>/&gt;</span><br><br>    <span class="hljs-tag">&lt;<span class="hljs-name">key</span>&gt;</span>KeepAlive<span class="hljs-tag">&lt;/<span class="hljs-name">key</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">dict</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">key</span>&gt;</span>SuccessfulExit<span class="hljs-tag">&lt;/<span class="hljs-name">key</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">true</span>/&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">dict</span>&gt;</span><br><br>    <span class="hljs-tag">&lt;<span class="hljs-name">key</span>&gt;</span>ThrottleInterval<span class="hljs-tag">&lt;/<span class="hljs-name">key</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">integer</span>&gt;</span>10<span class="hljs-tag">&lt;/<span class="hljs-name">integer</span>&gt;</span><br><br>    <span class="hljs-tag">&lt;<span class="hljs-name">key</span>&gt;</span>StandardOutPath<span class="hljs-tag">&lt;/<span class="hljs-name">key</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">string</span>&gt;</span>/tmp/beszel-agent.log<span class="hljs-tag">&lt;/<span class="hljs-name">string</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">key</span>&gt;</span>StandardErrorPath<span class="hljs-tag">&lt;/<span class="hljs-name">key</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">string</span>&gt;</span>/tmp/beszel-agent-error.log<span class="hljs-tag">&lt;/<span class="hljs-name">string</span>&gt;</span><br><br>    <span class="hljs-tag">&lt;<span class="hljs-name">key</span>&gt;</span>MachServices<span class="hljs-tag">&lt;/<span class="hljs-name">key</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">dict</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">key</span>&gt;</span>com.jianlong.beszel.agent<span class="hljs-tag">&lt;/<span class="hljs-name">key</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">true</span>/&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">dict</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">dict</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">plist</span>&gt;</span><br><br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p><strong>⚠️注意</strong>：</p>
+<ul>
+<li>将 <code>/path/to/beszel-agent</code> 替换为 <code>beszel-agent</code> 实际的完整路径。</li>
+<li><code>Label</code> 可以自定义，但通常建议使用反向域名格式。</li>
+<li><code>RunAtLoad</code> 确保服务在加载时启动，<code>KeepAlive</code> 确保服务保持后台运行。</li>
+</ul>
+</blockquote>
+<h4 id="加载-launchd-服务"><a href="#加载-launchd-服务" class="headerlink" title="加载 launchd 服务"></a>加载 <code>launchd</code> 服务</h4><p>保存文件后，在终端中加载该服务：</p>
+<figure class="highlight zsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs zsh">launchctl load ~/Library/LaunchAgents/com.yourname.beszel-agent.plist<br></code></pre></td></tr></table></figure>
+
+<p>如果一切正确，<code>beszel-agent</code> 将会在后台运行，并且会在系统启动时自动加载。</p>
+<h4 id="管理-launchd-服务"><a href="#管理-launchd-服务" class="headerlink" title="管理 launchd 服务"></a>管理 <code>launchd</code> 服务</h4><ul>
+<li><strong>卸载服务</strong>：<code>launchctl unload ~/Library/LaunchAgents/com.yourname.beszel-agent.plist</code></li>
+<li><strong>重新加载服务</strong>：可以先卸载再加载，也可以用 <code>launchctl kickstart</code> 进行重启。</li>
+</ul>
+<h4 id="检查服务状态"><a href="#检查服务状态" class="headerlink" title="检查服务状态"></a>检查服务状态</h4><p>使用以下命令查看服务日志，确认其是否正确运行：</p>
+<figure class="highlight zsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs zsh"><span class="hljs-built_in">log</span> show --predicate <span class="hljs-string">&#x27;process == &quot;beszel-agent&quot;&#x27;</span> --info --last 1h<br></code></pre></td></tr></table></figure>
+
+<p>这样设置后，<code>beszel-agent</code> 会作为后台服务在 macOS 上自动启动并运行。</p>
+
+        
+      </div>
+
+         
+    </div>
+    
+     
+  </div>
+  
+    
+<nav id="article-nav">
+  <a class="article-nav-btn left "
+    
+      href="/posts/58855692.html"
+      title="KDE Connect 找不到设备?"
+     >
+    <i class="fa-solid fa-angle-left"></i>
+    <p class="title-text">
+      
+        KDE Connect 找不到设备?
+        
+    </p>
+  </a>
+  <a class="article-nav-btn right "
+    
+      href="/posts/7964862d.html"
+      title="如何修改 Grub2主题?"
+     >
+
+    <p class="title-text">
+      
+        如何修改 Grub2主题?
+        
+    </p>
+    <i class="fa-solid fa-angle-right"></i>
+  </a>
+</nav>
+
+
+  
+</article>
+
+
+
+
+
+
+    </div>
+    <div id="footer-wrapper">
+      <footer id="footer">
+  
+  <div id="footer-info" class="inner">
+    
+    &copy; 2024 Jianlong Liu<br>
+    Powered by <a href="https://hexo.io/" target="_blank">Hexo</a> & Theme <a target="_blank" rel="noopener" href="https://github.com/saicaca/hexo-theme-vivia">Vivia</a>
+  </div>
+</footer>
+
+    </div>
+    <div class="back-to-top-wrapper">
+    <button id="back-to-top-btn" class="back-to-top-btn hide" onclick="topFunction()">
+        <i class="fa-solid fa-angle-up"></i>
+    </button>
+</div>
+
+<script>
+    function topFunction() {
+        window.scroll({ top: 0, behavior: 'smooth' });
+    }
+    let btn = document.getElementById('back-to-top-btn');
+    function scrollFunction() {
+        if (document.body.scrollTop > 600 || document.documentElement.scrollTop > 600) {
+            btn.classList.remove('hide')
+        } else {
+            btn.classList.add('hide')
+        }
+    }
+    window.onscroll = function() {
+        scrollFunction();
+    }
+</script>
+
+  </div>
+  <script src="/js/light-dark-switch.js"></script>
+</body>
+</html>
