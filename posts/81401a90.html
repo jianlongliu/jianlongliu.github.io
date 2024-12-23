@@ -220,13 +220,13 @@
 <li><a target="_blank" rel="noopener" href="https://gitlab.gnome.org/GNOME/gnome-settings-daemon/-/merge_requests/353">https://gitlab.gnome.org/GNOME/gnome-settings-daemon/-/merge_requests/353</a><br>respectively and all credits go to the original authors.</li>
 </ul>
 <h3 id="Installation-Instructions"><a href="#Installation-Instructions" class="headerlink" title="Installation Instructions"></a>Installation Instructions</h3><p>Enable the copr:</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo dnf copr enable taaem/mutter-xwayland-fractional-scaling</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">sudo</span> dnf copr <span class="hljs-built_in">enable</span> taaem/mutter-xwayland-fractional-scaling<br></code></pre></td></tr></table></figure>
 
 <p>Overwrite the installed versions of mutter and gnome-settings-daemon:</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo dnf reinstall mutter mutter-common gnome-settings-daemon --repo copr:copr.fedorainfracloud.org:taaem:mutter-xwayland-fractional-scaling</span><br></pre></td></tr></table></figure>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs stylus">sudo dnf reinstall mutter mutter-common gnome-settings-daemon <span class="hljs-attr">--repo</span> copr:copr<span class="hljs-selector-class">.fedorainfracloud</span><span class="hljs-selector-class">.org</span>:taaem:mutter-xwayland-fractional-scaling<br></code></pre></td></tr></table></figure>
 
 <p>Enable the experimental features:</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gsettings set org.gnome.mutter experimental-features &quot;[&#x27;scale-monitor-framebuffer&#x27;, &#x27;xwayland-native-scaling&#x27;]&quot;</span><br></pre></td></tr></table></figure>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs css">gsettings set org<span class="hljs-selector-class">.gnome</span><span class="hljs-selector-class">.mutter</span> experimental-features &quot;<span class="hljs-selector-attr">[<span class="hljs-string">&#x27;scale-monitor-framebuffer&#x27;</span>, <span class="hljs-string">&#x27;xwayland-native-scaling&#x27;</span>]</span>&quot;<br></code></pre></td></tr></table></figure>
 
 <blockquote>
 <ul>

@@ -227,7 +227,7 @@
 <li><p>payload dunper 需要安装python 3, 首次安装后需要更新<code>pip</code></p>
 </li>
 <li><p>前置module 需要<code>protobuf</code>, <code>six </code>, <code>bsdiff4</code></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">pip install protobuf==3.15.0</span><br><span class="line">pip install six</span><br><span class="line">pip install bsdiff4</span><br></pre></td></tr></table></figure></li>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs pip">pip install protobuf==3.15.0<br>pip install six<br>pip install bsdiff4<br></code></pre></td></tr></table></figure></li>
 </ul>
 </li>
 </ul>
@@ -245,7 +245,7 @@
 <li><p>准备好Nothing OS 1.1.3 全量包, 并用payload dumper 提取boot.img和 vendor_boot.img</p>
 </li>
 <li><p>刷入两个镜像进入recovery</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">fastboot flash boot boot.img</span><br><span class="line">fastboot flash vendor_boot vendor.img</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs fastboot">fastboot flash boot boot.img<br>fastboot flash vendor_boot vendor.img<br></code></pre></td></tr></table></figure>
 </li>
 <li><p>在手机上看到no command 后按住电源键，再按音量+ 并松手进入隐藏的恢复模式， 选择<code>apply update from adb side</code>, 侧载Nothing OS 1.1.3 (<code>adb sideload nothingos.zip</code>)</p>
 </li>
@@ -256,7 +256,7 @@
 <p>参考</p>
 <p><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=WXRhxDx3iYw">Nothing phone 1 unbrick, downgrade or revert back to Nothing OS from custom rom: The easiest method! - YouTube</a></p>
 </blockquote>
-<h3 id="跳过原厂验证"><a href="#跳过原厂验证" class="headerlink" title="跳过原厂验证"></a>跳过原厂验证</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">fastboot --disable-verity --disable-verification flash vbmeta vbmeta.img</span><br></pre></td></tr></table></figure>
+<h3 id="跳过原厂验证"><a href="#跳过原厂验证" class="headerlink" title="跳过原厂验证"></a>跳过原厂验证</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs fastboot">fastboot --disable-verity --disable-verification flash vbmeta vbmeta.img<br></code></pre></td></tr></table></figure>
 
 <blockquote>
 <p>参考</p>

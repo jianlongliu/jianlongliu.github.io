@@ -243,11 +243,11 @@
 </tr>
 </tbody></table>
 <h3 id="II-II-Sonoma-镜像下载和烧录到U盘"><a href="#II-II-Sonoma-镜像下载和烧录到U盘" class="headerlink" title="II.II Sonoma 镜像下载和烧录到U盘"></a>II.II Sonoma 镜像下载和烧录到U盘</h3><p>在opencore&#x2F;util&#x2F;macrecovery.py 下运行以下命令下载OS X Sonoma 的Base System 镜像    </p>
-<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python macrecovery.py -b Mac-<span class="number">937</span>A206F2EE63C01 -m <span class="number">00000000000000000</span> download    </span><br></pre></td></tr></table></figure>
+<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs cmd">python macrecovery.py -b Mac-<span class="hljs-number">937</span>A206F2EE63C01 -m <span class="hljs-number">00000000000000000</span> download    <br></code></pre></td></tr></table></figure>
 
 <p>使用rufus 格式化USB驱动器<br><img src="https://dortania.github.io/OpenCore-Install-Guide/assets/img/format-usb-rufus.43feba9e.png" alt="img" title="使用rufus格式化USB驱动器"><br>按上图设置 BOOT selection 为 not bootable 不可引导, 文件系统为Large FAT32, 删除所有Autorun 的文件</p>
 <p>复制刚刚下载的镜像到USB驱动器根目录下, 注意要手动创建<code>com.apple.recovery.boot</code>文件夹</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">\com.apple.recovery.boot\BaseSystem.chunklist    </span><br><span class="line">\com.apple.recovery.boot\BaseSystem.dmg    </span><br></pre></td></tr></table></figure>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs stylus">\com<span class="hljs-selector-class">.apple</span><span class="hljs-selector-class">.recovery</span>.boot\BaseSystem<span class="hljs-selector-class">.chunklist</span>    <br>\com<span class="hljs-selector-class">.apple</span><span class="hljs-selector-class">.recovery</span>.boot\BaseSystem<span class="hljs-selector-class">.dmg</span>    <br></code></pre></td></tr></table></figure>
 
 <p><img src="https://dortania.github.io/OpenCore-Install-Guide/assets/img/com-recovery.805dc41f.png" alt="img">    </p>
 <h3 id="II-III-准备EFI分区"><a href="#II-III-准备EFI分区" class="headerlink" title="II.III 准备EFI分区"></a>II.III 准备EFI分区</h3><p>EFI 部分很让人心情复杂, 后续的内容会涉及到系统驱动(Driver, Kext)和各种bug修复</p>
