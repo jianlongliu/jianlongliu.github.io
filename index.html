@@ -194,7 +194,7 @@
   
           </div>
           <div class="wordcount need-seperator meta-info">
-            360 words 
+            504 words 
           </div>
         </div>
         
@@ -208,8 +208,8 @@
               远程连接到 macOS 不卡顿的方法​	尝试了多种远程连接 macOS 的方法，最终发现最流畅的竟然是 TeamViewer。在一番尝试之后，总结出以下两种最合适的方案：
 1. 使用 TeamViewer​	TeamViewer 对个人用户最大的限制是可能触发各种使用限制，但通过 Web 端远程桌面 可以一定程度规避问题。​	缺点：如果更换 IP，必须手动将设备添加到 “可信赖设备” 列表中。
 2. 使用 Tailscale 和 Remote Desktop Manager​	首先使用 Tailscale 搭建虚拟局域网，然后通过 Remote Desktop Manager 的 ARD 协议进行连接。​	使用体验：连接效果非常流畅，这篇博客便是在这种环境下完成的。​	缺点：在 Fedora 系统下，RDM 客户端偶尔会崩溃。
-后记NoMachine 的 NX 方案未来可能会研究，暂未深入尝试。
-
+3. 使用 Zerotier 和 Remote Desktop Manager​	有时候Taliscale 会卡或连不上, 这是因为没有直接P2P连接, 可以试试ZeroTier
+​	简单教程: https://blog.csdn.net/qq_43377...
             
           </div>
         
