@@ -14,23 +14,22 @@
   
 
   
-  <title>一次升级失败：Nothing Phone遇到的问题与解决思路 | bonjour, jianlong liu</title>
+  <title>为hexo 博客部署qexo后台 | bonjour, jianlong liu</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
   <link rel="preload" href="/css/fonts/Roboto-Regular.ttf" as="font" type="font/ttf" crossorigin="anonymous">
   <link rel="preload" href="/css/fonts/Roboto-Bold.ttf" as="font" type="font/ttf" crossorigin="anonymous">
 
-  <meta name="description" content="我使用的是Nothing Phone (1) (代号: Spacewar)手机，最近收到了Project Elixir 3.7的升级推送。昨晚下载了升级包后，按照操作指引输入了fastboot update project*.zip 进行升级，但在等待设备重启到recovery模式时，我发现手机卡在了super.img。为了解决这个问题，我尝试更换了USB数据线和USB接口，然后使用了fastbo">
+  <meta name="description" content="为hexo 博客部署qexo后台博客托管: github page hexo 仓库: 本地 qexo: 部署在docker 容器 12345678910111213services:  qexo:    image: abudulin&#x2F;qexo:latest    container_name: qexo    restart: unless-stopped    ports:      - &amp;q">
 <meta property="og:type" content="article">
-<meta property="og:title" content="一次升级失败：Nothing Phone遇到的问题与解决思路">
-<meta property="og:url" content="http://jianlongliu.github.io/posts/28c2be6d.html">
+<meta property="og:title" content="为hexo 博客部署qexo后台">
+<meta property="og:url" content="http://jianlongliu.github.io/posts/415ac265.html">
 <meta property="og:site_name" content="bonjour, jianlong liu">
-<meta property="og:description" content="我使用的是Nothing Phone (1) (代号: Spacewar)手机，最近收到了Project Elixir 3.7的升级推送。昨晚下载了升级包后，按照操作指引输入了fastboot update project*.zip 进行升级，但在等待设备重启到recovery模式时，我发现手机卡在了super.img。为了解决这个问题，我尝试更换了USB数据线和USB接口，然后使用了fastbo">
+<meta property="og:description" content="为hexo 博客部署qexo后台博客托管: github page hexo 仓库: 本地 qexo: 部署在docker 容器 12345678910111213services:  qexo:    image: abudulin&#x2F;qexo:latest    container_name: qexo    restart: unless-stopped    ports:      - &amp;q">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2025-02-22T12:40:20.714Z">
-<meta property="article:modified_time" content="2025-02-22T12:40:20.714Z">
+<meta property="article:published_time" content="2025-02-23T08:16:25.584Z">
+<meta property="article:modified_time" content="2025-02-23T08:22:42.570Z">
 <meta property="article:author" content="Jianlong Liu">
-<meta property="article:tag" content="Android">
 <meta name="twitter:card" content="summary">
   
   
@@ -166,7 +165,7 @@
        
 
 
-<article id="post-ota_failed" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+<article id="post-qexo" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   
     
    
@@ -179,7 +178,7 @@
   
     
       <h1 class="p-name article-title" itemprop="headline name">
-        一次升级失败：Nothing Phone遇到的问题与解决思路
+        为hexo 博客部署qexo后台
       </h1>
     
   
@@ -187,7 +186,7 @@
 
         <div class='meta-info-bar'>
           <div class="meta-info">
-  <time class="dt-published" datetime="2025-02-22T12:40:20.714Z" itemprop="datePublished">2025-02-22</time>
+  <time class="dt-published" datetime="2025-02-23T08:16:25.584Z" itemprop="datePublished">2025-02-23</time>
 </div>
           <div class="need-seperator meta-info">
             <div class="meta-cate-flex">
@@ -198,18 +197,17 @@
   
           </div>
           <div class="wordcount need-seperator meta-info">
-            469 words 
+            372 words 
           </div>
         </div>
         
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/" rel="tag">Android</a></li></ul>
-
       </header>
       <div class="e-content article-entry" itemprop="articleBody">
         
-          <p>我使用的是<a target="_blank" rel="noopener" href="https://intl.nothing.tech/products/phone-1">Nothing Phone (1) (代号: Spacewar)</a>手机，最近收到了<a target="_blank" rel="noopener" href="https://projectelixiros.com/device/spacewar">Project Elixir</a> 3.7的升级推送。昨晚下载了升级包后，按照操作指引输入了<code>fastboot update project*.zip</code> 进行升级，但在等待设备重启到recovery模式时，我发现手机卡在了<code>super.img</code>。为了解决这个问题，我尝试更换了USB数据线和USB接口，然后使用了<code>fastboot -w</code> 命令清除了用户数据，但结果却仍然是类似的，令我感到相当困惑。</p>
-<p>此时已经凌晨0点，考虑一番后我决定尝试<a target="_blank" rel="noopener" href="https://download.pixelexperience.org/Spacewar/">Pixel Experience Plus</a>，并安装了一些常用的应用程序。初始情况看起来一切正常，我对此感到相当满意。但是，当我尝试观看视频时，发现手机没有声音输出的bug，这让人有些沮丧和失望！  </p>
-<p>现在已经接近凌晨3点了。于是，我决定回滚到原厂系统Nothing OS 1.1.3，并进行OTA升级到1.5.3版本。在OTA升级和安装App期间还看了英超联赛，曼城4:1大胜娜娜看得血脉偾张。在这个过程中，我也一直在思考我所遇到的问题，希望能找到更好的解决方案。</p>
+          <h1 id="为hexo-博客部署qexo后台"><a href="#为hexo-博客部署qexo后台" class="headerlink" title="为hexo 博客部署qexo后台"></a>为hexo 博客部署qexo后台</h1><p>博客托管: github page</p>
+<p>hexo 仓库: 本地</p>
+<p>qexo: 部署在docker 容器</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs yaml"><span class="hljs-attr">services:</span><br>  <span class="hljs-attr">qexo:</span><br>    <span class="hljs-attr">image:</span> <span class="hljs-string">abudulin/qexo:latest</span><br>    <span class="hljs-attr">container_name:</span> <span class="hljs-string">qexo</span><br>    <span class="hljs-attr">restart:</span> <span class="hljs-string">unless-stopped</span><br>    <span class="hljs-attr">ports:</span><br>      <span class="hljs-bullet">-</span> <span class="hljs-string">&quot;8000:8000&quot;</span><br>    <span class="hljs-attr">environment:</span><br>      <span class="hljs-bullet">-</span> <span class="hljs-string">HEXO_PATH=/app/jianlongliu.github.io</span><br>    <span class="hljs-attr">volumes:</span><br>      <span class="hljs-bullet">-</span> <span class="hljs-string">./db:/app/db</span><br>      <span class="hljs-bullet">-</span> <span class="hljs-string">/Users/jianlongliu/Documents/jianlongliu.github.io:/app/jianlongliu.github.io</span><br>      <span class="hljs-bullet">-</span> <span class="hljs-string">/opt/homebrew/bin/hexo:/usr/local/bin/hexo</span><br></code></pre></td></tr></table></figure>
 
         
       </div>
@@ -222,27 +220,22 @@
   
     
 <nav id="article-nav">
-  <a class="article-nav-btn left "
-    
-      href="/posts/415ac265.html"
-      title="为hexo 博客部署qexo后台"
+  <a class="article-nav-btn left  disabled "
      >
     <i class="fa-solid fa-angle-left"></i>
     <p class="title-text">
-      
-        为hexo 博客部署qexo后台
         
     </p>
   </a>
   <a class="article-nav-btn right "
     
-      href="/posts/0.html"
-      title="在不同平台上使用Reader3 阅读"
+      href="/posts/28c2be6d.html"
+      title="一次升级失败：Nothing Phone遇到的问题与解决思路"
      >
 
     <p class="title-text">
       
-        在不同平台上使用Reader3 阅读
+        一次升级失败：Nothing Phone遇到的问题与解决思路
         
     </p>
     <i class="fa-solid fa-angle-right"></i>
