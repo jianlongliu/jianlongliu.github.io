@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+
+
+<html theme="dark" showBanner="true" hasBanner="true" > 
+<link href="https://cdn.staticfile.org/font-awesome/6.4.2/css/fontawesome.min.css" rel="stylesheet">
+<link href="https://cdn.staticfile.org/font-awesome/6.4.2/css/brands.min.css" rel="stylesheet">
+<link href="https://cdn.staticfile.org/font-awesome/6.4.2/css/solid.min.css" rel="stylesheet">
+<script src="/js/color.global.min.js" ></script>
+<script src="/js/load-settings.js" ></script>
+<head>
+  <meta charset="utf-8">
+  
+  
+  
+
+  
+  <title>Nextcloud docker部署 (自用) | bonjour, jianlong liu</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <link rel="preload" href="/css/fonts/Roboto-Regular.ttf" as="font" type="font/ttf" crossorigin="anonymous">
+  <link rel="preload" href="/css/fonts/Roboto-Bold.ttf" as="font" type="font/ttf" crossorigin="anonymous">
+
+  <meta name="description" content="Nextcloud docker部署 (自用)使用环境机器: Mac Mini M4 OS: MacOS Sequoia 容器: Orb Stack 配置文件docker-compose.yaml123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Nextcloud docker部署 (自用)">
+<meta property="og:url" content="http://jianlongliu.github.io/posts/881d0c1e.html">
+<meta property="og:site_name" content="bonjour, jianlong liu">
+<meta property="og:description" content="Nextcloud docker部署 (自用)使用环境机器: Mac Mini M4 OS: MacOS Sequoia 容器: Orb Stack 配置文件docker-compose.yaml123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2024-12-21T16:29:30.000Z">
+<meta property="article:modified_time" content="2025-02-22T12:40:20.714Z">
+<meta property="article:author" content="Jianlong Liu">
+<meta property="article:tag" content="docker">
+<meta name="twitter:card" content="summary">
+  
+  
+    <link rel="icon" media="(prefers-color-scheme: light)" href="/images/favicon-light-32.png" sizes="32x32">
+    <link rel="icon" media="(prefers-color-scheme: light)" href="/images/favicon-light-128.png" sizes="128x128">
+    <link rel="icon" media="(prefers-color-scheme: light)" href="/images/favicon-light-180.png" sizes="180x180">
+    <link rel="icon" media="(prefers-color-scheme: light)" href="/images/favicon-light-192.png" sizes="192x192">
+    <link rel="icon" media="(prefers-color-scheme: dark)" href="/images/favicon-dark-32.png" sizes="32x32">
+    <link rel="icon" media="(prefers-color-scheme: dark)" href="/images/favicon-dark-128.png" sizes="128x128">
+    <link rel="icon" media="(prefers-color-scheme: dark)" href="/images/favicon-dark-180.png" sizes="180x180">
+    <link rel="icon" media="(prefers-color-scheme: dark)" href="/images/favicon-dark-192.png" sizes="192x192">
+  
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+<body>
+  
+  
+    
+<div id="banner" class="">
+  <img src="/bg.jpg" itemprop="image">
+  <div id="banner-dim"></div>
+</div>
+ 
+   
+  <div id="main-grid" class="  ">
+    <div id="nav" class=""  >
+      <navbar id="navbar">
+  <nav id="title-nav">
+    <a href="/">
+      <div id="vivia-logo">
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+      </div>
+      <div>bonjour, jianlong liu </div>
+    </a>
+  </nav>
+  <nav id="main-nav">
+    
+      <a class="main-nav-link" href="/">Home</a>
+    
+      <a class="main-nav-link" href="/archives">Archives</a>
+    
+      <a class="main-nav-link" href="/about">About</a>
+    
+  </nav>
+  <nav id="sub-nav">
+    <a id="theme-btn" class="nav-icon">
+      <span class="light-mode-icon"><svg xmlns="http://www.w3.org/2000/svg" height="20" viewBox="0 -960 960 960" width="20"><path d="M438.5-829.913v-48q0-17.452 11.963-29.476 11.964-12.024 29.326-12.024 17.363 0 29.537 12.024t12.174 29.476v48q0 17.452-11.963 29.476-11.964 12.024-29.326 12.024-17.363 0-29.537-12.024T438.5-829.913Zm0 747.826v-48q0-17.452 11.963-29.476 11.964-12.024 29.326-12.024 17.363 0 29.537 12.024t12.174 29.476v48q0 17.452-11.963 29.476-11.964 12.024-29.326 12.024-17.363 0-29.537-12.024T438.5-82.087ZM877.913-438.5h-48q-17.452 0-29.476-11.963-12.024-11.964-12.024-29.326 0-17.363 12.024-29.537t29.476-12.174h48q17.452 0 29.476 11.963 12.024 11.964 12.024 29.326 0 17.363-12.024 29.537T877.913-438.5Zm-747.826 0h-48q-17.452 0-29.476-11.963-12.024-11.964-12.024-29.326 0-17.363 12.024-29.537T82.087-521.5h48q17.452 0 29.476 11.963 12.024 11.964 12.024 29.326 0 17.363-12.024 29.537T130.087-438.5Zm660.174-290.87-34.239 32q-12.913 12.674-29.565 12.174-16.653-.5-29.327-13.174-12.674-12.673-12.554-28.826.12-16.152 12.794-28.826l33-35q12.913-12.674 30.454-12.674t30.163 12.847q12.709 12.846 12.328 30.826-.38 17.98-13.054 30.653ZM262.63-203.978l-32 34q-12.913 12.674-30.454 12.674t-30.163-12.847q-12.709-12.846-12.328-30.826.38-17.98 13.054-30.653l33.239-31q12.913-12.674 29.565-12.174 16.653.5 29.327 13.174 12.674 12.673 12.554 28.826-.12 16.152-12.794 28.826Zm466.74 33.239-32-33.239q-12.674-12.913-12.174-29.565.5-16.653 13.174-29.327 12.673-12.674 28.826-13.054 16.152-.38 28.826 12.294l35 33q12.674 12.913 12.674 30.454t-12.847 30.163q-12.846 12.709-30.826 12.328-17.98-.38-30.653-13.054ZM203.978-697.37l-34-33q-12.674-12.913-13.174-29.945-.5-17.033 12.174-29.707t31.326-13.293q18.653-.62 31.326 13.054l32 34.239q11.674 12.913 11.174 29.565-.5 16.653-13.174 29.327-12.673 12.674-28.826 12.554-16.152-.12-28.826-12.794ZM480-240q-100 0-170-70t-70-170q0-100 70-170t170-70q100 0 170 70t70 170q0 100-70 170t-170 70Zm-.247-82q65.703 0 111.475-46.272Q637-414.544 637-480.247t-45.525-111.228Q545.95-637 480.247-637t-111.475 45.525Q323-545.95 323-480.247t45.525 111.975Q414.05-322 479.753-322ZM481-481Z"/></svg></span>
+      <span class="dark-mode-icon"><svg xmlns="http://www.w3.org/2000/svg" height="20" viewBox="0 -960 960 960" width="20"><path d="M480.239-116.413q-152.63 0-258.228-105.478Q116.413-327.37 116.413-480q0-130.935 77.739-227.435t206.304-125.043q43.022-9.631 63.87 10.869t3.478 62.805q-8.891 22.043-14.315 44.463-5.424 22.42-5.424 46.689 0 91.694 64.326 155.879 64.325 64.186 156.218 64.186 24.369 0 46.978-4.946 22.609-4.945 44.413-14.076 42.826-17.369 62.967 1.142 20.142 18.511 10.511 61.054Q807.174-280 712.63-198.206q-94.543 81.793-232.391 81.793Zm0-95q79.783 0 143.337-40.217 63.554-40.218 95.793-108.283-15.608 4.044-31.097 5.326-15.49 1.283-31.859.805-123.706-4.066-210.777-90.539-87.071-86.473-91.614-212.092-.24-16.369.923-31.978 1.164-15.609 5.446-30.978-67.826 32.478-108.282 96.152Q211.652-559.543 211.652-480q0 111.929 78.329 190.258 78.329 78.329 190.258 78.329ZM466.13-465.891Z"/></svg></span>
+    </a>
+    
+    <div id="nav-menu-btn" class="nav-icon">
+      <svg xmlns="http://www.w3.org/2000/svg" height="20" viewBox="0 -960 960 960" width="20"><path d="M177.37-252.282q-17.453 0-29.477-11.964-12.024-11.963-12.024-29.326t12.024-29.537q12.024-12.174 29.477-12.174h605.26q17.453 0 29.477 11.964 12.024 11.963 12.024 29.326t-12.024 29.537q-12.024 12.174-29.477 12.174H177.37Zm0-186.218q-17.453 0-29.477-11.963-12.024-11.964-12.024-29.326 0-17.363 12.024-29.537T177.37-521.5h605.26q17.453 0 29.477 11.963 12.024 11.964 12.024 29.326 0 17.363-12.024 29.537T782.63-438.5H177.37Zm0-186.217q-17.453 0-29.477-11.964-12.024-11.963-12.024-29.326t12.024-29.537q12.024-12.174 29.477-12.174h605.26q17.453 0 29.477 11.964 12.024 11.963 12.024 29.326t-12.024 29.537q-12.024 12.174-29.477 12.174H177.37Z"/></svg>
+    </div>
+  </nav>
+</navbar>
+<div id="nav-dropdown" class="hidden">
+  <div id="dropdown-link-list">
+    
+      <a class="nav-dropdown-link" href="/">Home</a>
+    
+      <a class="nav-dropdown-link" href="/archives">Archives</a>
+    
+      <a class="nav-dropdown-link" href="/about">About</a>
+    
+     
+    </div>
+</div>
+<script>
+  let dropdownBtn = document.getElementById("nav-menu-btn");
+  let dropdownEle = document.getElementById("nav-dropdown");
+  dropdownBtn.onclick = function() {
+    dropdownEle.classList.toggle("hidden");
+  }
+</script>
+    </div>
+    <div id="sidebar-wrapper">
+      <sidebar id="sidebar">
+  
+    <div class="widget-wrap">
+  <div class="info-card">
+    <div class="avatar">
+      
+        <image src=/favicon.png></image>
+      
+      <div class="img-dim"></div>
+    </div>
+    <div class="info">
+      <div class="username">Jianlong Liu </div>
+      <div class="dot"></div>
+      <div class="subtitle">We are going deep, and we are going hard... </div>
+      <div class="link-list">
+        
+          <a class="link-btn" target="_blank" rel="noopener" href="https://twitter.com/jianlongliu" title="Twitter"><i class="fa-brands fa-twitter"></i></a>
+        
+          <a class="link-btn" target="_blank" rel="noopener" href="https://store.steampowered.com" title="Steam"><i class="fa-brands fa-steam"></i></a>
+        
+          <a class="link-btn" target="_blank" rel="noopener" href="https://github.com/jianlongliu" title="GitHub"><i class="fa-brands fa-github"></i></a>
+         
+      </div>  
+    </div>
+  </div>
+</div>
+
+  
+  <div class="sticky">
+    
+      
+
+
+
+    
+      
+  <div class="widget-wrap">
+    <div class="widget">
+      <h3 class="widget-title">Tags</h3>
+      <ul class="widget-tag-list" itemprop="keywords"><li class="widget-tag-list-item"><a class="widget-tag-list-link" href="/tags/Android/" rel="tag">Android</a></li><li class="widget-tag-list-item"><a class="widget-tag-list-link" href="/tags/Linux/" rel="tag">Linux</a></li><li class="widget-tag-list-item"><a class="widget-tag-list-link" href="/tags/MacOS/" rel="tag">MacOS</a></li><li class="widget-tag-list-item"><a class="widget-tag-list-link" href="/tags/Markdown/" rel="tag">Markdown</a></li><li class="widget-tag-list-item"><a class="widget-tag-list-link" href="/tags/Microsoft/" rel="tag">Microsoft</a></li><li class="widget-tag-list-item"><a class="widget-tag-list-link" href="/tags/Starfield/" rel="tag">Starfield</a></li><li class="widget-tag-list-item"><a class="widget-tag-list-link" href="/tags/Terminal/" rel="tag">Terminal</a></li><li class="widget-tag-list-item"><a class="widget-tag-list-link" href="/tags/beszel/" rel="tag">beszel</a></li><li class="widget-tag-list-item"><a class="widget-tag-list-link" href="/tags/docker/" rel="tag">docker</a></li><li class="widget-tag-list-item"><a class="widget-tag-list-link" href="/tags/office/" rel="tag">office</a></li><li class="widget-tag-list-item"><a class="widget-tag-list-link" href="/tags/%E6%98%BE%E7%A4%BA%E5%99%A8/" rel="tag">显示器</a></li><li class="widget-tag-list-item"><a class="widget-tag-list-link" href="/tags/%E8%BE%90%E5%B0%844/" rel="tag">辐射4</a></li></ul>
+    </div>
+  </div>
+
+
+    
+  </div>
+</sidebar>
+    </div>
+    <div id="content-body">
+       
+
+
+<article id="post-nextcloud" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  
+    
+   
+  <div class="article-inner">
+    <div class="article-main">
+      <header class="article-header">
+        
+<div class="main-title-bar">
+  <div class="main-title-dot"></div>
+  
+    
+      <h1 class="p-name article-title" itemprop="headline name">
+        Nextcloud docker部署 (自用)
+      </h1>
+    
+  
+</div>
+
+        <div class='meta-info-bar'>
+          <div class="meta-info">
+  <time class="dt-published" datetime="2024-12-21T16:29:30.000Z" itemprop="datePublished">2024-12-22</time>
+</div>
+          <div class="need-seperator meta-info">
+            <div class="meta-cate-flex">
+  
+    Uncategorized 
+   
+</div>
+  
+          </div>
+          <div class="wordcount need-seperator meta-info">
+            6.9k words 
+          </div>
+        </div>
+        
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/docker/" rel="tag">docker</a></li></ul>
+
+      </header>
+      <div class="e-content article-entry" itemprop="articleBody">
+        
+          <h1 id="Nextcloud-docker部署-自用"><a href="#Nextcloud-docker部署-自用" class="headerlink" title="Nextcloud docker部署 (自用)"></a><del>Nextcloud docker部署 (自用)</del></h1><h2 id="使用环境"><a href="#使用环境" class="headerlink" title="使用环境"></a>使用环境</h2><p>机器: Mac Mini M4</p>
+<p>OS: MacOS Sequoia</p>
+<p>容器: Orb Stack</p>
+<h2 id="配置文件"><a href="#配置文件" class="headerlink" title="配置文件"></a>配置文件</h2><h3 id="docker-compose-yaml"><a href="#docker-compose-yaml" class="headerlink" title="docker-compose.yaml"></a>docker-compose.yaml</h3><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br></pre></td><td class="code"><pre><code class="hljs yaml"><span class="hljs-attr">services:</span><br>  <span class="hljs-attr">app:</span><br>    <span class="hljs-attr">image:</span> <span class="hljs-string">nextcloud:latest</span><br>    <span class="hljs-attr">volumes:</span><br>      <span class="hljs-bullet">-</span> <span class="hljs-string">nextcloud:/var/www/html</span><br>      <span class="hljs-bullet">-</span> <span class="hljs-string">./config/config.php:/var/www/html/config/config.php</span><br>    <span class="hljs-attr">environment:</span><br>      <span class="hljs-bullet">-</span> <span class="hljs-string">MYSQL_DATABASE=nextcloud</span><br>      <span class="hljs-bullet">-</span> <span class="hljs-string">MYSQL_USER=nextcloud</span><br>      <span class="hljs-bullet">-</span> <span class="hljs-string">MYSQL_PASSWORD=your_db_password</span><br>      <span class="hljs-bullet">-</span> <span class="hljs-string">MYSQL_HOST=db</span><br>      <span class="hljs-bullet">-</span> <span class="hljs-string">REDIS_HOST=redis</span><br>      <span class="hljs-bullet">-</span> <span class="hljs-string">REDIS_HOST_PASSWORD=your_redis_password</span><br>      <span class="hljs-bullet">-</span> <span class="hljs-string">NEXTCLOUD_TRUSTED_DOMAINS=localhost</span><br>    <span class="hljs-attr">command:</span> <span class="hljs-string">&gt;</span><br><span class="hljs-string">      sh -c &quot;</span><br><span class="hljs-string">      chmod -R 755 /var/www/html/config &amp;&amp;</span><br><span class="hljs-string">      chown -R www-data:www-data /var/www/html/config &amp;&amp;</span><br><span class="hljs-string">      chown -R www-data:www-data /var/www/html/apps &amp;&amp;</span><br><span class="hljs-string">      su -s /bin/bash www-data -c &#x27;php occ upgrade&#x27; &amp;&amp;</span><br><span class="hljs-string">      apache2-foreground</span><br><span class="hljs-string">      &quot;</span><br><span class="hljs-string"></span>    <span class="hljs-attr">depends_on:</span> <br>      <span class="hljs-bullet">-</span> <span class="hljs-string">db</span><br>      <span class="hljs-bullet">-</span> <span class="hljs-string">redis</span><br>      <span class="hljs-bullet">-</span> <span class="hljs-string">nginx</span><br>  <br>  <span class="hljs-attr">db:</span><br>    <span class="hljs-attr">image:</span> <span class="hljs-string">mariadb:11.4.4-ubi9</span><br>    <span class="hljs-attr">environment:</span><br>      <span class="hljs-attr">MYSQL_ROOT_PASSWORD:</span> <span class="hljs-string">your_root_password</span><br>      <span class="hljs-attr">MYSQL_DATABASE:</span> <span class="hljs-string">nextcloud</span><br>      <span class="hljs-attr">MYSQL_USER:</span> <span class="hljs-string">nextcloud</span><br>      <span class="hljs-attr">MYSQL_PASSWORD:</span> <span class="hljs-string">your_db_password</span><br>    <span class="hljs-attr">volumes:</span><br>      <span class="hljs-bullet">-</span> <span class="hljs-string">db:/var/lib/mysql</span><br>    <span class="hljs-attr">restart:</span> <span class="hljs-string">always</span><br><br>  <span class="hljs-attr">redis:</span><br>    <span class="hljs-attr">image:</span> <span class="hljs-string">redis:alpine</span><br>    <span class="hljs-attr">command:</span> <span class="hljs-string">redis-server</span> <span class="hljs-string">--requirepass</span> <span class="hljs-string">your_redis_password</span><br>    <span class="hljs-attr">restart:</span> <span class="hljs-string">always</span><br>    <span class="hljs-attr">environment:</span><br>      <span class="hljs-bullet">-</span> <span class="hljs-string">REDIS_PASSWORD=your_redis_password</span><br>    <span class="hljs-attr">volumes:</span><br>      <span class="hljs-bullet">-</span> <span class="hljs-string">redis:/data</span><br><br>  <span class="hljs-attr">nginx:</span><br>    <span class="hljs-attr">image:</span> <span class="hljs-string">nginx:latest</span><br>    <span class="hljs-attr">container_name:</span> <span class="hljs-string">nginx</span><br>    <span class="hljs-attr">restart:</span> <span class="hljs-string">always</span><br>    <span class="hljs-attr">ports:</span><br>      <span class="hljs-bullet">-</span> <span class="hljs-string">&quot;80:80&quot;</span>   <span class="hljs-comment"># 映射标准 HTTP 端口</span><br>      <span class="hljs-bullet">-</span> <span class="hljs-string">&quot;443:443&quot;</span> <span class="hljs-comment"># 映射标准 HTTPS 端口</span><br>    <span class="hljs-attr">volumes:</span><br>      <span class="hljs-bullet">-</span> <span class="hljs-string">./nginx/nginx.conf:/etc/nginx/nginx.conf</span><br>      <span class="hljs-bullet">-</span> <span class="hljs-string">./nginx/ssl/origin.pem:/etc/nginx/ssl/origin.pem</span><br>      <span class="hljs-bullet">-</span> <span class="hljs-string">./nginx/ssl/origin-key.pem:/etc/nginx/ssl/origin-key.pem</span><br><br><span class="hljs-attr">volumes:</span><br>  <span class="hljs-attr">nextcloud:</span><br>  <span class="hljs-attr">db:</span><br>  <span class="hljs-attr">redis:</span><br></code></pre></td></tr></table></figure>
+
+<p>ps. 应该还要配置cron, 晚点继续研究</p>
+<h3 id="nginx-conf"><a href="#nginx-conf" class="headerlink" title="nginx.conf"></a>nginx.conf</h3><figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br></pre></td><td class="code"><pre><code class="hljs nginx"><span class="hljs-comment"># nginx.conf 文件的基本结构</span><br><br><span class="hljs-attribute">user</span>  nginx;<br><span class="hljs-attribute">worker_processes</span>  <span class="hljs-number">1</span>;<br><br><span class="hljs-comment"># 事件配置</span><br><span class="hljs-section">events</span> &#123;<br>    <span class="hljs-attribute">worker_connections</span> <span class="hljs-number">1024</span>;<br>&#125;<br><br><span class="hljs-section">http</span> &#123;<br>    <span class="hljs-attribute">include</span>       mime.types;<br>    <span class="hljs-attribute">default_type</span>  application/octet-stream;<br><br>    <span class="hljs-comment"># 日志格式</span><br>    <span class="hljs-attribute">access_log</span>  /var/log/nginx/access.log;<br>    <span class="hljs-attribute">error_log</span>   /var/log/nginx/<span class="hljs-literal">error</span>.log;<br><br>    <span class="hljs-comment"># 配置 HTTP 相关设置</span><br>    <span class="hljs-attribute">sendfile</span>        <span class="hljs-literal">on</span>;<br>    <span class="hljs-attribute">tcp_nopush</span>      <span class="hljs-literal">on</span>;<br>    <span class="hljs-attribute">tcp_nodelay</span>     <span class="hljs-literal">on</span>;<br>    <span class="hljs-attribute">keepalive_timeout</span>  <span class="hljs-number">65</span>;<br>    <span class="hljs-attribute">types_hash_max_size</span> <span class="hljs-number">2048</span>;<br><br>    <span class="hljs-comment"># 这里开始是你的 server 配置块</span><br>    <span class="hljs-section">server</span> &#123;<br>        <span class="hljs-attribute">listen</span> <span class="hljs-number">80</span>;<br>        <span class="hljs-attribute">server_name</span> your.domain.com;<br><br>        <span class="hljs-comment"># 强制重定向到 HTTPS</span><br>        <span class="hljs-attribute">return</span> <span class="hljs-number">301</span> https://<span class="hljs-variable">$host</span><span class="hljs-variable">$request_uri</span>;<br>    &#125;<br><br>    <span class="hljs-section">server</span> &#123;<br>        <span class="hljs-attribute">listen</span> <span class="hljs-number">443</span> ssl;<br>        <span class="hljs-attribute">server_name</span> your.domain.com;<br><br>        <span class="hljs-comment"># SSL 配置</span><br>        <span class="hljs-attribute">ssl_certificate</span> /etc/nginx/ssl/origin.pem;<br>        <span class="hljs-attribute">ssl_certificate_key</span> /etc/nginx/ssl/origin-key.pem;<br><br>        <span class="hljs-attribute">ssl_protocols</span> TLSv1.<span class="hljs-number">2</span> TLSv1.<span class="hljs-number">3</span>;<br>        <span class="hljs-attribute">ssl_ciphers</span> <span class="hljs-string">&#x27;ECDHE-ECDSA-AES128-GCM-SHA256:...&#x27;</span>;  <span class="hljs-comment"># 可根据需要调整</span><br>    <br><br>        <span class="hljs-comment"># 启用 HSTS (Strict-Transport-Security)</span><br>        <span class="hljs-attribute">add_header</span> Strict-Transport-Security <span class="hljs-string">&quot;max-age=15552000; includeSubDomains&quot;</span> always;<br><br>        <span class="hljs-comment"># 设置反向代理到 Nextcloud 容器（app）</span><br>        <span class="hljs-section">location</span> / &#123;<br>            <span class="hljs-attribute">proxy_pass</span> http://app:80;  <span class="hljs-comment"># 反向代理到 Nextcloud 容器的 80 端口</span><br>            <span class="hljs-attribute">proxy_set_header</span> Host <span class="hljs-variable">$host</span>;<br>            <span class="hljs-attribute">proxy_set_header</span> X-Real-IP <span class="hljs-variable">$remote_addr</span>;<br>            <span class="hljs-attribute">proxy_set_header</span> X-Forwarded-For <span class="hljs-variable">$proxy_add_x_forwarded_for</span>;<br>            <span class="hljs-attribute">proxy_set_header</span> X-Forwarded-Proto <span class="hljs-variable">$scheme</span>;<br><br>            <span class="hljs-comment"># 适用于 WebSocket 和 Nextcloud 的一些优化</span><br>            <span class="hljs-attribute">proxy_http_version</span> <span class="hljs-number">1</span>.<span class="hljs-number">1</span>;<br>            <span class="hljs-attribute">proxy_set_header</span> Upgrade <span class="hljs-variable">$http_upgrade</span>;<br>            <span class="hljs-attribute">proxy_set_header</span> Connection <span class="hljs-string">&#x27;upgrade&#x27;</span>;<br>        &#125;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>写完上面的yaml文件后, <code>docker-compose pull</code> 拉取镜像, 继续配置nginx.conf, 启动容器<code>docker-compose up -d</code></p>
+<h3 id="var-www-html-config-config-php"><a href="#var-www-html-config-config-php" class="headerlink" title="&#x2F;var&#x2F;www&#x2F;html&#x2F;config&#x2F;config.php"></a>&#x2F;var&#x2F;www&#x2F;html&#x2F;config&#x2F;config.php</h3><p>下面这个配置文件可以考虑外挂在物理机上, 覆盖容器内的文件</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span><br><span class="hljs-variable">$CONFIG</span> = <span class="hljs-keyword">array</span> (<br>  <span class="hljs-string">&#x27;htaccess.RewriteBase&#x27;</span> =&gt; <span class="hljs-string">&#x27;/&#x27;</span>,<br>  <span class="hljs-string">&#x27;memcache.local&#x27;</span> =&gt; <span class="hljs-string">&#x27;\\OC\\Memcache\\APCu&#x27;</span>,<br>  <span class="hljs-string">&#x27;apps_paths&#x27;</span> =&gt; <br>  <span class="hljs-keyword">array</span> (<br>    <span class="hljs-number">0</span> =&gt; <br>    <span class="hljs-keyword">array</span> (<br>      <span class="hljs-string">&#x27;path&#x27;</span> =&gt; <span class="hljs-string">&#x27;/var/www/html/apps&#x27;</span>,<br>      <span class="hljs-string">&#x27;url&#x27;</span> =&gt; <span class="hljs-string">&#x27;/apps&#x27;</span>,<br>      <span class="hljs-string">&#x27;writable&#x27;</span> =&gt; <span class="hljs-literal">false</span>,<br>    ),<br>    <span class="hljs-number">1</span> =&gt; <br>    <span class="hljs-keyword">array</span> (<br>      <span class="hljs-string">&#x27;path&#x27;</span> =&gt; <span class="hljs-string">&#x27;/var/www/html/custom_apps&#x27;</span>,<br>      <span class="hljs-string">&#x27;url&#x27;</span> =&gt; <span class="hljs-string">&#x27;/custom_apps&#x27;</span>,<br>      <span class="hljs-string">&#x27;writable&#x27;</span> =&gt; <span class="hljs-literal">true</span>,<br>    ),<br>  ),<br>  <span class="hljs-string">&#x27;memcache.distributed&#x27;</span> =&gt; <span class="hljs-string">&#x27;\\OC\\Memcache\\Redis&#x27;</span>,<br>  <span class="hljs-string">&#x27;memcache.locking&#x27;</span> =&gt; <span class="hljs-string">&#x27;\\OC\\Memcache\\Redis&#x27;</span>,<br>  <span class="hljs-string">&#x27;redis&#x27;</span> =&gt; <br>  <span class="hljs-keyword">array</span> (<br>    <span class="hljs-string">&#x27;host&#x27;</span> =&gt; <span class="hljs-string">&#x27;redis&#x27;</span>,<br>    <span class="hljs-string">&#x27;password&#x27;</span> =&gt; <span class="hljs-string">&#x27;your_redis_password&#x27;</span>,<br>    <span class="hljs-string">&#x27;port&#x27;</span> =&gt; <span class="hljs-number">6379</span>,<br>  ),<br>  <span class="hljs-string">&#x27;upgrade.disable-web&#x27;</span> =&gt; <span class="hljs-literal">true</span>,<br>  <span class="hljs-string">&#x27;instanceid&#x27;</span> =&gt; <span class="hljs-string">&#x27;&#x27;</span>,<br>  <span class="hljs-string">&#x27;passwordsalt&#x27;</span> =&gt; <span class="hljs-string">&#x27;&#x27;</span>,<br>  <span class="hljs-string">&#x27;secret&#x27;</span> =&gt; <span class="hljs-string">&#x27;&#x27;</span>,<br>  <span class="hljs-string">&#x27;trusted_domains&#x27;</span> =&gt; <br>  <span class="hljs-keyword">array</span> (<br>    <span class="hljs-number">0</span> =&gt; <span class="hljs-string">&#x27;localhost&#x27;</span>,<br>    <span class="hljs-number">1</span> =&gt; <span class="hljs-string">&#x27;https://your.domain.com&#x27;</span>,<br>  ),<br>  <span class="hljs-string">&#x27;datadirectory&#x27;</span> =&gt; <span class="hljs-string">&#x27;/var/www/html/data&#x27;</span>,<br>  <span class="hljs-string">&#x27;dbtype&#x27;</span> =&gt; <span class="hljs-string">&#x27;mysql&#x27;</span>,<br>  <span class="hljs-string">&#x27;version&#x27;</span> =&gt; <span class="hljs-string">&#x27;30.0.4.1&#x27;</span>,<br>  <span class="hljs-string">&#x27;overwriteprotocol&#x27;</span> =&gt; <span class="hljs-string">&#x27;https&#x27;</span>,<br>  <span class="hljs-string">&#x27;overwrite.cli.url&#x27;</span> =&gt; <span class="hljs-string">&#x27;https://your.domain.com&#x27;</span>,<br>  <span class="hljs-string">&#x27;dbname&#x27;</span> =&gt; <span class="hljs-string">&#x27;nextcloud&#x27;</span>,<br>  <span class="hljs-string">&#x27;dbhost&#x27;</span> =&gt; <span class="hljs-string">&#x27;db&#x27;</span>,<br>  <span class="hljs-string">&#x27;dbport&#x27;</span> =&gt; <span class="hljs-string">&#x27;&#x27;</span>,<br>  <span class="hljs-string">&#x27;dbtableprefix&#x27;</span> =&gt; <span class="hljs-string">&#x27;oc_&#x27;</span>,<br>  <span class="hljs-string">&#x27;mysql.utf8mb4&#x27;</span> =&gt; <span class="hljs-literal">true</span>,<br>  <span class="hljs-string">&#x27;dbuser&#x27;</span> =&gt; <span class="hljs-string">&#x27;nextcloud&#x27;</span>,<br>  <span class="hljs-string">&#x27;dbpassword&#x27;</span> =&gt; <span class="hljs-string">&#x27;your_db_password&#x27;</span>,<br>  <span class="hljs-string">&#x27;installed&#x27;</span> =&gt; <span class="hljs-literal">true</span>,<br>  <span class="hljs-string">&#x27;config_is_read_only&#x27;</span> =&gt; <span class="hljs-literal">false</span>,<br>  <span class="hljs-string">&#x27;default_language&#x27;</span> =&gt; <span class="hljs-string">&#x27;CN&#x27;</span>,<br>  <span class="hljs-string">&#x27;default_phone_region&#x27;</span> =&gt; <span class="hljs-string">&#x27;CN&#x27;</span>,<br>  <span class="hljs-string">&#x27;mail_smtpmode&#x27;</span> =&gt; <span class="hljs-string">&#x27;smtp&#x27;</span>,<br>  <span class="hljs-string">&#x27;mail_sendmailmode&#x27;</span> =&gt; <span class="hljs-string">&#x27;smtp&#x27;</span>,<br>  <span class="hljs-string">&#x27;mail_smtphost&#x27;</span> =&gt; <span class="hljs-string">&#x27;smtp.domain.com&#x27;</span>,<br>  <span class="hljs-string">&#x27;mail_smtpport&#x27;</span> =&gt; <span class="hljs-string">&#x27;587&#x27;</span>,<br>  <span class="hljs-string">&#x27;mail_from_address&#x27;</span> =&gt; <span class="hljs-string">&#x27;name&#x27;</span>,<br>  <span class="hljs-string">&#x27;mail_domain&#x27;</span> =&gt; <span class="hljs-string">&#x27;mail.com&#x27;</span>,<br>  <span class="hljs-string">&#x27;mail_smtpauth&#x27;</span> =&gt; <span class="hljs-number">1</span>,<br>  <span class="hljs-string">&#x27;mail_smtpname&#x27;</span> =&gt; <span class="hljs-string">&#x27;name@mail.com&#x27;</span>,<br>  <span class="hljs-string">&#x27;mail_smtppassword&#x27;</span> =&gt; <span class="hljs-string">&#x27;passwd&#x27;</span>,<br>  <span class="hljs-string">&#x27;defaultapp&#x27;</span> =&gt; <span class="hljs-string">&#x27;&#x27;</span>,<br>  <span class="hljs-string">&#x27;loglevel&#x27;</span> =&gt; <span class="hljs-number">2</span>,<br>  <span class="hljs-string">&#x27;maintenance&#x27;</span> =&gt; <span class="hljs-literal">false</span>,<br>  <span class="hljs-string">&#x27;appstoreenabled&#x27;</span> =&gt; <span class="hljs-literal">false</span>,<br>);<br><br></code></pre></td></tr></table></figure>
+
+<h2 id="怎么数据备份"><a href="#怎么数据备份" class="headerlink" title="怎么数据备份?"></a>怎么数据备份?</h2><p>数据存放的数据卷<code>nextcloud_nextcloud</code>中, <code>/var/www/html/_data</code>目录下, 考虑以下脚本备份</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><code class="hljs sh"><span class="hljs-comment"># backup_orbstack_volumes.sh</span><br><br><span class="hljs-comment">#!/bin/bash</span><br><br><span class="hljs-comment"># 设置路径</span><br>SOURCE_DIR=<span class="hljs-string">&quot;<span class="hljs-variable">$HOME</span>/OrbStack/docker/volumes&quot;</span><br>BACKUP_DIR=<span class="hljs-string">&quot;<span class="hljs-variable">$HOME</span>/Backup/OrbStack&quot;</span><br>SCRIPT_DIR=<span class="hljs-string">&quot;<span class="hljs-variable">$BACKUP_DIR</span>&quot;</span><br>DATE=$(<span class="hljs-built_in">date</span> +<span class="hljs-string">&quot;%Y-%m-%d_%H-%M-%S&quot;</span>)<br>BACKUP_FILE=<span class="hljs-string">&quot;<span class="hljs-variable">$&#123;BACKUP_DIR&#125;</span>/orbstack_volumes_backup_<span class="hljs-variable">$&#123;DATE&#125;</span>.tar.gz&quot;</span><br><br><span class="hljs-comment"># 检查目标备份目录是否存在</span><br><span class="hljs-keyword">if</span> [ ! -d <span class="hljs-string">&quot;<span class="hljs-variable">$&#123;BACKUP_DIR&#125;</span>&quot;</span> ]; <span class="hljs-keyword">then</span><br>    <span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;目标备份目录不存在，创建中...&quot;</span><br>    <span class="hljs-built_in">mkdir</span> -p <span class="hljs-string">&quot;<span class="hljs-variable">$&#123;BACKUP_DIR&#125;</span>&quot;</span><br><span class="hljs-keyword">fi</span><br><br><span class="hljs-comment"># 计算数据大小</span><br><span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;正在计算待备份目录的大小...&quot;</span><br>TOTAL_SIZE=$(gfind <span class="hljs-string">&quot;<span class="hljs-variable">$&#123;SOURCE_DIR&#125;</span>&quot;</span> -<span class="hljs-built_in">type</span> f -<span class="hljs-built_in">exec</span> <span class="hljs-built_in">stat</span> -f <span class="hljs-string">&quot;%z&quot;</span> &#123;&#125; + | awk <span class="hljs-string">&#x27;&#123;s+=$1&#125; END &#123;print s&#125;&#x27;</span>)<br><br><span class="hljs-keyword">if</span> [ -z <span class="hljs-string">&quot;<span class="hljs-variable">$&#123;TOTAL_SIZE&#125;</span>&quot;</span> ] || [ <span class="hljs-string">&quot;<span class="hljs-variable">$&#123;TOTAL_SIZE&#125;</span>&quot;</span> -eq 0 ]; <span class="hljs-keyword">then</span><br>    <span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;无法计算目录大小或目录为空，请检查路径：<span class="hljs-variable">$&#123;SOURCE_DIR&#125;</span>&quot;</span><br>    <span class="hljs-built_in">exit</span> 1<br><span class="hljs-keyword">fi</span><br><br><span class="hljs-comment"># 备份数据卷</span><br><span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;开始备份 OrbStack volumes（共 <span class="hljs-subst">$(echo $&#123;TOTAL_SIZE&#125; | numfmt --to=iec)</span>）...&quot;</span><br>tar -cf - -C <span class="hljs-string">&quot;<span class="hljs-variable">$&#123;SOURCE_DIR&#125;</span>&quot;</span> . | pv -s <span class="hljs-string">&quot;<span class="hljs-variable">$&#123;TOTAL_SIZE&#125;</span>&quot;</span> | gzip &gt; <span class="hljs-string">&quot;<span class="hljs-variable">$&#123;BACKUP_FILE&#125;</span>&quot;</span><br><br><span class="hljs-keyword">if</span> [ $? -eq 0 ]; <span class="hljs-keyword">then</span><br>    <span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;备份完成！文件已保存至：<span class="hljs-variable">$&#123;BACKUP_FILE&#125;</span>&quot;</span><br><span class="hljs-keyword">else</span><br>    <span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;备份失败，请检查错误信息。&quot;</span><br>    <span class="hljs-built_in">exit</span> 1<br><span class="hljs-keyword">fi</span><br><br><span class="hljs-comment"># 删除超过 30 天的备份文件</span><br><span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;清理超过 30 天的备份文件...&quot;</span><br>find <span class="hljs-string">&quot;<span class="hljs-variable">$&#123;BACKUP_DIR&#125;</span>&quot;</span> -<span class="hljs-built_in">type</span> f -name <span class="hljs-string">&quot;orbstack_volumes_backup_*.tar.gz&quot;</span> -mtime +30 -<span class="hljs-built_in">exec</span> <span class="hljs-built_in">rm</span> -v &#123;&#125; \;<br><span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;清理完成！&quot;</span><br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>以上脚本均由ChatGPT 生成, 我非常感谢他~</p>
+<p>ps. 太难用了, 转投pydio cells了</p>
+</blockquote>
+
+        
+      </div>
+
+         
+    </div>
+    
+     
+  </div>
+  
+    
+<nav id="article-nav">
+  <a class="article-nav-btn left "
+    
+      href="/posts/undefined.html"
+      title="远程连接到MacOS 不卡顿的方法"
+     >
+    <i class="fa-solid fa-angle-left"></i>
+    <p class="title-text">
+      
+        远程连接到MacOS 不卡顿的方法
+        
+    </p>
+  </a>
+  <a class="article-nav-btn right "
+    
+      href="/posts/d94ea7aa.html"
+      title="在docker compose 部署beszel 面板"
+     >
+
+    <p class="title-text">
+      
+        在docker compose 部署beszel 面板
+        
+    </p>
+    <i class="fa-solid fa-angle-right"></i>
+  </a>
+</nav>
+
+
+  
+</article>
+
+
+
+
+
+
+    </div>
+    <div id="footer-wrapper">
+      <footer id="footer">
+  
+  <div id="footer-info" class="inner">
+    
+    &copy; 2025 Jianlong Liu<br>
+    Powered by <a href="https://hexo.io/" target="_blank">Hexo</a> & Theme <a target="_blank" rel="noopener" href="https://github.com/saicaca/hexo-theme-vivia">Vivia</a>
+  </div>
+</footer>
+
+    </div>
+    <div class="back-to-top-wrapper">
+    <button id="back-to-top-btn" class="back-to-top-btn hide" onclick="topFunction()">
+        <i class="fa-solid fa-angle-up"></i>
+    </button>
+</div>
+
+<script>
+    function topFunction() {
+        window.scroll({ top: 0, behavior: 'smooth' });
+    }
+    let btn = document.getElementById('back-to-top-btn');
+    function scrollFunction() {
+        if (document.body.scrollTop > 600 || document.documentElement.scrollTop > 600) {
+            btn.classList.remove('hide')
+        } else {
+            btn.classList.add('hide')
+        }
+    }
+    window.onscroll = function() {
+        scrollFunction();
+    }
+</script>
+
+  </div>
+  <script src="/js/light-dark-switch.js"></script>
+</body>
+</html>
