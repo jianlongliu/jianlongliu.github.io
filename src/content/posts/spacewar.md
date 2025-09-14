@@ -3,14 +3,12 @@
 title: Nothing Phone (1) 使用Custom ROM和恢复官方系统
 published: 2023-02-20 21:46:35
 description: ''
-image: ''
+image: 'https://nothing-intl.myshopify.com/cdn/shop/files/Support_centre_title_update-_2160x1200_b73d0141-e403-4c3e-939d-70a0d78f15aa_3840x.jpg?v=1694490156'
 tags: [Android]
 category: ''
 draft: false 
 lang: ''
 ---
-
-![](https://nothing-intl.myshopify.com/cdn/shop/files/Support_centre_title_update-_2160x1200_b73d0141-e403-4c3e-939d-70a0d78f15aa_3840x.jpg?v=1694490156)
 
 ## 从Nothing OS 到 Custom ROM
 
@@ -34,7 +32,7 @@ lang: ''
   
   * 前置module 需要`protobuf`, `six `, `bsdiff4`
     
-    ```pip
+    ```bash
     pip install protobuf==3.15.0
     pip install six
     pip install bsdiff4
@@ -58,7 +56,7 @@ lang: ''
 
 * 刷入两个镜像进入recovery
   
-  ```fastboot
+  ```bash
   fastboot flash boot boot.img
   fastboot flash vendor_boot vendor.img
   ```
@@ -75,7 +73,7 @@ lang: ''
 
 ### 跳过原厂验证
 
-```fastboot
+```bash
 fastboot --disable-verity --disable-verification flash vbmeta vbmeta.img
 ```
 

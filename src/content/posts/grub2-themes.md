@@ -1,9 +1,9 @@
 ---
 title: 如何修改 Grub2主题?
 published: 2024-08-31 17:56:51
-description: This post demonstrates how to include embedded video in a blog post.
 tags: [Linux]
 category: Documents
+image: 'https://github.com/voidlhf/StarRailGrubThemes/raw/master/preview/Hysilens.png'
 draft: false
 ---
 

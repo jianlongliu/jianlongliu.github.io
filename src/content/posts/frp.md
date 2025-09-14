@@ -32,7 +32,7 @@ compress = true        #压缩
 
 手动创建 `sudo touch /etc/systemd/system/frps.service`
 
-```frps.service
+```service
 [Unit]
 Description=frp server
 After=network.target syslog.target
@@ -48,7 +48,7 @@ WantedBy=multi-user.target
 
  随开机自启动和手动启动`frps.service`
 
-```bash
+```service
 systemctl enable frps
 systemctl start frps
 ```

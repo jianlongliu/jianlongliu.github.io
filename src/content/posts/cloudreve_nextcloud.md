@@ -2,7 +2,7 @@
 title: '部署cloudreve和nextcloud 网盘'
 published: 2023-07-02 21:25:51
 description: ''
-image: 'https://gd-hbimg.huaban.com/913d6eefa0afa852ec7a7968f25848b5e8ac076f6ed7-qZZ1sC_fw658'
+image: ''
 tags: [office]
 category: 'Documents'
 draft: false 

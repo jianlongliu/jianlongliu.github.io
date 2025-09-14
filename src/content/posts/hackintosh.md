@@ -2,7 +2,7 @@
 title: Hackintosh 黑苹果安装配置指引 (自用)
 published: 2024-11-02 21:25:51
 description: ''
-image: 'https://gd-hbimg.huaban.com/913d6eefa0afa852ec7a7968f25848b5e8ac076f6ed7-qZZ1sC_fw658'
+image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ_b1Nmxsrk1mvi_fxqP03AHLyWLIsyViavNnnoIKo9JmqefBAMAw1T8FitrTjpi7lNu78&usqp=CAU'
 tags: [MacOS, Hackintosh]
 category: 'Documents'
 draft: false 
