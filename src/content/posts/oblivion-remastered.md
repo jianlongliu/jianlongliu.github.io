@@ -2,7 +2,7 @@
 title: 'The Elder Scroll: Oblivion Remastered 早期版本MOD优化修复'
 published: 2025-05-18 17:28:31
 description: ''
-image: ''
+image: 'https://staticdelivery.nexusmods.com/images/7587/93362-1746042912.jpg'
 tags: [OblivionRemastered]
 category: 'Game'
 draft: false 
