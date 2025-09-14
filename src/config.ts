@@ -59,8 +59,6 @@ export const navBarConfig: NavBarConfig = {
 			url: "https://cells.beckenbauer.icu", // Internal links should not include the base path, as it is automatically added
 			external: true, // Show an external link icon and will open in a new tab
 		},
-		
-		
 	],
 };
 
