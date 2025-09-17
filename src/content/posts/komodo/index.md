@@ -2,7 +2,7 @@
 title: Pixel 9 Pro XL (Komodo) 入门指南（自用）
 published: 2025-09-11 00:30:41
 description: ''
-image: ''
+image: './komodo.webp'
 tags: [Android]
 category: ''
 draft: false 
