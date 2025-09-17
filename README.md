@@ -2,7 +2,9 @@
 
 基于 [Astro](https://astro.build) 开发的静态博客模板。
 
-[**🖥️在线预览（Vercel）**](https://jianlongliu.netlify.app)
+[**🖥️在线预览(Github)**](https://jianlongliu.github.io)
+
+[**🖥️在线预览(Netlify)**](https://jianlongliu.netlify.app)
 
 ![Preview Image](https://raw.githubusercontent.com/saicaca/resource/main/fuwari/home.png)
 
