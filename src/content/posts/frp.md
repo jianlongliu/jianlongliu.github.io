@@ -6,8 +6,6 @@ category: Documents
 draft: false
 ---
 
-
-
     frp 是一个专注于内网穿透的高性能的反向代理应用，支持 TCP, UDP, HTTP, HTTPS 等多种协议. 可以将内网服务以安全, 便捷的方式通过具有公网 IP 节点的中转暴露到公网.
 
 >  下载地址: https://github.com/fatedier/frp/releases
@@ -32,7 +30,7 @@ compress = true        #压缩
 
 手动创建 `sudo touch /etc/systemd/system/frps.service`
 
-```service
+```
 [Unit]
 Description=frp server
 After=network.target syslog.target
@@ -48,7 +46,7 @@ WantedBy=multi-user.target
 
  随开机自启动和手动启动`frps.service`
 
-```service
+```
 systemctl enable frps
 systemctl start frps
 ```
