@@ -4,7 +4,7 @@ published: 2024-09-11 00:30:41
 description: ''
 image: ''
 tags: [Linux, FireFox]
-category: 'Documents'
+category: 'IT'
 draft: false 
 lang: ''
 ---

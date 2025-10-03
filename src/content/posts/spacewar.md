@@ -5,7 +5,7 @@ published: 2023-02-20 21:46:35
 description: ''
 image: 'https://nothing-intl.myshopify.com/cdn/shop/files/Support_centre_title_update-_2160x1200_b73d0141-e403-4c3e-939d-70a0d78f15aa_3840x.jpg?v=1694490156'
 tags: [Android]
-category: 'Documents'
+category: 'IT'
 draft: false 
 lang: ''
 ---

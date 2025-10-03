@@ -3,14 +3,15 @@ title: '如何在EAS客户端配置hotmail 邮箱'
 published: 2023-02-20 23:13:48
 description: 怎么EAS配置hotmail
 tags: [Microsoft]
-category: Documents
+category: IT
 draft: false
 ---
 
 # 如何在EAS客户端配置hotmail 邮箱
 
+> ps. 对微软失望了，经常改来改去
 
-        因为EAS可以同步邮件, 日历和联系人，要比其他协议更方便在手机端或Windows端好用, 联系人也不会单向同步. 接下来是在office outlook, gmail 客户端配置EAS协议的hotmail.com, outlook.com 邮箱
+    因为EAS可以同步邮件, 日历和联系人，要比其他协议更方便在手机端或Windows端好用, 联系人也不会单向同步. 接下来是在office outlook, gmail 客户端配置EAS协议的hotmail.com, outlook.com 邮箱
 
 Exchange 服务器: `outlook.office365.com`  
 Exchange 端口: `443`  

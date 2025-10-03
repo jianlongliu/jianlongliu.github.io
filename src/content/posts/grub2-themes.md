@@ -2,7 +2,7 @@
 title: 如何修改 Grub2主题?
 published: 2024-08-31 17:56:51
 tags: [Linux]
-category: Documents
+category: IT
 image: 'https://github.com/voidlhf/StarRailGrubThemes/raw/master/preview/Hysilens.png'
 draft: false
 ---

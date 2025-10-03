@@ -2,7 +2,7 @@
 title: 在不同平台上使用Reader3 阅读
 published: 2023-10-01
 tags: [Android, Reading]
-category: Documents
+category: IT
 draft: false
 ---
 > 服务器端: Ubuntu Server 22.04  

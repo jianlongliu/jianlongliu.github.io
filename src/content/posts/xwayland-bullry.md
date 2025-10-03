@@ -3,7 +3,7 @@ title: xwayland 应用在Gnome 46开启分数缩放会模糊的临时解决方�
 tags: [Linux]
 published: 2024-05-28 10:09:12
 image: https://github.com/jianlongliu/picx-images-hosting/raw/master/Screenshot-from-2024-05-28-10-21-23.77de344ygv.webp
-category: Documents
+category: IT
 draft: false
 ---
 

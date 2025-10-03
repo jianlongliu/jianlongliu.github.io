@@ -4,7 +4,7 @@ published: 2023-03-22 14:15:18
 description: ''
 image: ''
 tags: [Android, Windows]
-category: 'Documents'
+category: 'IT'
 draft: false 
 lang: ''
 ---

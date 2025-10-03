@@ -4,7 +4,7 @@ published: 2023-03-25 12:56:10
 description: ''
 image: 'https://raw.githubusercontent.com/starship/starship/master/media/demo.gif'
 tags: [Terminal]
-category: 'Documents'
+category: 'IT'
 draft: false 
 lang: ''
 ---

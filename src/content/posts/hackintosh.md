@@ -4,7 +4,7 @@ published: 2024-11-02 21:25:51
 description: ''
 image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ_b1Nmxsrk1mvi_fxqP03AHLyWLIsyViavNnnoIKo9JmqefBAMAw1T8FitrTjpi7lNu78&usqp=CAU'
 tags: [MacOS, Hackintosh]
-category: 'Documents'
+category: 'IT'
 draft: false 
 lang: ''
 ---

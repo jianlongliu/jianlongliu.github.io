@@ -2,11 +2,11 @@
 title: 简单部署yourls短链接
 published: 2025-10-02
 description: ''
-image: ''
+image: 'https://d.jianl.dev/images/yourls-logo.svg?v=1.10.2'
 tags: [docker]
-category: 'Document'
+category: 'IT'
 draft: false 
-lang: 'zh_CN'
+lang: 'zh-CN'
 ---
 
 # 简单部署 YOURLS 短链接服务

@@ -4,7 +4,7 @@ published: 2023-02-23 21:37:56
 description: ''
 image: 'https://staticdelivery.nexusmods.com/mods/1151/images/68996/68996-1676955908-1247527835.png'
 tags: [Fallout 4]
-category: 'Mod'
+category: 'Game'
 draft: false 
 lang: ''
 ---

@@ -4,7 +4,7 @@ published: 2023-07-02 21:25:51
 description: ''
 image: ''
 tags: [office]
-category: 'Documents'
+category: 'IT'
 draft: false 
 lang: ''
 ---

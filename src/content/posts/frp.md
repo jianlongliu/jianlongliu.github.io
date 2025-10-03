@@ -2,7 +2,7 @@
 title: '基于 FRP 的微软远程协助简单实现'
 published: 2024-08-31 17:56:51
 tags: [Linux, remote]
-category: Documents
+category: IT
 draft: false
 ---
 

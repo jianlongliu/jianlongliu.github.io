@@ -4,7 +4,7 @@ published: 2023-09-16 19:00:56
 description: ''
 image: 'https://images.ctfassets.net/rporu91m20dc/18e7duUXmbZeBXV20BwJ5y/2ca09e1d133634db3bacbadb715be173/ShatteredSpace_LargeHero_LaunchTrailer.jpg'
 tags: [Starfield]
-category: 'Mod'
+category: 'Game'
 draft: false 
 lang: ''
 ---

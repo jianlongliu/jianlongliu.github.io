@@ -3,7 +3,7 @@ title: 辐射4 2023年MOD 安装推荐和优化Modlist (自用)
 tags: [Fallout 4, Game, Mod]
 published: 2023-02-13 14:28:06
 image: 'https://staticdelivery.nexusmods.com/images/1151/53202501-1758642335.png'
-category: Documents
+category: Game
 draft: false
 ---
 

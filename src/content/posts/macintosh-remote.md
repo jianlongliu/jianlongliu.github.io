@@ -4,7 +4,7 @@ published: 2025-09-27
 description: ''
 image: 'https://www.apple.com/v/mac-mini/aa/images/overview/welcome/hero_endframe__d9kro8y76v42_large.jpg'
 tags: [Mac]
-category: 'Documents'
+category: 'IT'
 draft: false 
 lang: 'zh-CN'
 ---

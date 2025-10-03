@@ -3,7 +3,7 @@ title: Quest Tags - FIS - Chinese Translation 简体中文翻译
 published: 2023-02-28 00:10:59
 description: ''
 tags: [Fallout 4]
-category: 'Mod'
+category: 'Game'
 draft: false 
 lang: ''
 ---

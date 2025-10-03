@@ -3,7 +3,7 @@ title: '非官方剧情DLC - The Machine, and her'
 published: 2023-12-24 00:58:17
 tags: [Fallout 4, Mod]
 image: 'https://staticdelivery.nexusmods.com/mods/1151/images/30488/30488-1566925894-1683144847.png'
-category: Documents
+category: Game
 draft: false
 ---
 

@@ -4,7 +4,7 @@ published: 2025-09-11 00:30:41
 description: ''
 image: './komodo.webp'
 tags: [Android]
-category: 'Documents'
+category: 'IT'
 draft: false 
 lang: ''
 ---

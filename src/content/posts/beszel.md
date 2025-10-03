@@ -4,7 +4,7 @@ published: 2024-11-14 10:28:49
 description: ''
 image: 'https://beszel.dev/image/home-dashboard.png'
 tags: [docker, beszel]
-category: 'Documents'
+category: 'IT'
 draft: false 
 lang: ''
 ---
