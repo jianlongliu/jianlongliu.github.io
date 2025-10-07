@@ -28,6 +28,8 @@ services:
       YOURLS_SITE: https://example.com   # 网站域名
       YOURLS_USER: example_username      # YOURLS 管理员账号
       YOURLS_PASS: example_password      # YOURLS 管理员密码
+    volumes:
+      - ./plugins:/var/www/html/user/plugins
 
   mysql:
     image: mysql
@@ -71,6 +73,9 @@ EXIT;
 ### 3. 完成安装
 
 访问 https://localhost:8080/admin 进入后台安装页面，使用配置的用户名和密码登录。
+
+### 4. 插件推荐
+* [YOURLS plugin : 404 if not found](https://github.com/YOURLS/404-if-not-found)
 
 ## 重要说明
 
