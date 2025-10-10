@@ -11,6 +11,7 @@ content:
     fields:
       - { name: title, label: Title, type: string, required: true }
       - { name: published, label: Published Date, type: datetime }
+      - { name: slug, label: URL Slug, type: string, required: true, hint: "用于生成文章URL，如: my-first-blog-post" }
       - { name: description, label: Description, type: string }
       - { name: image, label: Cover Image, type: image }
       - { name: tags, label: Tags, type: string, list: true }
