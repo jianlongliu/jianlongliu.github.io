@@ -8,7 +8,7 @@ tags:
 category: IT
 draft: false
 ---
-[\[项目地址\](https://github.com/pages-cms/pages-cms)](https://github.com/pages-cms/pages-cms)
+[项目地址](https://github.com/pages-cms/pages-cms)](https://github.com/pages-cms/pages-cms)
 
 在线链接 [https://app.pagescms.org](https://app.pagescms.org)
 
