@@ -9,16 +9,13 @@ content:
     view:
       fields: [ title, draft, date ]
     fields:
-      - { name: author, label: Author, type: string }
-      - { name: pubDatetime, label: Date, type: date }
-      - { name: modDatetime, label: Date, type: date }
       - { name: title, label: Title, type: string, required: true }
-      - { name: ogImage, label: Title, type: string }
-      - { name: slug, label: Slug, type: string }
-      - { name: featured, label: Featured, type: boolean }
-      - { name: draft, label: Draft, type: boolean }
-      - { name: tags, label: Tags, type: string, list: true }
+      - { name: published, label: Published Date, type: datetime }
       - { name: description, label: Description, type: string }
+      - { name: image, label: Cover Image, type: image }
+      - { name: tags, label: Tags, type: string, list: true }
+      - { name: category, label: Category, type: string }
+      - { name: draft, label: Draft, type: boolean, default: false }
       - { name: body, label: Body, type: rich-text }
   - name: about
     label: About page
