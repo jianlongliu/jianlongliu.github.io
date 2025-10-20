@@ -11,7 +11,7 @@ lang: ''
 
 # Pixel 9 Pro XL (Komodo) 入门指南（自用）
 
-## 1.启用国内三大运营商VoLTE和5G (适用于2025年9月谷歌更新)
+## 1.启用国内三大运营商VoLTE和5G
 
 需要用到的工具
 
@@ -24,7 +24,15 @@ plaform tools https://developer.android.com/tools/releases/platform-tools?hl=zh-
 安装打开shizuku并在无线调试配对，接下来安装打开Pixel IMS 勾选VoLTE, Vo5G 即可.   
 冬尽了@bilibili的视频教程 https://www.bilibili.com/video/BV1F4HczgEPv
 
-## 2.修改Pixel 信号阈值 (适用于2025年9月谷歌更新)
+### 另外一个IMS补丁
+  vvb2060/ims 补丁: https://github.com/vvb2060/Ims/releases
+  安装shizuku并无线调试配对，安装IMS 临时补丁。在shizuku授权停止服务重新开启服务即可    
+> 可以参考冬尽了@bilibili的 临时补丁教程 https://www.bilibili.com/video/BV1oz4PzxESS    
+
+  中国联通用户安装补丁后不能蜂窝数据上网，看下APN是否为空，需要添加wonet APN 如下图:    
+![wonet](./apn.jpeg)
+
+## 2.Pixel IMS修改信号阈值  
 
 > Pixel IMS 因为被2025年10月Google更新封堵，等作者更新或使用临时补丁
 
@@ -56,15 +64,5 @@ plaform tools https://developer.android.com/tools/releases/platform-tools?hl=zh-
 
 > https://www.irvingwu.blog/posts/aosp-5g-signal-strength
 
-
-## 3. 启用国内三大运营商VoLTE和5G (适用于2025年10月谷歌更新)
-
-  IMS临时补丁下载地址 https://www.123865.com/s/QIG3jv-97osd    
-
-  安装shizuku并无线调试配对，安装IMS 临时补丁。在shizuku授权停止服务重新开启服务即可    
-> 可以参考冬尽了@bilibili的 临时补丁教程 https://www.bilibili.com/video/BV1oz4PzxESS    
-
-  中国联通用户安装补丁后不能蜂窝数据上网，看下APN是否为空，需要添加wonet APN 如下图:    
-![wonet](./apn.jpeg)
 
 > ps. 慢慢写吧！
