@@ -86,3 +86,19 @@ lang: jp      # 仅当文章语言与 `config.ts` 中的网站语言不同时需
 | `pnpm new-post <filename>`        | 创建新文章                             |
 | `pnpm astro ...`                  | 执行 `astro add`, `astro check` 等指令 |
 | `pnpm astro --help`               | 显示 Astro CLI 帮助                   |
+
+
+## QA
+
+下面这些内容会经常遇到, 总是忘记它能能帮助到我
+
+| Command                           | Action                            |
+|:----------------------------------|:----------------------------------|
+| `ssh-keygen -t ed25519 -C "admin@example.com"` | ssh 公钥和私钥生成 |
+| `git config --global user.name "Jianlong Liu"` <br> `git config --global user.email jianlongliu@hotmail.com` | git 用户配置 |
+| `git remote -v` | 查看远程仓库当前配置 |
+| `git remote add origin git@github.com:`<br>`jianlongliu/jianlongliu.github.io.git` | 添加远程仓库 |
+| `git remote set-url origin git@github.com:`<br>`jianlongliu/jianlongliu.github.io.git` | 修改远程仓库地址 |
+| `git pull` | 拉取远程仓库 |
+| `pnpm install --fix` | 修复astro + fuwari依赖 |
+| `npx @biomejs/biome format --write ./src` | 修复biome 格式错误 |
