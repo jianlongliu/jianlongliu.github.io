@@ -10,11 +10,11 @@ lang: ''
 ---
 # 处理Fedora 下的Firefox 浏览器播放视频抖动
 
-    在使用firefox 播放bilibili 视频时，画面时不时抖动抽风。切换Vivaldi 浏览器播放又正常，更新FFMPEG是解决firefox 浏览器播放抖动的一个思路
+    在使用firefox 播放bilibili 视频时，画面时不时抖动抽风或播放4K视频卡顿。切换Vivaldi 浏览器播放又正常，更新FFMPEG是解决firefox 浏览器播放抖动的一个思路
 
-> 操作系统: Fedora Workstation 40 Pre-Release
+> 操作系统: Fedora Workstation 40+
 > 
-> 桌面环境: Gnome 46
+> 桌面环境: Gnome 46, Niri 25
 
 1. 配置RPM Fussion 库
 
@@ -40,4 +40,4 @@ sudo dnf install https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-releas
 
         `ffmpeg -version` 查看版本号
 
-重新启动Firefox 浏览器后应该可以正常观看，视频不抖动了
+重新启动Firefox 浏览器后应该可以正常观看，视频不抖动不卡了
