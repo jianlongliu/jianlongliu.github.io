@@ -30,17 +30,22 @@ The labels in the bottom right corner of the preview image will not be displayed
 2. 编辑grub文件
    `sudo vim /etc/default/grub`
 
-3. Add the theme to the bottom of the text file 在底部添加以下内容  
-   `GRUB_THEME="/usr/share/grub/themes/Guinaifen/theme.txt"`
+3. 在底部添加以下内容  
+```
+# grub 分辨率
+GRUB_GFXMODE=1920x1080
+      
+# 保活
+GRUB_GFXPAYLOAD_LINUX=keep
+      
+# 显卡输出
+GRUB_TERMINAL_OUTPUT="gfxterm"
+      
+GRUB_THEME="/usr/share/grub/themes/Guinaifen/theme.txt"
+```
 
 4. 更新 grub  
-   `sudo grub-mkconfig -o /boot/grub/grub.cfg`
-   
-   > 在UEFI 的Fedroa 40+ 机器上不生效?
-   > 
-   > `sudo grub2-mkconfig -o /boot/efi/EFI/fedora/grub.cfg`
-   > 
-   > [Changing grub menu theme on Fedora 40 Workstation - #2 by jaybe - Fedora Discussion](https://discussion.fedoraproject.org/t/changing-grub-menu-theme-on-fedora-40-workstation/126448/2)
+   `sudo grub2-mkconfig -o /boot/grub2/grub.cfg`
 
 5. Reboot the computer 重启电脑
 
