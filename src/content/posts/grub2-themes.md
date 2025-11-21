@@ -32,6 +32,9 @@ The labels in the bottom right corner of the preview image will not be displayed
 
 3. 在底部添加以下内容  
 ```
+# 切记要禁用BLS
+GRUB_ENABLE_BLSCFG=false
+
 # grub 分辨率
 GRUB_GFXMODE=1920x1080
       
@@ -45,7 +48,7 @@ GRUB_THEME="/usr/share/grub/themes/Guinaifen/theme.txt"
 ```
 
 4. 更新 grub  
-   `sudo grub2-mkconfig -o /boot/grub2/grub.cfg`
+`sudo grub2-mkconfig -o /boot/grub2/grub.cfg`
 
 5. Reboot the computer 重启电脑
 
