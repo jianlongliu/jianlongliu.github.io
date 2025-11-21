@@ -2,7 +2,7 @@
 title: 解决Debian 上安装向日葵远程控制依赖
 published: 2025-10-26
 description: ''
-image: 'https://res1.orayimg.com/sunlogin/1.0/img/99cb1ff.png'
+image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b4/Eberndorf_K%C3%B6cking_Sonnenblumenfeld_Biohof_Tomic_18072014_0792.jpg/960px-Eberndorf_K%C3%B6cking_Sonnenblumenfeld_Biohof_Tomic_18072014_0792.jpg'
 tags: [Linux]
 category: 'IT'
 draft: false 
