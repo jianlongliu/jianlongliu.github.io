@@ -1,5 +1,5 @@
 ---
-title: oh my zsh
+title: 安装 oh my zsh和推荐插件
 published: 2025-11-26
 description: ''
 tags: [Linux]
@@ -7,11 +7,11 @@ category: 'IT'
 draft: false 
 lang: ''
 ---
-# Oh my zsh.
+# 安装 Oh my zsh和推荐插件
 
 ## Install ZSH.
 ```
-sudo apt install zsh-autosuggestions zsh-syntax-highlighting zsh
+sudo dnf install zsh-autosuggestions zsh-syntax-highlighting zsh
 ```
 
 ## Install Oh my ZSH.
@@ -32,10 +32,6 @@ sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/too
  
 	`git clone https://github.com/zdharma-continuum/fast-syntax-highlighting.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/plugins/fast-syntax-highlighting`
 	
- - zsh-autocomplete plugin 自动补全
-	
-	`git clone --depth 1 -- https://github.com/marlonrichert/zsh-autocomplete.git $ZSH_CUSTOM/plugins/zsh-autocomplete`
-	
 ## Enable plugins by adding them to .zshrc.
  - Open .zshrc
 	
@@ -52,7 +48,6 @@ sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/too
  - [zsh-autosuggestions](https://github.com/zsh-users/zsh-autosuggestions)
  - [zsh-syntax-highlighting](https://github.com/zsh-users/zsh-syntax-highlighting)
  - [zsh-fast-syntax-highlighting](https://github.com/zdharma/fast-syntax-highlighting)
- - [zsh-autocomplete](https://github.com/marlonrichert/zsh-autocomplete)
 
 
  > **引用**    
