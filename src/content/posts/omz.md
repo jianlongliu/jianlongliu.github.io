@@ -40,7 +40,7 @@ sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/too
  -  Find the line which says `plugins=(git)`.
 	
  -  Replace that line with
-	`plugins=(git zsh-autosuggestions zsh-syntax-highlighting fast-syntax-highlighting zsh-autocomplete)`
+	`plugins=(git zsh-autosuggestions zsh-syntax-highlighting fast-syntax-highlighting)`
 	
 ## References
 
