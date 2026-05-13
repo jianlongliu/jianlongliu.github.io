@@ -2,7 +2,7 @@
 title: 修复 WPS Office 在 Nautilus 中双击无法打开的问题
 published: 2026-05-04
 description: ''
-image: 'nautilus.png'
+image: ''
 tags: [Linux, WPS Office, Nautilus]
 category: 'Documents'
 draft: false 
