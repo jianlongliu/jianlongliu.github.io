@@ -2,7 +2,7 @@
 title: ThinkPad X1 Carbon Gen 9 个人使用指南
 published: 2026-05-12
 description: ''
-image: ''
+image: 'https://img2cdn.clubstatic.lenovo.com.cn/pic/22594239265217/0'
 tags: [Linux, Windows, Microsoft, Arch, ThinkPad]
 category: 'IT'
 draft: false 
@@ -15,6 +15,8 @@ lang: ''
 > __Memory__: 32GB DDR4    
 > __NVME SSD__: Micron 512GB    
 > __Monitor__: 华星光电 CSO1411 (MNE007ZA1-4) 14" 3200*2400p@60hz    
+
+> https://wiki.archlinux.org.cn/title/Lenovo_ThinkPad_X1_Carbon_(Gen_9)
 
 ## Windows 11和Microsoft Office 安装和激活
 
