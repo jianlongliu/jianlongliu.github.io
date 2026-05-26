@@ -36,6 +36,54 @@ https://massgrave.dev/office_c2r_custom
 ## Arch Linux
 > https://github.com/jianlongliu/myarch
 
+### 解决散热积热
+
+#### 限制Intel Core i7 1185G7的最大主频
+用于节省电量和限制功耗发热, 注册`intel-turbo` systemd服务
+
+```intel-turbo.service
+[Unit]
+Description=Limit Intel Turbo Boost to 3.0GHz
+After=sys-init.target
+
+[Service]
+Type=oneshot
+ExecStart=/bin/sh -c 'for cpu in /sys/devices/system/cpu/cpu*/cpufreq/scaling_max_freq; do echo 3000000 > "$cpu"; done'
+ExecStop=/bin/sh -c 'for cpu in /sys/devices/system/cpu/cpu*/cpufreq/scaling_max_freq; do echo 4800000 > "$cpu"; done'
+RemainAfterExit=yes
+
+[Install]
+WantedBy=multi-user.target
+```
+
+除了手动限制, 也可以考虑使用 auto-cpufreq 替代 power-profiles-daemon    
+```bash
+
+# 禁用power-profiles-daemon
+sudo systemctl disable --now power-profiles-daemon
+
+# 安装auto-cpufreq
+sudo pacman -S auto-cpufreq
+
+# 启用后台服务
+sudo systemctl enable --now auto-cpufreq
+```
+
+```/etc/auto-cpufreq.conf
+
+[charger]
+turbo = never
+platform_profile = balanced
+[battery]
+turbo = never
+platform_profile = low-power
+```    
+
+> Powered by DeepSeek v4 Flash & opencode
+
+#### 硬件层面
+更换SoC 硅脂, 例如霍尼韦尔PM7950或利民TF7. 拆D壳在SoC, 内存颗粒, 固态硬盘, VRM上方加装散热垫, 胆子大不怕导电可以考虑散热铜箔纸. 散热效果非常理想, 联想这个散热做的真垃圾. 切忌电池部分不可以贴, 锂电池忌讳高热.
+
 ### Q&A
 #### 修复内置屏幕在Linux 下雪花屏幕闪烁
 ##### 问题现象
@@ -50,23 +98,14 @@ CSO1400 面板硬件缺陷：10-bit FRC（帧率控制/时间抖动）导致视�
 ##### 修复方案
 1. EDID 固件覆盖强制 8-bit
 核心操作：提取面板原生 EDID（256 字节完整结构），修改单个字节 0x14 从 0xb5(10-bit) → 0xa5(8-bit)，重算校验和。
-> 踩坑点：用 moninfo / AW EDID Editor 等 Windows 工具生成的修改版 EDID 只有 128 字节，但字节 0x7e 声明了扩展块数量为 1。内核看到声明有扩展块却只有 128 字节 → 拒绝加载 → [drm] *ERROR* Invalid firmware EDID。
+> 注意: 用 moninfo / AW EDID Editor 等 Windows 工具生成的修改版 EDID 只有 128 字节，但字节 0x7e 声明了扩展块数量为 1。内核看到声明有扩展块却只有 128 字节 → 拒绝加载 → [drm] *ERROR* Invalid firmware EDID。
 >
 > 正确做法：直接从 Linux 面板提取完整 256 字节 EDID（含 CEA-861 扩展块），仅修改字节 0x14，重算基础块校验和，其余结构完全不动。
-2. 辅助内核参数
-
-| 参数 | 作用 | 必要性 |
-| --- | --- | --- |
-| i915.fastboot=1 |	保留 EFI GOP 配置，跳过 i915 接管时的链路重训练	| 高 — nomodeset正常说明 GOP 配置是对的 |
-| i915.enable_psr2_sel_fetch=0 | 禁用 PSR2 选择性抓取 | 中 — 即使 PSR=0 此项仍独立开启 |
-| i915.enable_psr=0 | 禁用面板自刷新 | |
-| i915.enable_dc=0 | 禁用 DC 电源状态 | |
-| i915.edp_vswing=2 | 电压摆幅等级 | |
 
 ##### 部署步骤（Arch + systemd-boot + UKI）
 1. `/lib/firmware/edid/CSO1411.bin`         ← 放置修改后 256 字节 EDID
-2. `/etc/kernel/cmdline`                    ← 更新内核参数
-3. `/etc/mkinitcpio.conf → FILES=(...)`     ← 将 EDID 打包进 initramfs
+2. `/etc/kernel/cmdline`                    ← 更新内核参数, 追加`drm.edid_firmware=eDP-1:edid/CSO1411.bin`
+3. `/etc/mkinitcpio.conf` → `FILES=(/usr/lib/firmware/edid/CSO1411.bin)`     ← 将 EDID 打包进 initramfs
 4. `mkinitcpio -P`                          ← 重建 UKI
 5. `reboot`
 
@@ -80,9 +119,21 @@ cat /sys/class/drm/card1-eDP-1/edid | hexdump -C | head -2  # 0x14 应为 a5
 
 ## AI
 ### 1. Opencode
-`winget install opencode`
+#### Windows 10+
+```powershell
+winget install opencode
+```
 
-### 2. DeepSeek
+#### Arch linux
+```bash
+sudo pacman -S opencode
+```
+
+### 2. DeepSeek API
 https://platform.deepthink.com
+
+### 3. SpaceXAI
+https://grok.com
+
 
 > progessing 施工中
