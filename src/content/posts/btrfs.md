@@ -74,16 +74,6 @@ NUMBER_LIMIT="10"
    ```
 > __温馨提示__: 仅适用于回滚root `@`子卷
 
-### 方案 C：`snapper-rollback` (实验性修改版)
-**适用场景**：系统可进入终端。它是方案 A 的自动化脚本实现。
-
-> __CAUTION!__    
-> This code was generated via vibe coding and has NOT been tested in production. Use at your own risk. Thanks to DeepSeek v4 and OpenCode for making this possible.     
-> __注意!__   
-> 本代码由 vibe coding 生成，未经生产环境验证，使用风险自负。感谢 DeepSeek v4 和 OpenCode 让这次魔改成为可能
->
-> https://github.com/jianlongliu/snapper-rollback
-
 ---
 
 ## Ⅲ. 状态复原与后置处理
@@ -128,4 +118,4 @@ sudo btrfs balance status /
 > **提示**：现代内核已足够智能，除非遇到空间分配异常，否则无需将 Balance 加入定时任务，以减少 SSD 额外磨损。
 
 ---
-Updated: 2026-04-18 | Inspired by Gemini
+Updated: 2026-06-29 | Inspired by Gemini

@@ -115,6 +115,9 @@ dmesg | grep -i "edid"          # 不应出现 Invalid firmware EDID
 cat /sys/class/drm/card1-eDP-1/edid | hexdump -C | head -2  # 0x14 应为 a5
 ```
 
+#### 为sudo-rs添加指纹识别和dms 锁屏添加面部识别
+> 
+
 > Powered by Deepseek 4 Pro & Opencode
 
 ## AI
@@ -125,6 +128,10 @@ winget install opencode
 ```
 
 #### Arch linux
+
+> Arch Linux CN上本机的配置参考
+> https://wiki.archlinux.org.cn/title/Lenovo_ThinkPad_X1_Carbon_(Gen_9)
+
 ```bash
 sudo pacman -S opencode
 ```

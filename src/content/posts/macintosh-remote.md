@@ -3,7 +3,7 @@ title: 怎么连接到我的Mac Mini
 published: 2025-09-27
 description: ''
 image: 'https://www.apple.com/v/mac-mini/aa/images/overview/welcome/hero_endframe__d9kro8y76v42_large.jpg'
-tags: [Mac]
+tags: [MacOS]
 category: 'IT'
 draft: false 
 lang: 'zh-CN'
@@ -71,3 +71,14 @@ ps. 稍后测试，这种方式也可能存在卡顿问题。
 ## III. 使用向日葵远程控制
 
 在尝试了多种方案后，发现[向日葵远程](https://sunlogin.oray.com/)在流畅度上表现尚可。这让我有些意外，因为之前使用时的印象是连接较为卡顿，不禁让人感到些许困惑。
+
+## IV. NoMachine
+
+Mac OS服务端部署NoMachine (noserver), Linux 客户端同样部署nxplayer
+```bash
+# macos 从官网下载就行了, 或
+brew install --cask nomachine
+
+# arch linux
+paru -S nomachine 
+```
