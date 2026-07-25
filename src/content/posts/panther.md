@@ -37,55 +37,16 @@ https://massgrave.dev/office_c2r_custom
 > https://github.com/jianlongliu/myarch
 
 ### 解决散热积热
-
-#### 限制Intel Core i7 1185G7的最大主频
-用于节省电量和限制功耗发热, 注册`intel-turbo` systemd服务
-
-```intel-turbo.service
-[Unit]
-Description=Limit Intel Turbo Boost to 3.0GHz
-After=sys-init.target
-
-[Service]
-Type=oneshot
-ExecStart=/bin/sh -c 'for cpu in /sys/devices/system/cpu/cpu*/cpufreq/scaling_max_freq; do echo 3000000 > "$cpu"; done'
-ExecStop=/bin/sh -c 'for cpu in /sys/devices/system/cpu/cpu*/cpufreq/scaling_max_freq; do echo 4800000 > "$cpu"; done'
-RemainAfterExit=yes
-
-[Install]
-WantedBy=multi-user.target
-```
-
-除了手动限制, 也可以考虑使用 auto-cpufreq 替代 power-profiles-daemon    
-```bash
-
-# 禁用power-profiles-daemon
-sudo systemctl disable --now power-profiles-daemon
-
-# 安装auto-cpufreq
-sudo pacman -S auto-cpufreq
-
-# 启用后台服务
-sudo systemctl enable --now auto-cpufreq
-```
-
-```/etc/auto-cpufreq.conf
-
-[charger]
-turbo = never
-platform_profile = balanced
-[battery]
-turbo = never
-platform_profile = low-power
-```    
-
-> Powered by DeepSeek v4 Flash & opencode
+#### 软件层面
+内置的华星高分屏分辨率很高(3840x2400p@60hz). igpu渲染压力较大, 
+可以尝试把分辨率降到2560x1600p@60hz, 肉眼观感下降不明显, 但是渲染压力和功率会小很多    
+`niri msg output eDP-1 scale 1.5`
 
 #### 硬件层面
-更换SoC 硅脂, 例如霍尼韦尔PM7950或利民TF7. 拆D壳在SoC, 内存颗粒, 固态硬盘, VRM上方加装散热垫, 胆子大不怕导电可以考虑散热铜箔纸. 散热效果非常理想, 联想这个散热做的真垃圾. 切忌电池部分不可以贴, 锂电池忌讳高热.
+更换SoC 硅脂, 例如霍尼韦尔PM7950或利民TF7. 拆D壳在SoC, 内存颗粒, 固态硬盘, VRM上方加装散热垫. 胆子大不怕导电可以考虑散热铜箔纸. 散热效果非常理想, 联想这个散热做的真垃圾. 切忌电池部分不可以贴, 锂电池忌讳高热.
 
 ### Q&A
-#### 修复内置屏幕在Linux 下雪花屏幕闪烁
+#### 1. 修复内置屏幕在Linux 下雪花屏幕闪烁
 ##### 问题现象
 - ThinkPad X1 Carbon Gen 9，CSOT 华星光电 CSO1400 (MNE007ZA1-4) 面板
 - Linux 下 systemd-boot 结束后出现横条纹闪烁（雪花屏）
@@ -115,8 +76,16 @@ dmesg | grep -i "edid"          # 不应出现 Invalid firmware EDID
 cat /sys/class/drm/card1-eDP-1/edid | hexdump -C | head -2  # 0x14 应为 a5
 ```
 
-#### 为sudo-rs添加指纹识别和dms 锁屏添加面部识别
-> 
+#### 2. 注入EDID, plymouth, 解决屏幕不能唤醒和卡顿
+```/etc/kernel/cmdline
+root=PARTUUID=f8f4252f-23ac-4cbe-a80f-3042b814b1fd zswap.enabled=0 rootflags=subvol=@ rw rootfstype=btrfs drm.edid_firmware=eDP-1:edid/CSO1411.bin quiet splash systemd.show_status=false rd.systemd.show_status=false i915.enable_dc=0 i915.enable_psr=0
+```
+
+#### 3. 为sudo-rs添加指纹识别和dms 锁屏添加面部识别
+> https://jianl.dev/posts/howdy-fprintd/
+
+#### 4. 解决Zen 浏览器上播放Bilibili 视频卡顿
+> https://jianl.dev/posts/i915-hwdec/
 
 > Powered by Deepseek 4 Pro & Opencode
 
