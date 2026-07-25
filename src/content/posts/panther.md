@@ -36,6 +36,9 @@ https://massgrave.dev/office_c2r_custom
 ## Arch Linux
 > https://github.com/jianlongliu/myarch
 
+> Arch Linux CN 配置参考    
+> https://wiki.archlinux.org.cn/title/Lenovo_ThinkPad_X1_Carbon_(Gen_9)
+
 ### 解决散热积热
 #### 软件层面
 内置的华星高分屏分辨率很高(3840x2400p@60hz). igpu渲染压力较大, 
@@ -80,7 +83,6 @@ cat /sys/class/drm/card1-eDP-1/edid | hexdump -C | head -2  # 0x14 应为 a5
 ```/etc/kernel/cmdline
 root=PARTUUID=f8f4252f-23ac-4cbe-a80f-3042b814b1fd zswap.enabled=0 rootflags=subvol=@ rw rootfstype=btrfs drm.edid_firmware=eDP-1:edid/CSO1411.bin quiet splash systemd.show_status=false rd.systemd.show_status=false i915.enable_dc=0 i915.enable_psr=0
 ```
-
 #### 3. 为sudo-rs添加指纹识别和dms 锁屏添加面部识别
 > https://jianl.dev/posts/howdy-fprintd/
 
@@ -91,17 +93,11 @@ root=PARTUUID=f8f4252f-23ac-4cbe-a80f-3042b814b1fd zswap.enabled=0 rootflags=sub
 
 ## AI
 ### 1. Opencode
-#### Windows 10+
-```powershell
+```sh
+# windows 10+
 winget install opencode
-```
 
-#### Arch linux
-
-> Arch Linux CN上本机的配置参考
-> https://wiki.archlinux.org.cn/title/Lenovo_ThinkPad_X1_Carbon_(Gen_9)
-
-```bash
+# arch linux
 sudo pacman -S opencode
 ```
 
@@ -110,6 +106,5 @@ https://platform.deepthink.com
 
 ### 3. SpaceXAI
 https://grok.com
-
 
 > progessing 施工中
