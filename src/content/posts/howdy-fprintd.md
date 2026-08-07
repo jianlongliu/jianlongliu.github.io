@@ -1,120 +1,171 @@
 ---
+
 title: 为 Arch Linux 实现指纹识别和面部解锁
-published: 2026-06-02
-description: ''
-image: ''
+published: 2026-08-07
+description: '锁屏刷脸、登录刷脸、sudo 按指纹——howdy + fprintd 在 Arch + DMS 上的三路 PAM 实践'
+image: 'https://live.staticflickr.com/65535/53990781497_f407bba1dd_b.jpg'
 tags: [Linux, Arch]
-category: ''
-draft: false 
+category: 'Linux'
+draft: false
 lang: ''
+
 ---
+
 # 为 Arch Linux 实现指纹识别和面部解锁
 
-由于指纹识别模块进程抢占, 锁屏时摄像头识别人脸解锁，sudo 时按指纹代替输密码更佳
+
 
 ## 环境
 
-OS: Arch Linux
+- 硬件：ThinkPad X1 Carbon Gen 9（IR 灰度头 `/dev/video2` 640x360，彩色头 `/dev/video0` 1280x720）
+- OS：Arch Linux
+- DM：greetd + dms-greeter
+- WM：niri + dms
+- Bio：howdy 2.6.1-3（稳定版）+ fprintd
 
-DM: greetd + dms-greeter
+## 架构：为什么拆成三路
 
-WM: niri + dms
+三个场景走三张 PAM，互不抢占：
 
-Bio: howdy + fprintd
+```
+greeter 登录   → /etc/pam.d/greetd    人脸 + 密码
+DMS 锁屏      → /etc/pam.d/dankshell 人脸 + 密码（不挂指纹）
+sudo         → /etc/pam.d/sudo       指纹 + 密码
+```
 
-HW: Lenovo ThinkPad X1 Carbon Gen 9
+两个关键决策：
+
+- 锁屏 / greeter 只接 howdy、不接指纹——X1C9 上 fprintd 会被 sudo + 锁屏抢读失效，搞不定，就让位只留 sudo 一个场景
+- sudo 只接指纹、不接 howdy——不碰摄像头
+
+`system-auth` 永远不碰 howdy。
 
 ## 一、howdy 人脸解锁
 
-### 安装
+### 安装与配置
 
-`sudo pacman -S howdy`
+```bash
+sudo pacman -S howdy
+```
 
-### 配置文件
-
-默认配置下 `device_path = none`，摄像头根本不知道去哪找。改成：
+默认配置 `device_path = none`，先指到红外头：
 
 ```ini
 # /lib/security/howdy/config.ini
 
-device_path = /dev/video0
-recording_plugin = opencv # 默认是 opencv，别手贱改 ffmpeg
-capture_failed = false # 关掉快照，避免权限问题
-capture_successful = false
-certainty = 3.5 # 精度，越低越松
-timeout = 4 # 识别超时秒数
+device_path = /dev/video2   # IR 灰度头，不是 /dev/video0
+use_cnn = false             # CNN 单帧 45s 必挂，HOG 只要 ~200ms
+certainty = 5.0             # 阈值 0.5
+timeout = 6
+dark_threshold = 50
+recording_plugin = opencv
 ```
 
+### 点灯：ir-light
+
+IR 摄像头不点灯就是一片黑。写个 `ir-light` 脚本，通过 UVC 扩展单元（`unit=13 selector=14`）写 `[2, 100]`（模式 2 + 亮度 100），画面亮度能从 16 提到 68：
+
+```bash
+# /usr/local/bin/ir-light，PAM 里每次认证前由 pam_exec 调用
 ```
+
+### V4L2 补丁（关键）
+
+OpenCV 默认用 FFMPEG backend 读 `/dev/video2` 直接崩，日志就报 `Unknown error: 1`。给 `/lib/security/howdy/pam.py` 加环境变量，强制 V4L2：
+
+```
+OPENCV_VIDEOIO_PRIORITY_V4L2=100
+OPENCV_VIDEOIO_PRIORITY_FFMPEG=0
+OPENCV_VIDEOIO_PRIORITY_GSTREAMER=0
+```
+
+### 锁屏 PAM
+
+```bash
 # /etc/pam.d/dankshell
-# 锁屏用，加 howdy
-
-auth sufficient pam_python3.so /lib/security/howdy/pam.py
-auth [success=1 default=bad] pam_unix.so try_first_pass nullok
+#%PAM-1.0
+auth       optional     pam_exec.so /usr/local/bin/ir-light
+auth       sufficient   pam_python.so /lib/security/howdy/pam.py
+auth       include      system-auth
+account    include      system-auth
+session    include      system-auth
 ```
 
-绝对不要把 howdy 加到 system-auth！ greetd 启动也会经过 system-auth，加上去 greetd 直接崩到起不来，血泪教训。
+### 录入（必须带 V4L2 env）
 
-### Python 3 兼容
+录脸和识别如果走了不同 backend，编码有系统偏差，换个姿势就不认。录脸也得带同一套环境变量：
 
-Arch 的 pam_python3.so 用 Python 3 跑脚本，但 howdy 的 pam.py 是 Python 2 写法：
-
-#### ❌ 原版 Python 2
-
-```py
-import ConfigParser
-config = ConfigParser.ConfigParser()
+```bash
+sudo /usr/local/bin/ir-light
+pkexec env SUDO_USER=jianlongliu OPENCV_VIDEOIO_PRIORITY_V4L2=100 \
+  OPENCV_VIDEOIO_PRIORITY_FFMPEG=0 OPENCV_VIDEOIO_PRIORITY_GSTREAMER=0 \
+  howdy add -y
 ```
 
-#### ✅ 兼容写法
+建议姿势：正脸 / 低头 / 偏左 / 偏右 / 仰头。
 
-```py
-try:
- import ConfigParser as configparser
-except ImportError:
- import configparser
-config = configparser.ConfigParser()
+## 二、greeter 登录人脸（2026-08-07 新增）
+
+锁屏能刷脸之后，登录界面也想刷。改 `/etc/pam.d/greetd`：
+
+```bash
+# /etc/pam.d/greetd
+#%PAM-1.0
+
+auth       optional     pam_exec.so /usr/local/bin/ir-light
+auth       sufficient   pam_python.so /lib/security/howdy/pam.py
+auth       required     pam_securetty.so
+auth       requisite    pam_nologin.so
+auth       include      system-local-login
+account    include      system-local-login
+session    include      system-local-login
 ```
 
-录入人脸 `sudo howdy add`
-然后锁屏测试，脸对准摄像头，4 秒内识别成功自动解锁。
+**坑**：howdy 一开始放在 `system-local-login` 之后，密码栈失败会走 faillock `[default=die]` 直接终止，根本轮不到 howdy。必须把 `ir-light` + howdy 挪到栈顶、`sufficient` 前置，回车 → 扫脸 → 进桌面才成立。
 
-## 二、fprintd 指纹 sudo
+另外 howdy 别升 beta：greetd 下 beta 版有 `pam_setcred: PERM_DENIED` 的已知崩溃（boltgolt/howdy#991），锁屏没事，greeter 会直接起不来。
 
-### 安装与录入
+## 三、fprintd 指纹 sudo
+
+指纹在 X1C9 上很挑食：sudo 和 dms 锁屏同时在读 fprintd，守护进程被抢后直接失灵，试过各种方案搞不定。所以干脆让位——fprintd 只服务 sudo，锁屏/登录全交给人脸。硬件分家（IR 摄像头 vs 指纹头）只是前提，真正决定分工的是 fprintd 抢读这个坑。
 
 ```bash
 sudo pacman -S fprintd
-fprintd-enroll -f right-index-finger # 或 right-middle-finger
+fprintd-enroll -f right-index-finger   # 或 right-middle-finger
 ```
 
-录入小提示：每次扫描后一定要完全抬起手指，微调位置再放回去，否则会报 enroll-duplicate——这不是真有重复指纹，而是传感器觉得你两次位置一模一样。
+录指纹有个反直觉的坑：每次扫描后**一定要完全抬起手指**，微调位置再放回去，否则报 `enroll-duplicate`——不是真重复，是传感器觉得你两次放得一模一样。
 
-### PAM 配置
-
-```
+```bash
 # /etc/pam.d/sudo
-auth sufficient pam_fprintd.so
-auth include system-auth
+#%PAM-1.0
+auth		sufficient	pam_fprintd.so forward_pass
+auth		include		system-auth
+account		include		system-auth
+session		include		system-auth
 ```
 
-指纹只在 sudo 时生效，不跟锁屏抢硬件，互不干扰。
+## 四、效果一览
 
-## 三、最终效果
+| 场景          | 方式        | 状态    |
+| ----------- | --------- | ----- |
+| 锁屏解锁        | 人脸 / 密码   | 自动解锁  |
+| 登录（greeter） | 人脸 / 密码   | 回车即扫脸 |
+| sudo        | 指纹 / 密码   | 免输密码  |
+| 兜底          | 识别失败，密码照常 | 已测    |
 
-| 场景         | 方式           | 状态              |
-| ---------- | ------------ | --------------- |
-| 🔒 锁屏解锁    | 摄像头人脸识别      | 自动解锁            |
-| 🔑 sudo 提权 | 指纹验证         | 通过              |
-| 🚀 开机首次登录  | 手动输密码        | greetd 不走锁屏 PAM |
-| ⌨️ 兜底      | 识别失败了正常输密码就行 |                 |
+## 五、踩坑录
 
-## 总结
+- **`Unknown error: 1`，锁屏回退密码**：OpenCV 默认 FFMPEG backend 读不了 IR 头 → compare.py 崩。修复：pam.py 强制 V4L2。
+- **刷脸必挂**：`use_cnn=true` 单帧约 45s，远大于 timeout。换 HOG 后 ~200ms。
+- **换个姿势不认**：录脸走 FFMPEG、识别走 V4L2，两套编码有系统偏差。带 V4L2 env 重录解决。
+- **IR 灯不亮（全黑帧）**：UVC 灯控件没设，写 `ir-light`。灯常亮则是 UVC 设置跨进程持久，要关就写回 `[0,0]`。
+- **greeter 回车不扫脸**：howdy 排在密码栈后面，被 faillock `[default=die]` 截胡，前置到栈顶解决。
+- **fprintd 多场景抢读失效**：sudo + 锁屏共用 fprintd，守护进程被抢读后指纹失灵。修复：让位——指纹只留给 sudo，锁屏/登录全用 howdy。
 
-1. PAM 文件别乱改——搞清楚你的 DM 锁屏走哪个 PAM 服务，不是所有场景都用 system-auth
-2. 模块名要对——pam_python.so ≠ pam_python3.so
-3. Python 2/3 兼容——Arch 的 howdy 包还没修这个问题，得手动改
-4. 硬件是分开的——摄像头和指纹传感器各走各路，配置好 PAM 路径就不会打架
-5. 打完快照再跑路——`sudo snapper --config root create --description "howdy + fprintd"`和`sudo snapper --config home create --description "howdy + fprintd"`
+## 运维备忘
 
-> Jianlong Liu: 最近都在用AI Agent debug 不知道这个过时没, 希望能帮助到人~
+- **`dms auth sync` 会覆盖 `/etc/pam.d/dankshell` 和 `/etc/pam.d/greetd`**：greeter 需在 DMS 设置里开 "Use system PAM authentication"（`greeterPamExternallyManaged=true`），手工行才不被冲掉
+- **paru 更新 howdy/dms 后**：`pam.py` 的 V4L2 补丁可能被覆盖，需重打
+- **ThinkShutter**：物理滑盖，刷脸时保持推开
+- **改 PAM 前先快照**：`sudo snapper --config root create --description "howdy + fprintd"`
