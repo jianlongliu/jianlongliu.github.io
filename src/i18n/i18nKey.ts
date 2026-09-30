@@ -2,6 +2,7 @@ enum I18nKey {
 	home = "home",
 	about = "about",
 	archive = "archive",
+	friends = "friends",
 	search = "search",
 
 	tags = "tags",
@@ -21,17 +22,20 @@ enum I18nKey {
 	postCount = "postCount",
 	postsCount = "postsCount",
 
-	themeColor = "themeColor",
-
-	lightMode = "lightMode",
-	darkMode = "darkMode",
-	systemMode = "systemMode",
-
 	more = "more",
 
 	author = "author",
 	publishedAt = "publishedAt",
+	updatedAt = "updatedAt",
 	license = "license",
+
+	footnotes = "footnotes",
+
+	notFound = "notFound",
+	returnToHomepage = "returnToHomepage",
+
+	unsupportedLang = "unsupportedLang",
+	langName = "langName",
 }
 
 export default I18nKey;

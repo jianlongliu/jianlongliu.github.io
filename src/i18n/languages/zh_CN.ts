@@ -5,6 +5,7 @@ export const zh_CN: Translation = {
 	[Key.home]: "主页",
 	[Key.about]: "关于",
 	[Key.archive]: "归档",
+	[Key.friends]: "友链",
 	[Key.search]: "搜索",
 
 	[Key.tags]: "标签",
@@ -24,15 +25,18 @@ export const zh_CN: Translation = {
 	[Key.postCount]: "篇文章",
 	[Key.postsCount]: "篇文章",
 
-	[Key.themeColor]: "主题色",
-
-	[Key.lightMode]: "亮色",
-	[Key.darkMode]: "暗色",
-	[Key.systemMode]: "跟随系统",
-
 	[Key.more]: "更多",
 
 	[Key.author]: "作者",
 	[Key.publishedAt]: "发布于",
+	[Key.updatedAt]: "更新于",
 	[Key.license]: "许可协议",
+
+	[Key.footnotes]: "脚注",
+
+	[Key.notFound]: "未找到",
+	[Key.returnToHomepage]: "返回首页",
+
+	[Key.unsupportedLang]: "该页面尚未翻译成%s。",
+	[Key.langName]: "中文",
 };

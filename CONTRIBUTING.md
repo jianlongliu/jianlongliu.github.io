@@ -13,9 +13,5 @@ Please keep each pull request focused on a single purpose. Avoid mixing unrelate
 
 Please use the [Conventional Commits](https://www.conventionalcommits.org/) format for your commit messages whenever possible. This keeps our history clear and consistent.
 
-Before submitting code, please run the appropriate commands to check for errors and format your code.
+Before run git commit, run error checking script for Astro, Typescript, and Svelte (`pnpm check`) or usign `pnpm astro-check`, `pnpm type-check`, `pnpm svelte-check` separately. Also run Biome formatting (`pnpm format`) and linting (`pnpm lint`) before git commit and push.
 
-```bash
-pnpm check
-pnpm format
-```

@@ -1,4 +1,7 @@
 import type {
+	AnalyticsConfig,
+	CommentConfig,
+	DeployConfig,
 	ExpressiveCodeConfig,
 	LicenseConfig,
 	NavBarConfig,
@@ -10,10 +13,12 @@ import { LinkPreset } from "./types/config";
 export const siteConfig: SiteConfig = {
 	title: "bonjour, jianlong liu",
 	subtitle: "We're going deep, and we're going hard... ",
-	lang: "en", // Language code, e.g. 'en', 'zh_CN', 'ja', etc.
-	themeColor: {
+	lang: "en",
+	// 留空数组 = 关闭多语言切换
+	supportedLangs: [],
+	theme: {
 		hue: 290, // Default hue for the theme color, from 0 to 360. e.g. red: 0, teal: 200, cyan: 250, pink: 345
-		fixed: false, // Hide the theme color picker for visitors
+		mode: "light",
 	},
 	banner: {
 		enable: true,
@@ -30,13 +35,19 @@ export const siteConfig: SiteConfig = {
 		depth: 3, // Maximum heading depth to show in the table, from 1 to 3
 	},
 	favicon: [
-		// Leave this array empty to use the default favicon
-		// {
-		//   src: '/favicon/icon.png',    // Path of the favicon, relative to the /public directory
-		//   theme: 'light',              // (Optional) Either 'light' or 'dark', set only if you have different favicons for light and dark mode
-		//   sizes: '32x32',              // (Optional) Size of the favicon, set only if you have favicons of different sizes
-		// }
+		{ src: "/favicon/favicon-light-32.png", theme: "light", sizes: "32x32" },
+		{ src: "/favicon/favicon-light-128.png", theme: "light", sizes: "128x128" },
+		{ src: "/favicon/favicon-light-180.png", theme: "light", sizes: "180x180" },
+		{ src: "/favicon/favicon-light-192.png", theme: "light", sizes: "192x192" },
+		{ src: "/favicon/favicon-dark-32.png", theme: "dark", sizes: "32x32" },
+		{ src: "/favicon/favicon-dark-128.png", theme: "dark", sizes: "128x128" },
+		{ src: "/favicon/favicon-dark-180.png", theme: "dark", sizes: "180x180" },
+		{ src: "/favicon/favicon-dark-192.png", theme: "dark", sizes: "192x192" },
 	],
+	ogImage: {
+		useDefault: true, // 用默认分享图(站点没有给每篇单独设置 ogImage 时)
+		defaultSrc: "/media/images/banner.png",
+	},
 };
 
 export const navBarConfig: NavBarConfig = {
@@ -46,18 +57,18 @@ export const navBarConfig: NavBarConfig = {
 		LinkPreset.About,
 		{
 			name: "Immich",
-			url: "https://photo.jianl.dev", // Internal links should not include the base path, as it is automatically added
+			url: "https://photo.jianl.dev",
 			external: true, // Show an external link icon and will open in a new tab
 		},
 		{
 			name: "Memos",
-			url: "https://memos.jianl.dev", // Internal links should not include the base path, as it is automatically added
-			external: true, // Show an external link icon and will open in a new tab
+			url: "https://memos.jianl.dev",
+			external: true,
 		},
 		{
 			name: "Pydio Cells",
-			url: "https://cells.jianl.dev", // Internal links should not include the base path, as it is automatically added
-			external: true, // Show an external link icon and will open in a new tab
+			url: "https://cells.jianl.dev",
+			external: true,
 		},
 	],
 };
@@ -69,9 +80,7 @@ export const profileConfig: ProfileConfig = {
 	links: [
 		{
 			name: "X",
-			icon: "fa6-brands:twitter", // Visit https://icones.js.org/ for icon codes
-			// You will need to install the corresponding icon set if it's not already included
-			// `pnpm add @iconify-json/<icon-set-name>`
+			icon: "fa6-brands:x-twitter", // Visit https://icones.js.org/ for icon codes
 			url: "https://x.com/jianlongliu",
 		},
 		{
@@ -97,4 +106,22 @@ export const expressiveCodeConfig: ExpressiveCodeConfig = {
 	// Note: Some styles (such as background color) are being overridden, see the astro.config.mjs file.
 	// Please select a dark theme, as this blog theme currently only supports dark background color
 	theme: "github-dark",
+};
+
+// 本站没启用评论:giscus 的 repoId / categoryId 需要先去 giscus.app 授权拿到,留空即不渲染评论区
+export const commentConfig: CommentConfig = {};
+
+// Site analytics config, only support GA4 for now
+export const analyticsConfig: AnalyticsConfig = {
+	enabled: false,
+	// Example if using Google Analytics, don't forget to make `enabled` true
+	// google: {
+	//	 id: "G-xxx",
+	// },
+};
+
+// Deploy configuration (Netlify, GitHub Pages, Cloudflare, etc)
+export const deployConfig: DeployConfig = {
+	siteUrl: "https://jianl.dev",
+	baseUrl: "/",
 };

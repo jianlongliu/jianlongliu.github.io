@@ -5,6 +5,7 @@ export const id: Translation = {
 	[Key.home]: "Beranda",
 	[Key.about]: "Tentang",
 	[Key.archive]: "Arsip",
+	[Key.friends]: "Teman",
 	[Key.search]: "Cari",
 
 	[Key.tags]: "Tag",
@@ -24,15 +25,18 @@ export const id: Translation = {
 	[Key.postCount]: "postingan",
 	[Key.postsCount]: "postingan",
 
-	[Key.themeColor]: "Warna Tema",
-
-	[Key.lightMode]: "Terang",
-	[Key.darkMode]: "Gelap",
-	[Key.systemMode]: "Sistem",
-
 	[Key.more]: "Lainnya",
 
 	[Key.author]: "Penulis",
 	[Key.publishedAt]: "Diterbitkan pada",
+	[Key.updatedAt]: "Diperbarui pada",
 	[Key.license]: "Lisensi",
+
+	[Key.footnotes]: "Catatan kaki",
+
+	[Key.notFound]: "Tidak Ditemukan",
+	[Key.returnToHomepage]: "Kembali ke Beranda",
+
+	[Key.unsupportedLang]: "Halaman ini belum diterjemahkan ke dalam %s.",
+	[Key.langName]: "Bahasa Indonesia",
 };

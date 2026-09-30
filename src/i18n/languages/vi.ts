@@ -5,6 +5,7 @@ export const vi: Translation = {
 	[Key.home]: "Trang chủ",
 	[Key.about]: "Giới thiệu",
 	[Key.archive]: "Kho bài",
+	[Key.friends]: "Bạn",
 	[Key.search]: "Tìm kiếm",
 
 	[Key.tags]: "Thẻ",
@@ -24,15 +25,18 @@ export const vi: Translation = {
 	[Key.postCount]: "bài viết",
 	[Key.postsCount]: "bài viết",
 
-	[Key.themeColor]: "Màu giao diện",
-
-	[Key.lightMode]: "Sáng",
-	[Key.darkMode]: "Tối",
-	[Key.systemMode]: "Hệ thống",
-
 	[Key.more]: "Thêm",
 
 	[Key.author]: "Tác giả",
-	[Key.publishedAt]: "Đăng vào lúc",
-	[Key.license]: "Giấy phép bản quyền",
+	[Key.publishedAt]: "Xuất bản tại",
+	[Key.updatedAt]: "Cập nhật lúc",
+	[Key.license]: "Giấy phép",
+
+	[Key.footnotes]: "Chú chân",
+
+	[Key.notFound]: "Không tìm thấy",
+	[Key.returnToHomepage]: "Quay lại trang chủ",
+
+	[Key.unsupportedLang]: "Trang này chưa được dịch sang %s.",
+	[Key.langName]: "Tiếng Việt",
 };

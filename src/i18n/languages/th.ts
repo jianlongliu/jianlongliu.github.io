@@ -5,6 +5,7 @@ export const th: Translation = {
 	[Key.home]: "หน้าแรก",
 	[Key.about]: "เกี่ยวกับ",
 	[Key.archive]: "คลัง",
+	[Key.friends]: "เพื่อน",
 	[Key.search]: "ค้นหา",
 
 	[Key.tags]: "ป้ายกำกับ",
@@ -24,15 +25,18 @@ export const th: Translation = {
 	[Key.postCount]: "โพสต์",
 	[Key.postsCount]: "โพสต์",
 
-	[Key.themeColor]: "สีของธีม",
-
-	[Key.lightMode]: "สว่าง",
-	[Key.darkMode]: "มืด",
-	[Key.systemMode]: "ตามระบบ",
-
 	[Key.more]: "ดูเพิ่ม",
 
-	[Key.author]: "ผู้เขียน",
+	[Key.author]: "ผู้แต่ง",
 	[Key.publishedAt]: "เผยแพร่เมื่อ",
-	[Key.license]: "สัญญาอนุญาต",
+	[Key.updatedAt]: "อัปเดตเมื่อ",
+	[Key.license]: "ใบอนุญาต",
+
+	[Key.footnotes]: "หมายเหตุท้ายหน้า",
+
+	[Key.notFound]: "ไม่พบหน้าเว็บ",
+	[Key.returnToHomepage]: "กลับสู่หน้าหลัก",
+
+	[Key.unsupportedLang]: "หน้านี้ยังไม่ได้แปลเป็น%s",
+	[Key.langName]: "ภาษาไทย",
 };

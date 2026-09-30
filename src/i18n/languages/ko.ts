@@ -5,6 +5,7 @@ export const ko: Translation = {
 	[Key.home]: "홈",
 	[Key.about]: "소개",
 	[Key.archive]: "아카이브",
+	[Key.friends]: "친구",
 	[Key.search]: "검색",
 
 	[Key.tags]: "태그",
@@ -24,15 +25,18 @@ export const ko: Translation = {
 	[Key.postCount]: "게시물",
 	[Key.postsCount]: "게시물",
 
-	[Key.themeColor]: "테마 색상",
-
-	[Key.lightMode]: "밝은 모드",
-	[Key.darkMode]: "어두운 모드",
-	[Key.systemMode]: "시스템 모드",
-
 	[Key.more]: "더 보기",
 
 	[Key.author]: "저자",
 	[Key.publishedAt]: "게시일",
+	[Key.updatedAt]: "업데이트 일시",
 	[Key.license]: "라이선스",
+
+	[Key.footnotes]: "각주",
+
+	[Key.notFound]: "찾을 수 없음",
+	[Key.returnToHomepage]: "홈으로 돌아가기",
+
+	[Key.unsupportedLang]: "이 페이지는 아직 %s로 번역되지 않았습니다.",
+	[Key.langName]: "한국어",
 };

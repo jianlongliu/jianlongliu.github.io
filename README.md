@@ -1,62 +1,73 @@
-# 🍥Fuwari
+# Fumika🐈
+![Node.js >= 22](https://img.shields.io/badge/node.js-%3E%3D20-brightgreen) 
+![pnpm >= 11](https://img.shields.io/badge/pnpm-%3E%3D9-blue) 
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fiyanarmanda%2Ffumika.svg?type=shield&issueType=license)](https://app.fossa.com/projects/git%2Bgithub.com%2Fiyanarmanda%2Ffumika?ref=badge_shield&issueType=license)
 
-基于 [Astro](https://astro.build) 开发的静态博客模板。
+A clean, minimalist, and modern, static blog template built with [Astro](https://astro.build). **Fumika** is heavily modified from [Fuwari](https://github.com/saicaca/fuwari).
 
-[**🖥️在线预览（Vercel）**](https://jianlongliu.github.io, jianlongliu.netlify.app, jianl.dev)
+[**Live Demo**](https://fumika-demo.netlify.app)
 
-![Preview Image](https://raw.githubusercontent.com/saicaca/resource/main/fuwari/home.png)
+**Preview**:
 
-## ✨ 功能特性
+Light Mode:
+![Preview Image Light Mode](https://raw.githubusercontent.com/iyanarmanda/resource/main/fumika/home-light.png)
 
-- [x] 基于 Astro 和 Tailwind CSS 开发
-- [x] 流畅的动画和页面过渡
-- [x] 亮色 / 暗色模式
-- [x] 自定义主题色和横幅图片
-- [x] 响应式设计
-- [ ] 评论
-- [x] 搜索
-- [x] 文内目录
+Dark Mode:
+![Preview Image Dark Mode](https://raw.githubusercontent.com/iyanarmanda/resource/main/fumika/home-dark.png)
 
-## 👀 要求
+## Tech Stacks
 
-- Node.js <= 22
-- pnpm <= 9
+- [Astrojs v7](https://astro.build)
+- [Svelte v5](https://svelte.dev/)
+- [Tailwind CSS v4](https://tailwindcss.com) 
+- [SCSS](https://sass-lang.com/)
 
-## 🚀 使用方法 1
+## Features
 
-使用 [create-fuwari](https://github.com/L4Ph/create-fuwari) 在本地初始化项目。
+- [x] Smooth animations and page transitions
+- [x] Light / dark mode
+- [x] Responsive design
+- [x] Customizable theme, banner, and other components
+- [x] Search functionality with [Pagefind](https://pagefind.app/)
+- [x] [Markdown extended features](https://github.com/iyanarmanda/fumika?tab=readme-ov-file#-markdown-extended-syntax)
+- [x] Table of contents
+- [x] RSS feed
+- [x] Meta and Open Graph Tag
+- [x] i18n translation
+- [x] Comment feature with [Giscus](https://giscus.app/)
+- [x] Google Analytics using [Partytown](https://partytown.qwik.dev/)
 
-```sh
-# npm
-npm create fuwari@latest
+*See upcoming features in [ROADMAP](https://github.com/iyanarmanda/fumika/blob/main/ROADMAP.md)
 
-# yarn
-yarn create fuwari
+### Markdown Extended Features
 
-# pnpm
-pnpm create fuwari@latest
+In addition to Astro's default support for GitHub Flavored Markdown ([Docs](https://github.github.com/gfm/)), several extra Markdown features are included:
 
-# bun
-bun create fuwari@latest
+- Admonitions ([Preview and Usage](https://fumika-demo.netlify.app/posts/markdown-extended/#admonitions))
+- GitHub repository cards ([Preview and Usage](https://fumika-demo.netlify.app/posts/markdown-extended/#github-repository-cards))
+- Enhanced code blocks with Expressive Code ([Preview](https://fumika-demo.netlify.app/posts/expressive-code/) / [Docs](https://expressive-code.com/)) 
+- Mermaid Diagram ([Preview](https://fumika-demo.netlify.app/posts/mermaid/) / [Docs](https://mermaid.js.org/))
+- Typography features ([Preview and Usage](https://fumika-demo.netlify.app/posts/markdown-extend/#typography-features))
 
-# deno
-deno run -A npm:create-fuwari@latest
-```
+## Getting Started
 
-1. 通过配置文件 `src/config.ts` 自定义博客
-2. 执行 `pnpm new-post <filename>` 创建新文章，并在 `src/content/posts/` 目录中编辑
-3. 参考[官方指南](https://docs.astro.build/zh-cn/guides/deploy/)将博客部署至 Vercel, Netlify, GitHub Pages 等；部署前需编辑 `astro.config.mjs` 中的站点设置。
+1. Create your blog repository:
+    - [Generate a new repository](https://github.com/iyanarmanda/fumika/generate) from this template or fork this repository.
+    - Or run one of the following commands (*soon*):
+       ```sh
+       npm create fumika@latest
+       yarn create fumika
+       pnpm create fumika@latest
+       bun create fumika@latest
+       deno run -A npm:create-fumika@latest
+       ```
+2. To edit your blog locally, clone your repository, run `pnpm install` to install dependencies.
+    - Install [pnpm](https://pnpm.io) `npm install -g pnpm` if you haven't.
+3. Edit the config file `src/config.ts` to customize your blog.
+4. Run `pnpm new-post <filename>` to create a new post and edit it in `src/content/posts/`.
+5. Deploy your blog to Netlify, GitHub Pages, etc. following [the guides](https://docs.astro.build/en/guides/deploy/). You need to edit the site configuration in `astro.config.mjs` before deployment.
 
-## 🚀 使用方法 2
-
-1. 使用此模板[生成新仓库](https://github.com/saicaca/fuwari/generate)或 Fork 此仓库
-2. 进行本地开发，Clone 新的仓库，执行 `pnpm install` 和 `pnpm add sharp` 以安装依赖  
-   - 若未安装 [pnpm](https://pnpm.io)，执行 `npm install -g pnpm`
-3. 通过配置文件 `src/config.ts` 自定义博客
-4. 执行 `pnpm new-post <filename>` 创建新文章，并在 `src/content/posts/` 目录中编辑
-5. 参考[官方指南](https://docs.astro.build/zh-cn/guides/deploy/)将博客部署至 Vercel, Netlify, GitHub Pages 等；部署前需编辑 `astro.config.mjs` 中的站点设置。
-
-## ⚙️ 文章 Frontmatter
+## Frontmatter of Posts
 
 ```yaml
 ---
@@ -66,21 +77,30 @@ description: This is the first post of my new Astro blog.
 image: ./cover.jpg
 tags: [Foo, Bar]
 category: Front-end
+ogImage: /media/images/cover.webp   # by default is empty and use `image` frontmatter if it from public directories or url.
 draft: false
-lang: jp      # 仅当文章语言与 `config.ts` 中的网站语言不同时需要设置
 ---
 ```
 
-## 🧞 指令
+## Commands
 
-下列指令均需要在项目根目录执行：
+All commands are run from the root of the project, from a terminal:
 
-| Command                           | Action                            |
-|:----------------------------------|:----------------------------------|
-| `pnpm install` 并 `pnpm add sharp` | 安装依赖                              |
-| `pnpm dev`                        | 在 `localhost:4321` 启动本地开发服务器      |
-| `pnpm build`                      | 构建网站至 `./dist/`                   |
-| `pnpm preview`                    | 本地预览已构建的网站                        |
-| `pnpm new-post <filename>`        | 创建新文章                             |
-| `pnpm astro ...`                  | 执行 `astro add`, `astro check` 等指令 |
-| `pnpm astro --help`               | 显示 Astro CLI 帮助                   |
+| Command                    | Action                                                                   |
+|:---------------------------|:-------------------------------------------------------------------------|
+| `pnpm install`             | Installs dependencies                                                    |
+| `pnpm dev`                 | Starts local dev server at `localhost:4321`                              |
+| `pnpm build`               | Build your production site to `./dist/`                                  |
+| `pnpm preview`             | Preview your build locally, before deploying                             |
+| `pnpm check`               | Run checks for errors in your code                                       |
+| `pnpm format`              | Format your code using **Biome**                                         |
+| `pnpm lint`                | Lint your code using **Biome**                                           |
+| `pnpm new-post <filename>` | Create a new post                                                        |
+| `pnpm astro ...`           | Run CLI commands like `astro add`, `astro check`                         |
+| `pnpm astro --help`        | Get help using the Astro CLI                                             |
+| `pnpm test`                | Running unit testing using **Vitest**                                    |
+
+## License
+
+This project is licensed under the MIT License.
+

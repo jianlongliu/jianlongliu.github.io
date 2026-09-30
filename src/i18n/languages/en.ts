@@ -5,6 +5,7 @@ export const en: Translation = {
 	[Key.home]: "Home",
 	[Key.about]: "About",
 	[Key.archive]: "Archive",
+	[Key.friends]: "Friends",
 	[Key.search]: "Search",
 
 	[Key.tags]: "Tags",
@@ -24,15 +25,18 @@ export const en: Translation = {
 	[Key.postCount]: "post",
 	[Key.postsCount]: "posts",
 
-	[Key.themeColor]: "Theme Color",
-
-	[Key.lightMode]: "Light",
-	[Key.darkMode]: "Dark",
-	[Key.systemMode]: "System",
-
 	[Key.more]: "More",
 
 	[Key.author]: "Author",
 	[Key.publishedAt]: "Published at",
+	[Key.updatedAt]: "Updated at",
 	[Key.license]: "License",
+
+	[Key.footnotes]: "Footnotes",
+
+	[Key.notFound]: "Not Found",
+	[Key.returnToHomepage]: "Return to Homepage",
+
+	[Key.unsupportedLang]: "This page is not yet translated into %s.",
+	[Key.langName]: "English",
 };

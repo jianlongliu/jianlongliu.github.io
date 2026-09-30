@@ -1,24 +1,36 @@
-import type { AUTO_MODE, DARK_MODE, LIGHT_MODE } from "@constants/constants";
+import type { InferEntrySchema, RenderedContent } from "astro:content";
+import type {
+	ALL_LANGUAGES,
+	DARK_MODE,
+	LIGHT_MODE,
+} from "@constants/constants";
+import type * as Giscus from "@giscus/svelte";
+
+export type ConfigLang =
+	| "en"
+	| "zh_CN"
+	| "zh_TW"
+	| "ja"
+	| "ko"
+	| "es"
+	| "th"
+	| "vi"
+	| "tr"
+	| "id"
+	| "fr"
+	| "fa";
 
 export type SiteConfig = {
 	title: string;
 	subtitle: string;
 
-	lang:
-		| "en"
-		| "zh_CN"
-		| "zh_TW"
-		| "ja"
-		| "ko"
-		| "es"
-		| "th"
-		| "vi"
-		| "tr"
-		| "id";
+	lang: ConfigLang;
+	supportedLangs: ConfigLang[];
+	// rtl: boolean;  // TODO make it work without destryoing layouts
 
-	themeColor: {
+	theme: {
 		hue: number;
-		fixed: boolean;
+		mode: "light" | "dark";
 	};
 	banner: {
 		enable: boolean;
@@ -36,6 +48,11 @@ export type SiteConfig = {
 	};
 
 	favicon: Favicon[];
+
+	ogImage: {
+		useDefault: boolean;
+		defaultSrc?: string;
+	};
 };
 
 export type Favicon = {
@@ -48,6 +65,7 @@ export enum LinkPreset {
 	Home = 0,
 	Archive = 1,
 	About = 2,
+	Friends = 3,
 }
 
 export type NavBarLink = {
@@ -77,10 +95,7 @@ export type LicenseConfig = {
 	url: string;
 };
 
-export type LIGHT_DARK_MODE =
-	| typeof LIGHT_MODE
-	| typeof DARK_MODE
-	| typeof AUTO_MODE;
+export type LIGHT_DARK_MODE = typeof LIGHT_MODE | typeof DARK_MODE;
 
 export type BlogPostData = {
 	body: string;
@@ -100,3 +115,52 @@ export type BlogPostData = {
 export type ExpressiveCodeConfig = {
 	theme: string;
 };
+
+export type GetSortedPosts = {
+	id: string;
+	body?: string | undefined;
+	collection: "posts";
+	data: InferEntrySchema<"posts">;
+	rendered?: RenderedContent | undefined;
+	filePath?: string;
+};
+
+export type GiscusConfig = {
+	repo: Giscus.Repo;
+	host?: string;
+	repoId: string;
+	category: string;
+	categoryId: string;
+	mapping?: Giscus.Mapping;
+	term?: string;
+	strict?: Giscus.BooleanString;
+	reactionsEnabled?: Giscus.BooleanString;
+	emitMetadata?: Giscus.BooleanString;
+	inputPosition?: Giscus.InputPosition;
+	theme?: Giscus.Theme;
+	lang?: Giscus.AvailableLanguage;
+	loading?: Giscus.Loading;
+};
+
+export type CommentConfig = {
+	giscus?: GiscusConfig;
+	disqus?: null;
+	twikoo?: null;
+};
+
+export type GoogleAnalytics = {
+	id: string;
+};
+
+export type AnalyticsConfig = {
+	enabled: boolean;
+	google?: GoogleAnalytics;
+	umami?: null;
+};
+
+export type DeployConfig = {
+	siteUrl: string;
+	baseUrl: string;
+};
+
+export type SupportedLang = (typeof ALL_LANGUAGES)[number];

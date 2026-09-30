@@ -5,6 +5,7 @@ export const tr: Translation = {
 	[Key.home]: "Anasayfa",
 	[Key.about]: "Hakkında",
 	[Key.archive]: "Arşiv",
+	[Key.friends]: "Arkadaşlar",
 	[Key.search]: "Ara",
 
 	[Key.tags]: "Taglar",
@@ -24,15 +25,18 @@ export const tr: Translation = {
 	[Key.postCount]: "gönderi",
 	[Key.postsCount]: "gönderiler",
 
-	[Key.themeColor]: "Tema Rengi",
-
-	[Key.lightMode]: "Aydınlık",
-	[Key.darkMode]: "Koyu",
-	[Key.systemMode]: "Sistem",
-
 	[Key.more]: "Daha Fazla",
 
 	[Key.author]: "Yazar",
-	[Key.publishedAt]: "Yayınlanma:",
+	[Key.publishedAt]: "Yayınlandı:",
+	[Key.updatedAt]: "Güncellenme tarihi",
 	[Key.license]: "Lisans",
+
+	[Key.footnotes]: "Altı not",
+
+	[Key.notFound]: "Bulunamadı",
+	[Key.returnToHomepage]: "Ana sayfaya dön",
+
+	[Key.unsupportedLang]: "Bu sayfa henüz %s diline çevrilmedi.",
+	[Key.langName]: "Türkçe",
 };
