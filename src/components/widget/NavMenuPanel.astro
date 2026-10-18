@@ -9,10 +9,23 @@ interface Props {
 }
 
 const { links, lang } = Astro.props;
+
+// Entries carrying `showFrom` are promoted into the desktop top row at wide
+// widths, but they must still be listed here: this panel is what <md gets and
+// it is also the only place they appear when the desktop bar is too narrow.
+// The desktop-only duplicates are hidden with CSS instead, so no de-duping is
+// needed — but a group trigger without a url (e.g. "More") is dropped here
+// rather than rendered as a dead link, since its children are listed anyway.
+const flatLinks: NavBarLink[] = links.flatMap((link) => {
+	if (!link.children?.length) return [link];
+	return link.url ? [link, ...link.children] : link.children;
+});
+const href = (link: NavBarLink) =>
+	link.url ? (link.external ? link.url : url(link.url, lang)) : null;
 ---
 <div id="nav-menu-panel" class:list={["float-panel float-panel-closed transition-all fixed right-4 px-2 py-2"]}>
-    {links.map((link) => (
-        <a href={link.external ? link.url : url(link.url, lang)} class="group flex justify-between items-center py-2 pl-3 pr-1 rounded-lg gap-8
+    {flatLinks.map((link) => (
+        <a href={href(link)} class="group flex justify-between items-center py-2 pl-3 pr-1 rounded-lg gap-8
             hover:bg-(--btn-plain-bg-hover) active:bg-(--btn-plain-bg-active) transition
         "
            target={link.external ? "_blank" : null}

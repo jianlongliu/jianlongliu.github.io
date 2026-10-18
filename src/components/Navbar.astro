@@ -2,7 +2,12 @@
 import { Icon } from "astro-icon/components";
 import { navBarConfig, siteConfig } from "../config";
 import { getLinkPresets } from "../constants/link-presets";
-import { LinkPreset, type NavBarLink } from "../types/config";
+import {
+	type Breakpoint,
+	LinkPreset,
+	type NavBarLink,
+	type NavBarLinkConfig,
+} from "../types/config";
 import { url } from "../utils/url-utils";
 import LanguageSwitch from "./LanguageSwitch.svelte";
 import LightDarkSwitch from "./LightDarkSwitch.svelte";
@@ -19,14 +24,95 @@ const { class: className, lang } = Astro.props;
 
 const presets = getLinkPresets(lang);
 
-let links: NavBarLink[] = navBarConfig.links.map(
-	(item: NavBarLink | LinkPreset): NavBarLink => {
-		if (typeof item === "number") {
-			return presets[item];
-		}
-		return item;
-	},
-);
+// Resolves presets and normalizes nested groups into render-ready NavBarLink.
+const resolve = (item: NavBarLinkConfig | LinkPreset): NavBarLink => {
+	const link = typeof item === "number" ? presets[item] : item;
+	if (link.children) {
+		return { ...link, children: link.children.map(resolve) };
+	}
+	return { ...link, children: undefined };
+};
+
+const allLinks: NavBarLink[] = navBarConfig.links.map(resolve);
+
+// Entries marked `showFrom` are promoted out of their group into the top row
+// from that breakpoint up, positioned *before* their group so a promoted item
+// sits next to its siblings rather than after the trigger. The wide/narrow
+// switch is pure CSS: below its breakpoint a promoted entry is hidden in the
+// top row and shown inside the dropdown instead, so it is only ever visible in
+// one place. Tailwind needs literal class names, hence the explicit maps
+// rather than composing strings such as `lg:${suffix}`.
+const HIDE_UP_FROM: Record<Breakpoint, string> = {
+	sm: "sm:hidden",
+	md: "md:hidden",
+	lg: "lg:hidden",
+	xl: "xl:hidden",
+	"2xl": "2xl:hidden",
+};
+const SHOW_FROM: Record<Breakpoint, string> = {
+	sm: "hidden sm:flex",
+	md: "hidden md:flex",
+	lg: "hidden lg:flex",
+	xl: "hidden xl:flex",
+	"2xl": "hidden 2xl:flex",
+};
+
+type RenderEntry =
+	| { kind: "link"; link: NavBarLink; hideBelow?: Breakpoint }
+	| {
+			kind: "group";
+			link: NavBarLink;
+			kids: NavBarLink[];
+			hideAbove?: Breakpoint;
+	  };
+
+const BREAKPOINT_ORDER: Breakpoint[] = ["sm", "md", "lg", "xl", "2xl"];
+const HIDE_ABOVE: Record<Breakpoint, string> = {
+	sm: "sm:hidden",
+	md: "md:hidden",
+	lg: "lg:hidden",
+	xl: "xl:hidden",
+	"2xl": "2xl:hidden",
+};
+
+// Flatten groups into an ordered render list so promoted children can be placed
+// ahead of their own group's trigger. Each promoted child is rendered twice on
+// purpose: once in the top row (shown from its breakpoint up) and once in the
+// dropdown (shown below it). Both copies are always in the DOM so the entry is
+// reachable at every width, and CSS decides which one paints.
+const renderList: RenderEntry[] = [];
+for (const l of allLinks) {
+	const allKids = l.children ?? [];
+	if (allKids.length === 0) {
+		renderList.push({ kind: "link", link: l });
+		continue;
+	}
+	const promotedKids = allKids.filter((k) => k.showFrom);
+	const staysPut = allKids.filter((k) => !k.showFrom);
+	for (const k of promotedKids) {
+		renderList.push({ kind: "link", link: k, hideBelow: k.showFrom });
+	}
+	// If every child is promoted the dropdown empties out once the last one moves
+	// up, so hide the trigger from that breakpoint on instead of leaving a button
+	// that opens an empty panel.
+	const lastPromotion = promotedKids.reduce<Breakpoint | undefined>(
+		(acc, k) =>
+			!acc ||
+			BREAKPOINT_ORDER.indexOf(k.showFrom as Breakpoint) >
+				BREAKPOINT_ORDER.indexOf(acc)
+				? (k.showFrom as Breakpoint)
+				: acc,
+		undefined,
+	);
+	renderList.push({
+		kind: "group",
+		link: l,
+		kids: allKids,
+		hideAbove: staysPut.length === 0 ? lastPromotion : undefined,
+	});
+}
+
+const links = allLinks;
 ---
 <div id="navbar" class="z-50 onload-animation">
     <div class="absolute h-8 left-0 right-0 -top-8 bg-(--card-bg) transition"></div> <!-- used for onload animation -->
@@ -39,16 +125,68 @@ let links: NavBarLink[] = navBarConfig.links.map(
                 {siteConfig.title}
             </div>
         </a>
-        <div class="hidden md:flex">
-            {links.map((l) => {
-                return <a aria-label={l.name} href={l.external ? l.url : url(l.url, lang)} target={l.external ? "_blank" : null}
-                          class="btn-plain scale-animation rounded-lg h-11 font-bold px-5 active:scale-95"
-                >
-                    <div class="flex items-center">
-                        {l.name}
-                        {l.external && <Icon name="fa6-solid:arrow-up-right-from-square" class="text-[0.875rem] transition -translate-y-px ml-1 text-black/20 dark:text-white/20"></Icon>}
+        <div class="hidden md:flex items-center">
+            {renderList.map((entry) => {
+                // Hover is unavailable on touch (hover: none) and at these widths the
+                // desktop bar is what tablets get, so open state is driven by both
+                // hover and click/focus, see the script below.
+                // px-3 rather than px-4: six triggers at px-4 overflowed at 1024px.
+                const triggerClass = "btn-plain scale-animation rounded-lg h-11 font-bold px-3 active:scale-95 flex items-center";
+
+                if (entry.kind === "link") {
+                    const l = entry.link;
+                    return <a aria-label={l.name} href={l.external ? l.url : url(l.url ?? "/", lang)} target={l.external ? "_blank" : null}
+                              class:list={[triggerClass, entry.hideBelow ? SHOW_FROM[entry.hideBelow] : ""]}
+                    >
+                        <div class="flex items-center">
+                            {l.name}
+                            {l.external && <Icon name="fa6-solid:arrow-up-right-from-square" class="text-[0.875rem] transition -translate-y-px ml-1 text-black/20 dark:text-white/20"></Icon>}
+                        </div>
+                    </a>;
+                }
+
+                const l = entry.link;
+                const kids = entry.kids;
+                const groupClass = `nav-group relative ${entry.hideAbove ? HIDE_ABOVE[entry.hideAbove] : ""}`;
+                return <div class={groupClass} data-nav-group>
+                    {l.url ? (
+                        <a aria-label={l.name} href={l.external ? l.url : url(l.url, lang)} target={l.external ? "_blank" : null}
+                           class={triggerClass}
+                        >
+                            <div class="flex items-center">
+                                {l.name}
+                                <Icon name="material-symbols:keyboard-arrow-down-rounded" class="nav-group-chevron text-[1.25rem] transition -mr-1 ml-0.5"></Icon>
+                            </div>
+                        </a>
+                    ) : (
+                        <button type="button" aria-label={l.name} aria-expanded="false" data-nav-trigger
+                                class={triggerClass}
+                        >
+                            <div class="flex items-center">
+                                {l.name}
+                                <Icon name="material-symbols:keyboard-arrow-down-rounded" class="nav-group-chevron text-[1.25rem] transition -mr-1 ml-0.5"></Icon>
+                            </div>
+                        </button>
+                    )}
+                    <div class="nav-group-panel absolute left-0 top-full pt-2" data-nav-panel>
+                        <div class="float-panel !top-0 min-w-[9rem] px-2 py-2">
+                            {kids.map((k) => (
+                                <a aria-label={k.name} href={k.external ? k.url : url(k.url ?? "/", lang)} target={k.external ? "_blank" : null}
+                                   class:list={["group flex justify-between items-center gap-6 py-2 pl-3 pr-1 rounded-lg",
+                                          "hover:bg-(--btn-plain-bg-hover) active:bg-(--btn-plain-bg-active) transition",
+                                          k.showFrom ? HIDE_UP_FROM[k.showFrom] : ""]}
+                                >
+                                    <div class="transition font-bold text-black/75 dark:text-white/75 group-hover:text-(--primary) group-active:text-(--primary)">
+                                        {k.name}
+                                    </div>
+                                    {k.external
+                                        ? <Icon name="fa6-solid:arrow-up-right-from-square" class="transition text-[0.75rem] text-black/25 dark:text-white/25 -translate-x-1"></Icon>
+                                        : <Icon name="material-symbols:chevron-right-rounded" class="transition text-[1.25rem] text-(--primary)"></Icon>}
+                                </a>
+                            ))}
+                        </div>
                     </div>
-                </a>;
+                </div>;
             })}
         </div>
         <div class="flex">
@@ -74,6 +212,40 @@ let links: NavBarLink[] = navBarConfig.links.map(
     </div>
 </div>
 
+<style>
+/* Desktop nav group panels. Kept in CSS (not the float-panel-closed utility)
+   because the open state is toggled by the script above via .nav-group-open. */
+.nav-group-panel {
+    opacity: 0;
+    transform: translateY(-0.25rem);
+    pointer-events: none;
+    transition: opacity 0.15s ease, transform 0.15s ease;
+}
+.nav-group-panel.nav-group-open {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+}
+.nav-group-chevron {
+    transition: transform 0.15s ease;
+}
+/* Rotate only where hovering is meaningful; touch devices would latch it on. */
+@media (hover: hover) {
+    .nav-group:hover .nav-group-chevron {
+        transform: rotate(180deg);
+    }
+}
+.nav-group:focus-within .nav-group-chevron {
+    transform: rotate(180deg);
+}
+@media (prefers-reduced-motion: reduce) {
+    .nav-group-panel,
+    .nav-group-chevron {
+        transition: none;
+    }
+}
+</style>
+
 <script>
 function loadButtonScript() {
     let settingBtn = document.getElementById("display-settings-switch");
@@ -98,6 +270,78 @@ function loadButtonScript() {
 }
 
 loadButtonScript();
+
+// Desktop nav groups. Hover alone is not enough: the bar is shown from the `md`
+// breakpoint up, so touch devices (hover: none) get it too. Open state therefore
+// responds to hover, click, and keyboard focus, and closes on Escape/blur/outside
+// click. A short close delay keeps diagonal pointer travel from flickering.
+function initNavGroups() {
+    const groups = Array.from(document.querySelectorAll<HTMLElement>("[data-nav-group]"));
+    if (groups.length === 0) return;
+    const CLOSE_DELAY = 150;
+    const timers = new WeakMap<HTMLElement, number>();
+
+    // Tapping or clicking the trigger also focuses it, so focusin would open the
+    // panel and the click handler would immediately toggle it shut again. Only
+    // treat focus as an "open" intent when it came from the keyboard.
+    let keyboardIntent = false;
+    document.addEventListener("keydown", () => { keyboardIntent = true; }, true);
+    document.addEventListener("pointerdown", () => { keyboardIntent = false; }, true);
+
+    const isOpen = (g: HTMLElement) =>
+        g.querySelector("[data-nav-panel]")?.classList.contains("nav-group-open") ?? false;
+
+    const setOpen = (g: HTMLElement, open: boolean) => {
+        const win = timers.get(g);
+        if (win) { clearTimeout(win); timers.delete(g); }
+        g.querySelector("[data-nav-panel]")?.classList.toggle("nav-group-open", open);
+        const trigger = g.querySelector("[data-nav-trigger]");
+        if (trigger) trigger.setAttribute("aria-expanded", String(open));
+    };
+
+    const closeSoon = (g: HTMLElement) => {
+        const win = timers.get(g);
+        if (win) clearTimeout(win);
+        timers.set(g, window.setTimeout(() => setOpen(g, false), CLOSE_DELAY));
+    };
+
+    // Touch taps synthesize mouseenter before the click, which would open the
+    // panel and then let the click handler toggle it straight shut again. Hover
+    // state is therefore only wired up on devices that actually hover.
+    const canHover = window.matchMedia("(hover: hover)").matches;
+
+    for (const g of groups) {
+        const trigger = g.querySelector<HTMLElement>("[data-nav-trigger]");
+        if (canHover) {
+            g.addEventListener("mouseenter", () => setOpen(g, true));
+            g.addEventListener("mouseleave", () => closeSoon(g));
+        }
+        // Covers Tab navigation; pointer-driven focus is handled by click below.
+        g.addEventListener("focusin", () => {
+            if (keyboardIntent) setOpen(g, true);
+        });
+        g.addEventListener("focusout", (e) => {
+            if (!g.contains(e.relatedTarget as Node)) closeSoon(g);
+        });
+        trigger?.addEventListener("click", (e) => {
+            e.preventDefault();
+            setOpen(g, !isOpen(g));
+        });
+    }
+
+    document.addEventListener("keydown", (e) => {
+        if (e.key !== "Escape") return;
+        for (const g of groups) if (isOpen(g)) setOpen(g, false);
+    });
+
+    document.addEventListener("click", (e) => {
+        const t = e.target;
+        if (!(t instanceof Node)) return;
+        for (const g of groups) if (!g.contains(t)) setOpen(g, false);
+    });
+}
+
+initNavGroups();
 </script>
 
 {import.meta.env.PROD && <script is:inline define:vars={{scriptUrl: url('/pagefind/pagefind.js')}}>

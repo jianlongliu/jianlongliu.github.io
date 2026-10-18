@@ -52,13 +52,16 @@ export const siteConfig: SiteConfig = {
 
 export const navBarConfig: NavBarConfig = {
 	links: [
-		LinkPreset.Home,
-		LinkPreset.Archive,
-		LinkPreset.About,
 		{
-			name: "Immich",
+			// Group triggers keep the top row short; the submenu holds the rest.
+			name: "Home",
+			url: "/",
+			children: [LinkPreset.Archive, LinkPreset.About],
+		},
+		{
+			name: "Photos",
 			url: "https://photo.jianl.dev",
-			external: true, // Show an external link icon and will open in a new tab
+			external: true,
 		},
 		{
 			name: "Memos",
@@ -66,9 +69,35 @@ export const navBarConfig: NavBarConfig = {
 			external: true,
 		},
 		{
-			name: "Pydio Cells",
-			url: "https://cells.jianl.dev",
-			external: true,
+			name: "More",
+			// No url: rendered as a disclosure button rather than a link.
+			children: [
+				{
+					name: "Cells",
+					url: "https://cells.jianl.dev",
+					external: true,
+				},
+				{
+					name: "Beszel",
+					url: "https://dash.jianl.dev",
+					external: true,
+				},
+				{
+					// Promoted into the top row from lg up; below that it stays here.
+					// Six triggers do not fit at the md breakpoint (measured), so these
+					// two only leave the dropdown once there is room for them.
+					name: "Git",
+					url: "https://git.jianl.dev",
+					external: true,
+					showFrom: "lg",
+				},
+				{
+					name: "Status",
+					url: "https://status.jianl.dev",
+					external: true,
+					showFrom: "lg",
+				},
+			],
 		},
 	],
 };

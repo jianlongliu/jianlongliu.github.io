@@ -70,12 +70,28 @@ export enum LinkPreset {
 
 export type NavBarLink = {
 	name: string;
-	url: string;
+	/** Omitted for group/trigger entries that only open a submenu. */
+	url?: string;
 	external?: boolean;
+	/** Submenu entries. Presets are resolved to links before rendering. */
+	children?: NavBarLink[];
+	/**
+	 * Promote this entry into the top row from this breakpoint up. Below it the
+	 * entry stays inside its group dropdown, and a group child carrying the same
+	 * value is dropped from the dropdown at that width so it is not shown twice.
+	 */
+	showFrom?: Breakpoint;
+};
+
+export type Breakpoint = "sm" | "md" | "lg" | "xl" | "2xl";
+
+/** Config form of NavBarLink: submenu entries may also be presets. */
+export type NavBarLinkConfig = Omit<NavBarLink, "children"> & {
+	children?: (NavBarLink | LinkPreset)[];
 };
 
 export type NavBarConfig = {
-	links: (NavBarLink | LinkPreset)[];
+	links: (NavBarLinkConfig | LinkPreset)[];
 };
 
 export type ProfileConfig = {
