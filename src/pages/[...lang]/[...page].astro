@@ -1,5 +1,6 @@
 ---
 import type { GetStaticPaths } from "astro";
+import { siteConfig } from "@/config";
 import Pagination from "../../components/control/Pagination.astro";
 import PostPage from "../../components/PostPage.astro";
 import {
@@ -33,9 +34,17 @@ export const getStaticPaths = (async ({ paginate }) => {
 const { page, lang } = Astro.props;
 
 const len = page.data.length;
+
+// The listing has no visible page heading, so give assistive tech and search
+// engines one. Later pagination pages need their own label to stay unique.
+const heading =
+	page.currentPage === 1
+		? siteConfig.title
+		: `${siteConfig.title} - ${page.currentPage}`;
 ---
 
 <MainGridLayout lang={lang}>
+    <h1 class="sr-only">{heading}</h1>
     <PostPage page={page} lang={lang}></PostPage>
     <Pagination class="mx-auto onload-animation" page={page} style={`animation-delay: calc(var(--content-delay) + ${(len)*50}ms)`}></Pagination>
 </MainGridLayout>

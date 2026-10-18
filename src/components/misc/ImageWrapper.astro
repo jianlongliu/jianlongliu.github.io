@@ -26,12 +26,20 @@ const isPublic = src.startsWith("/");
 
 // TODO temporary workaround for images dynamic import
 // https://github.com/withastro/astro/issues/3373
+// NOTE: "../../**" resolves to all of src/, so this glob doubles as the loader
+// for src/styles/*.css. Narrowing it to image extensions silently drops the
+// Tailwind layer (~750 selectors). Only giscus is excluded here: its styles are
+// injected into the comment iframe via the ?raw imports in Giscus.svelte, so
+// letting them through this glob shipped them to every page as global CSS.
 // biome-ignore lint/suspicious/noImplicitAnyLet: <check later>
 let img;
 if (isLocal) {
-	const files = import.meta.glob<ImageMetadata>("../../**", {
-		import: "default",
-	});
+	const files = import.meta.glob<ImageMetadata>(
+		["../../**", "!../../styles/giscus-*.css"],
+		{
+			import: "default",
+		},
+	);
 	let normalizedPath = path
 		.normalize(path.join("../../", basePath, src))
 		.replace(/\\/g, "/");

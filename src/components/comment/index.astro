@@ -2,8 +2,6 @@
 import type { CollectionEntry } from "astro:content";
 import { commentConfig } from "@/config";
 
-import Giscus from "./Giscus.svelte";
-
 interface Props {
 	post?: CollectionEntry<"posts">;
 	lang?: string;
@@ -14,14 +12,20 @@ const { lang } = Astro.props;
 // const path = post ? `/posts/${post.id}` : Astro.url.pathname;
 // const url = `${Astro.site?.href || Astro.url.origin}${path}`;
 
-let commentService = "";
-if (commentConfig?.giscus) {
-	commentService = "giscus";
-}
+// Comments are optional. When no service is configured we render nothing at all,
+// otherwise every post gets an empty card plus giscus' stylesheet and client JS.
+const commentService = commentConfig?.giscus ? "giscus" : "";
+
+// Imported dynamically so giscus is only bundled when it is actually used.
+const Giscus =
+	commentService === "giscus"
+		? (await import("./Giscus.svelte")).default
+		: null;
 ---
 
-<div class="card-base p-6 mb-4">
-	<!-- TODO sometimes Giscus theme color not reactive -->
-  {commentService === 'giscus' && <Giscus client:only="svelte" lang={lang} />}
-  {commentService === '' && null }
-</div>
+{commentService === "giscus" && Giscus && (
+	<div class="card-base p-6 mb-4">
+		<!-- TODO sometimes Giscus theme color not reactive -->
+		<Giscus client:only="svelte" lang={lang} />
+	</div>
+)}

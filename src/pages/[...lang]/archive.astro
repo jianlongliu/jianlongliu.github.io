@@ -21,6 +21,7 @@ const sortedPostsList = await getSortedPostsList(lang);
 ---
 
 <MainGridLayout title={i18n(I18nKey.archive, lang)} lang={lang}>
+    <h1 class="sr-only">{i18n(I18nKey.archive, lang)}</h1>
     <!-- @ts-expect-error ts(9013) - (temporary solutions) -->
     <ArchivePanel sortedPosts={sortedPostsList} lang={lang} client:only="svelte"></ArchivePanel>
 </MainGridLayout>

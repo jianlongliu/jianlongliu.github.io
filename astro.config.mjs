@@ -17,7 +17,11 @@ import remarkDirective from "remark-directive"; /* Handle directives */
 import remarkGithubAdmonitionsToDirectives from "remark-github-admonitions-to-directives";
 import remarkMath from "remark-math";
 import remarkSectionize from "remark-sectionize";
-import { deployConfig, expressiveCodeConfig } from "./src/config.ts";
+import {
+	analyticsConfig,
+	deployConfig,
+	expressiveCodeConfig,
+} from "./src/config.ts";
 import I18nKey from "./src/i18n/i18nKey.ts";
 import { i18n } from "./src/i18n/translation.ts";
 import { pluginCustomCopyButton } from "./src/plugins/expressive-code/custom-copy-button.js";
@@ -106,11 +110,17 @@ export default defineConfig({
 		}),
 		svelte(),
 		sitemap(),
-		partytown({
-			config: {
-				forward: ["dataLayer.push"],
-			},
-		}),
+		// Partytown installs a service worker and a sandbox iframe on every page,
+		// so only load it when there is a third-party script that needs offloading.
+		...(analyticsConfig.enabled
+			? [
+					partytown({
+						config: {
+							forward: ["dataLayer.push"],
+						},
+					}),
+				]
+			: []),
 	],
 	markdown: {
 		processor: unified({
@@ -159,6 +169,7 @@ export default defineConfig({
 							properties: {
 								className: ["anchor-icon"],
 								"data-pagefind-ignore": true,
+								"aria-hidden": "true",
 							},
 							children: [
 								{
