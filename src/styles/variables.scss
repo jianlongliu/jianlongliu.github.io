@@ -16,6 +16,13 @@ $rainbow-dark: linear-gradient(to right, oklch(0.70 0.10 0), oklch(0.70 0.10 30)
   color-scheme: light;
   --radius-large: 1rem;
   --content-delay: 150ms;
+  /* Card surface at partial opacity, so whatever sits behind (the banner) shows
+     through. Derived from --card-bg rather than a second literal pair so it
+     tracks the light/dark values defined below and can't drift from them.
+     Deliberately separate from --card-bg: that one is also reused for markdown
+     table cells, the pagination bar and the archive timeline dot's outline,
+     which should all stay opaque. */
+  --card-bg-alpha: color-mix(in oklab, var(--card-bg) 85%, transparent);
 }
 
 :root.dark {

@@ -17,7 +17,10 @@ export const siteConfig: SiteConfig = {
 	// 留空数组 = 关闭多语言切换
 	supportedLangs: [],
 	theme: {
-		hue: 290, // Default hue for the theme color, from 0 to 360. e.g. red: 0, teal: 200, cyan: 250, pink: 345
+		// 41 = 橘色系;采样自 banner 那位橘发少女的发色(oklch 色相 41.5°,
+		// 46546 个发丝像素的中位数)。Material Design 取色盘里同色相的是
+		// Orange 900 (#E65100, 40.25°),符合 tonal spot 保留源色色相的做法。
+		hue: 41, // Default hue for the theme color, from 0 to 360. e.g. red: 0, teal: 200, cyan: 250, pink: 345
 		mode: "light",
 	},
 	banner: {

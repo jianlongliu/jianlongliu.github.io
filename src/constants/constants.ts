@@ -18,6 +18,11 @@ export const BANNER_HEIGHT_HOME: number = BANNER_HEIGHT + BANNER_HEIGHT_EXTEND;
 // The height the main panel overlaps the banner, unit: rem
 export const MAIN_PANEL_OVERLAPS_BANNER_HEIGHT = 3.5;
 
+// Height of the gradient fade at the banner's bottom edge, unit: px. The banner
+// wrapper's bottom edge is the visible bottom of the banner on both the home and
+// post layouts, so the mask can be anchored to it for both.
+export const BANNER_FADE_HEIGHT = 140;
+
 // Page width: rem
 export const PAGE_WIDTH = 75;
 

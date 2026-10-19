@@ -6,6 +6,7 @@ import "@fontsource/roboto/700.css";
 import ConfigCarrier from "@components/ConfigCarrier.astro";
 import { profileConfig, siteConfig } from "@/config";
 import {
+	BANNER_FADE_HEIGHT,
 	BANNER_HEIGHT,
 	BANNER_HEIGHT_EXTEND,
 	BANNER_HEIGHT_HOME,
@@ -146,11 +147,18 @@ const bannerOffset =
 	bannerOffset,
 	'banner-height-home': `${BANNER_HEIGHT_HOME}vh`,
 	'banner-height': `${BANNER_HEIGHT}vh`,
+	'banner-fade-height': `${BANNER_FADE_HEIGHT}px`,
 }}>
 @reference "../styles/main.css";
 @layer components {
 	.enable-banner #banner-wrapper {
 		@apply h-(--banner-height-home);
+		/* Fade the banner's bottom edge into the page background. Applies to the
+		   wrapper rather than the image so it also covers the onload scale/opacity
+		   animation, and anchored to the bottom edge because that edge is the
+		   visible bottom of the banner on both the home and post layouts. */
+		mask-image: linear-gradient(to bottom, #000 calc(100% - var(--banner-fade-height)), transparent 100%);
+		-webkit-mask-image: linear-gradient(to bottom, #000 calc(100% - var(--banner-fade-height)), transparent 100%);
 	}
 	.enable-banner #banner {
 		@apply h-(--banner-height-home) translate-y-(--bannerOffset);

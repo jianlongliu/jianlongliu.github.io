@@ -17,7 +17,7 @@
 }
 
 @utility card-base {
-  @apply rounded-(--radius-large) overflow-hidden bg-(--card-bg) transition;
+  @apply rounded-(--radius-large) overflow-hidden bg-(--card-bg-alpha) backdrop-blur-md transition;
 }
 
 @utility expand-animation {
