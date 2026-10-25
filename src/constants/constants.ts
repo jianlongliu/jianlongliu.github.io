@@ -23,6 +23,14 @@ export const MAIN_PANEL_OVERLAPS_BANNER_HEIGHT = 3.5;
 // post layouts, so the mask can be anchored to it for both.
 export const BANNER_FADE_HEIGHT = 140;
 
+// Horizontal focus of the banner crop, in percent (the X half of
+// object-position). The banner is 1983x793, so a tall narrow viewport makes
+// `cover` blow it up hard and keep only a slice of the width: 390x549 leaves
+// ~28% of it visible. The subject's face sits at ~35% of the image width, so the
+// 50% anchor cut it in half at the left edge. 32% keeps the face near the middle
+// on phones while moving the desktop crop by only a few px.
+export const BANNER_FOCUS_X = 32;
+
 // Page width: rem
 export const PAGE_WIDTH = 75;
 
