@@ -9,7 +9,7 @@ draft: false
 lang: ''
 ---
 
-> ps. 两个都太难用了, 转投pydio cells了
+> ps. 折腾了一圈，最后还是换回 cloudreve 了。
 
 ![](https://cloudreve.org/imgs/feature3.png)
 

@@ -76,8 +76,8 @@ export const navBarConfig: NavBarConfig = {
 			// No url: rendered as a disclosure button rather than a link.
 			children: [
 				{
-					name: "Cells",
-					url: "https://cells.jianl.dev",
+					name: "Cloud",
+					url: "https://cloud.jianl.dev",
 					external: true,
 				},
 				{
